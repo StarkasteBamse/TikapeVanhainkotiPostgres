@@ -1,7 +1,10 @@
 
 package sovelluslogiikka;
 
-public class Viesti {
+import java.sql.SQLException;
+import java.util.List;
+
+public class Viesti implements Dao<Viesti>{
     private final int id;
     private final String viesti;
     private final String nimimerkki;
@@ -39,6 +42,26 @@ public class Viesti {
     @Override
     public String toString() {
         return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Viesti key) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void add(Viesti key) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(Viesti key) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Viesti> getAll() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
