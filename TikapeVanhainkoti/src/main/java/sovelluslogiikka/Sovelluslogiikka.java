@@ -26,6 +26,8 @@ public class Sovelluslogiikka {
             this.viestiDao = new ViestiDAO(database);
         } catch (SQLException se) {
             return false;
+        } catch (ClassNotFoundException e) {
+            
         }
         return true;
     }
@@ -47,69 +49,7 @@ public class Sovelluslogiikka {
     
      Käsittelee myös DAO:n heittämät SQLExceptionit.
      */
-    public void luoTietokanta() {
-
-        Connection connection = null;
-        //tietokannan avaus ja luonti, jos tietokantaa ei ole olemassa vielä. Tällä hetkellä TiKaPeVanhainkoti kansion rootiin viittaus.
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + tietokannanNimi);
-            System.out.println("Opened database successfully");
-            System.out.println("****************************");
-        } catch (Exception e) {
-            System.out.println("sum thing no worki wit mah DATABASE!! >_<");
-        }
-        taulunLuominen(connection);
-        //taulu "Ketju" luonti
-        try {
-            Statement stmt = connection.createStatement();
-            String sql = "CREATE TABLE Ketju"
-                    + "(Id integer PRIMARY KEY,"
-                    + "Nimi varchar(100) NOT NULL,"
-                    + "AlueId integer NOT NULL UNIQUE,"
-                    + "FOREIGN KEY (AlueId) REFERENCES Alue(Id))";
-            stmt.executeUpdate(sql);
-            stmt.close();
-            System.out.println("Table \"Ketju\" created successfully");
-        } catch (Exception e) {
-            System.out.println("Table \"Ketju\" exist already");
-        }
-        //taulu "Viesti" luonti, Nimimerkin kanssa.
-        try {
-            Statement stmt = connection.createStatement();
-            String sql = "CREATE TABLE Viesti"
-                    + "(Id integer PRIMARY KEY,"
-                    + "Viesti text NOT NULL,"
-                    + "Nimimerkki varchar(50) NOT NULL, "
-                    + "Pvm datetime NOT NULL,"
-                    + "KetjuId integer NOT NULL UNIQUE,"
-                    + "FOREIGN KEY (KetjuId) REFERENCES Ketju(Id))";
-            stmt.executeUpdate(sql);
-            stmt.close();
-            System.out.println("Table \"Viesti\" created successfully");
-        } catch (Exception e) {
-            System.out.println("Table \"Viesti\" exist already");
-        }
-        try {
-            connection.close();
-        } catch (Exception e) {
-        }
-    }
-
-    private void taulunLuominen(Connection connection) {
-        //taulun "Alue" luonti
-        try {
-            Statement stmt = connection.createStatement();
-            String sql = "CREATE TABLE Alue"
-                    + "(Id integer PRIMARY KEY,"
-                    + "Nimi varchar(100) NOT NULL)";
-            stmt.executeUpdate(sql);
-            stmt.close();
-            System.out.println("Table \"Alue\" created successfully");
-        } catch (Exception e) {
-            System.out.println("Table \"Alue\" exist already");
-        }
-    }
+    
 
     public List<Alue> haeAlueet() {
         List<Alue> alueet = new ArrayList<>();
