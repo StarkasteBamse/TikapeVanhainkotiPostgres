@@ -11,10 +11,10 @@ import java.util.List;
  *Ketju-olioiden SQL-kyselyt.
  */
 public class KetjuDAO implements Dao<Ketju> {
-    private Connection yhteys;
+    private Database database;
     
-    public KetjuDAO(String tietokannanNimi) throws SQLException {
-        muodostaYhteys(tietokannanNimi);
+    public KetjuDAO(Database database) throws SQLException {
+        this.database = database;
     }
     
     @Override

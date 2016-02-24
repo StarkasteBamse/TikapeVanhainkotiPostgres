@@ -13,16 +13,16 @@ import java.util.List;
  *Alue-olioiden SQL-kyselyt.
  */
 public class AlueDAO implements Dao<Alue> {
-    private Connection yhteys;
+    private Database database;
     
-    public AlueDAO(String tietokannanNimi) throws SQLException {
-        muodostaYhteys(tietokannanNimi);
+    public AlueDAO(Database database) throws SQLException {
+        this.database = database;
     }
     
     
     @Override
     public void delete(Alue alue) throws SQLException {
-        PreparedStatement stmt = yhteys.prepareStatement("");
+        
     }
 
     @Override
@@ -41,6 +41,6 @@ public class AlueDAO implements Dao<Alue> {
     }
     
     public void muodostaYhteys(String tietokannanNimi) throws SQLException {
-        yhteys = DriverManager.getConnection(tietokannanNimi);
+        
     }
 }

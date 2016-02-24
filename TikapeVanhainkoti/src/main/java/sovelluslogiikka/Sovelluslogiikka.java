@@ -10,17 +10,20 @@ public class Sovelluslogiikka {
     private AlueDAO alueDao;
     private KetjuDAO ketjuDao;
     private ViestiDAO viestiDao;
+    private Database database;
     private String tietokannanNimi;
 
     public Sovelluslogiikka(String tietokannanNimi) {
         this.tietokannanNimi = tietokannanNimi;
+        
     }
 
     public boolean kaynnista() {
         try {
-            this.alueDao = new AlueDAO(tietokannanNimi);
-            this.ketjuDao = new KetjuDAO(tietokannanNimi);
-            this.viestiDao = new ViestiDAO(tietokannanNimi);
+            this.database = new Database(tietokannanNimi);
+            this.alueDao = new AlueDAO(database);
+            this.ketjuDao = new KetjuDAO(database);
+            this.viestiDao = new ViestiDAO(database);
         } catch (SQLException se) {
             return false;
         }
@@ -56,18 +59,7 @@ public class Sovelluslogiikka {
         } catch (Exception e) {
             System.out.println("sum thing no worki wit mah DATABASE!! >_<");
         }
-        //taulun "Alue" luonti
-        try {
-            Statement stmt = connection.createStatement();
-            String sql = "CREATE TABLE Alue"
-                    + "(Id integer PRIMARY KEY,"
-                    + "Nimi varchar(100) NOT NULL)";
-            stmt.executeUpdate(sql);
-            stmt.close();
-            System.out.println("Table \"Alue\" created successfully");
-        } catch (Exception e) {
-            System.out.println("Table \"Alue\" exist already");
-        }
+        taulunLuominen(connection);
         //taulu "Ketju" luonti
         try {
             Statement stmt = connection.createStatement();
@@ -101,6 +93,21 @@ public class Sovelluslogiikka {
         try {
             connection.close();
         } catch (Exception e) {
+        }
+    }
+
+    private void taulunLuominen(Connection connection) {
+        //taulun "Alue" luonti
+        try {
+            Statement stmt = connection.createStatement();
+            String sql = "CREATE TABLE Alue"
+                    + "(Id integer PRIMARY KEY,"
+                    + "Nimi varchar(100) NOT NULL)";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            System.out.println("Table \"Alue\" created successfully");
+        } catch (Exception e) {
+            System.out.println("Table \"Alue\" exist already");
         }
     }
 

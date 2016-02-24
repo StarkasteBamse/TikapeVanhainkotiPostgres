@@ -17,10 +17,10 @@ import java.util.List;
  *Viesti-olioiden SQL-kyselyt.
  */
 public class ViestiDAO implements Dao<Viesti> {
-    private Connection yhteys;
+    private Database database;
 
-    public ViestiDAO(String tietokannanNimi) throws SQLException {
-        muodostaYhteys(tietokannanNimi);
+    public ViestiDAO(Database database) throws SQLException {
+        this.database = database;
     }
 
     public void muodostaYhteys(String tietokannanNimi) throws SQLException {

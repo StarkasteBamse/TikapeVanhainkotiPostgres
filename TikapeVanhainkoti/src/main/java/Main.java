@@ -8,6 +8,6 @@ public class Main {
 //        System.out.println(alue1.getId() + ", " + alue1.getNimi());
         
         Sovelluslogiikka s = new Sovelluslogiikka("koe.db");
-        s.luoTietokanta();
+        
     }
 }
