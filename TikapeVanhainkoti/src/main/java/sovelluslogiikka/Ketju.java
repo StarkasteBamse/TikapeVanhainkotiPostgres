@@ -5,12 +5,12 @@ package sovelluslogiikka;
 public class Ketju {
     private final int id;
     private final int alueId;
-    private final String otsikko;
+    private final String nimi;
 
-    public Ketju(int id, int alueId, String otsikko) {
+    public Ketju(int id, int alueId, String nimi) {
         this.alueId = alueId;
         this.id = id;
-        this.otsikko = otsikko;
+        this.nimi = nimi;
     }
 
     public int getId() {
@@ -18,7 +18,7 @@ public class Ketju {
     }
 
     public String getNimi() {
-        return otsikko;
+        return nimi;
     }
 
     public int getAlueId() {

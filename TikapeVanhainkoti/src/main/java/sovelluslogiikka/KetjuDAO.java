@@ -4,7 +4,11 @@ package sovelluslogiikka;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 /**
  *Hallinnoi yhteydenottoa SQL-tietokantaan ja suorittaa
@@ -44,8 +48,27 @@ public class KetjuDAO implements Dao<Alue, Ketju> {
     }
     
     @Override
-    public List<Ketju> getAll(Alue kkey) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Ketju> getAll(Alue alue) throws SQLException {
+        PreparedStatement stmt = yhteys.prepareStatement(
+                "SELECT * FROM Ketju, Alue"
+                    + "WHERE Alue.Id = Ketju.AlueId "
+                    + "AND Ketju.AlueId = ?;");
+        stmt.setInt(1, alue.getId());
+        ResultSet rs = stmt.executeQuery();
+        List<Ketju> ketjut = new LinkedList<>();
+        
+        while (rs.next()) {
+            int id = rs.getInt("Ketju.Id");
+            int alueId = rs.getInt("Ketju.alueid");
+            String nimi = rs.getString("Ketju.nimi");
+            
+            Ketju uusiKetju = new Ketju(id, alueId, nimi);
+            ketjut.add(uusiKetju);
+        }
+        rs.close();
+        stmt.close();
+        suljeYhteys();
+        return ketjut;
     }
     
     public void suljeYhteys() throws SQLException {
