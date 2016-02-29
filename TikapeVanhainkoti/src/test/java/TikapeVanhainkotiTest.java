@@ -51,7 +51,7 @@ public class TikapeVanhainkotiTest {
    
     @Test
     public void luotietokannan() {
-        sovelluslogiikka.luoTietokanta();
+        sovelluslogiikka.kaynnista();
         
     }
 }
