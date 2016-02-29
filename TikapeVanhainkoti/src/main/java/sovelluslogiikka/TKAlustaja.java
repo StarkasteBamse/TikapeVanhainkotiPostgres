@@ -5,10 +5,14 @@ import java.sql.*;
 public class TKAlustaja {
     
     private Database database;
-    private boolean debug;
+    private boolean debug = false;
 
     public TKAlustaja(Database database) {
-        this.database = database;
+        this.database = database;        
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
     
     public void kokeileYhteys() {

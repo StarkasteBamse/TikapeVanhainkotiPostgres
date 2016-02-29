@@ -12,15 +12,18 @@ public class Sovelluslogiikka {
     private ViestiDAO viestiDao;
     private Database database;
     private String tietokannanNimi;
+    private TKAlustaja tkAlustaja;
 
     public Sovelluslogiikka(String tietokannanNimi) {
-        this.tietokannanNimi = tietokannanNimi;
-        
+        this.tietokannanNimi = tietokannanNimi;        
     }
 
     public boolean kaynnista() {
         try {
             this.database = new Database(tietokannanNimi);
+            this.tkAlustaja = new TKAlustaja(database);
+            tkAlustaja.kokeileYhteys();
+            tkAlustaja.luoTaulut();
             this.alueDao = new AlueDAO(database);
             this.ketjuDao = new KetjuDAO(database);
             this.viestiDao = new ViestiDAO(database);
