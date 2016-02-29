@@ -1,17 +1,21 @@
 
 package sovelluslogiikka;
 
-import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
-public class Viesti implements Dao<Viesti>{
+public class Viesti {
     private final int id;
     private final String viesti;
     private final String nimimerkki;
-    private final String pvm; //harkintaan datetime olio/unix-timestamp?
+    private final LocalDateTime pvm; //harkintaan datetime olio/unix-timestamp?
     private final int ketjuId;
 
-    public Viesti(int id, String viesti, String nimimerkki, String pvm, int ketjuId) {
+    public Viesti(String viesti, String nimimerkki, int ketjuId) {
+        this(0, viesti, nimimerkki, null, ketjuId);
+    }
+    
+    public Viesti(int id, String viesti, String nimimerkki, LocalDateTime pvm, int ketjuId) {
         this.id = id;
         this.viesti = viesti;
         this.nimimerkki = nimimerkki;
@@ -31,7 +35,7 @@ public class Viesti implements Dao<Viesti>{
         return nimimerkki;
     }
 
-    public String getPvm() {
+    public LocalDateTime getPvm() {
         return pvm;
     }
 
@@ -42,27 +46,5 @@ public class Viesti implements Dao<Viesti>{
     @Override
     public String toString() {
         return super.toString(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void delete(Viesti key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void add(Viesti key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void update(Viesti key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Viesti> getAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
+    }    
 }

@@ -10,11 +10,16 @@ import java.util.List;
  *Hallinnoi yhteydenottoa SQL-tietokantaan ja suorittaa
  *Ketju-olioiden SQL-kyselyt.
  */
-public class KetjuDAO implements Dao<Ketju> {
+public class KetjuDAO implements Dao<Alue, Ketju> {
     private Database database;
+    private Connection yhteys;
     
     public KetjuDAO(Database database) throws SQLException {
         this.database = database;
+    }
+    
+    public void muodostaYhteys(String tietokannanNimi) throws SQLException {
+        yhteys = DriverManager.getConnection(tietokannanNimi);
     }
     
     @Override
@@ -24,22 +29,28 @@ public class KetjuDAO implements Dao<Ketju> {
         }
 
     @Override
-    public void add(Ketju key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void add(Ketju ketju) throws SQLException {
+    
+        PreparedStatement stmt = yhteys.prepareStatement(
+                "INSERT INTO Ketju(Nimi, AlueId) VALUES (?, ?);");
+        stmt.setString(1, ketju.getNimi());
+        stmt.setInt(2, ketju.getAlueId());
+        stmt.execute();
     }
 
     @Override
     public void update(Ketju key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
-    public List<Ketju> getAll() throws SQLException {
+    public List<Ketju> getAll(Alue kkey) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void muodostaYhteys(String tietokannanNimi) throws SQLException {
-        yhteys = DriverManager.getConnection(tietokannanNimi);
+    public void suljeYhteys() throws SQLException {
+        yhteys.close();
     }
+    
     
 }
