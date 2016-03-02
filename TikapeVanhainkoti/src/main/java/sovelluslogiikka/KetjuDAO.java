@@ -66,10 +66,12 @@ public class KetjuDAO implements Dao<Alue, Ketju> {
             int id = rs.getInt("Ketju.Id");
             int alueId = rs.getInt("Ketju.alueid");
             String nimi = rs.getString("Ketju.nimi");
+            String alueNimi = rs.getString("Alue.nimi");
             Timestamp timestamp = rs.getTimestamp("MAX(Viesti.pvm)");
             
+            
             LocalDateTime pvmLCT = timestamp.toLocalDateTime();
-            Ketju uusiKetju = new Ketju(id, alueId, pvmLCT, nimi);
+            Ketju uusiKetju = new Ketju(id, alueId, pvmLCT, nimi, alueNimi);
             ketjut.add(uusiKetju);
         }
         rs.close();
@@ -81,4 +83,6 @@ public class KetjuDAO implements Dao<Alue, Ketju> {
     public void suljeYhteys() throws SQLException {
         yhteys.close();
     }
+    
+    
 }

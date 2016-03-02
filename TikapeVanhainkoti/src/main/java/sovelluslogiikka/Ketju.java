@@ -9,12 +9,14 @@ public class Ketju {
     private final int alueId;
     private final LocalDateTime viimeisinPvm;
     private final String nimi;
+    private final String alueNimi;
 
-    public Ketju(int id, int alueId, LocalDateTime viimeisinPvm, String nimi) {
+    public Ketju(int id, int alueId, LocalDateTime viimeisinPvm, String nimi, String alueNimi) {
         this.alueId = alueId;
         this.id = id;
         this.nimi = nimi;
         this.viimeisinPvm = viimeisinPvm;
+        this.alueNimi = alueNimi;
     }
 
     public int getId() {
@@ -27,6 +29,14 @@ public class Ketju {
 
     public int getAlueId() {
         return alueId;
+    }
+
+    public String getAlueNimi() {
+        return alueNimi;
+    }
+
+    public LocalDateTime getViimeisinPvm() {
+        return viimeisinPvm;
     }
     
     @Override
