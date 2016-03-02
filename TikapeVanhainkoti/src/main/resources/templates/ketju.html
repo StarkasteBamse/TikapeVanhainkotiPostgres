@@ -7,14 +7,14 @@
     </head>
 
     <body>
-        <h1>Alueet</h1>
+        <h1>Alue:</h1>
         
         <ul>
-            <li th:each="alue: ${alueet}">
-                <span th:text="${alue.getNimi}">Nimi</span>
-                <span th:text="${alue.getId}">Id</span>
-                <span th:text="${alue.getViimeisinPvm}">Pvm</span>
-            </li>
+            <li th:each="ketju: ${ketju}">
+                <span th:text="${ketju.getNimi}">Nimi</span>
+                <span th:text="${ketju.getId}">Id</span>
+                <span th:text="${ketju.getViimeisinPvm}">Pvm</span>
+            </li>            
         </ul>
             
     </body>

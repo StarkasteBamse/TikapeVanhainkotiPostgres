@@ -25,7 +25,13 @@ public class Webbikayttoliittyma {
             return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
         
-        
+        get("/ketju", (req, res) -> {
+            HashMap map = new HashMap<>();
+            
+            map.put("ketju", sovelluslogiikka.haeKetjut(1));
+
+            return new ModelAndView(map, "ketju");
+        }, new ThymeleafTemplateEngine());
         
     }
 }
