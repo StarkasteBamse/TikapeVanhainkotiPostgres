@@ -12,7 +12,7 @@ import java.util.List;
  *Hallinnoi yhteydenottoa SQL-tietokantaan ja suorittaa
  *Alue-olioiden SQL-kyselyt.
  */
-public class AlueDAO implements Dao<Alue> {
+public class AlueDAO implements Dao<Ketju, Alue> {
     private Database database;
     
     public AlueDAO(Database database) throws SQLException {
@@ -36,11 +36,7 @@ public class AlueDAO implements Dao<Alue> {
     }
 
     @Override
-    public List<Alue> getAll() throws SQLException {
+    public List<Alue> getAll(Ketju kkey) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public void muodostaYhteys(String tietokannanNimi) throws SQLException {
-        
     }
 }

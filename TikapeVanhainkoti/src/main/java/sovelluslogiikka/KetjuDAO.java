@@ -50,9 +50,14 @@ public class KetjuDAO implements Dao<Alue, Ketju> {
     @Override
     public List<Ketju> getAll(Alue alue) throws SQLException {
         PreparedStatement stmt = yhteys.prepareStatement(
-                "SELECT * FROM Ketju, Alue"
+                "SELECT Ketju.Id, Ketju.alueid, ketju.nimi, MAX(Viesti.pvm) "
+                    + "FROM Alue, Ketju, Viesti "
                     + "WHERE Alue.Id = Ketju.AlueId "
-                    + "AND Ketju.AlueId = ?;");
+                    + "AND Ketju.Id = Viesti.KetjuId "
+                    + "AND Ketju.AlueId = ? "
+                    + "GROUP BY Ketju.Id "
+                    + "ORDER BY MAX(Viesti.pvm) DESC;");
+        
         stmt.setInt(1, alue.getId());
         ResultSet rs = stmt.executeQuery();
         List<Ketju> ketjut = new LinkedList<>();
@@ -61,8 +66,10 @@ public class KetjuDAO implements Dao<Alue, Ketju> {
             int id = rs.getInt("Ketju.Id");
             int alueId = rs.getInt("Ketju.alueid");
             String nimi = rs.getString("Ketju.nimi");
+            Timestamp timestamp = rs.getTimestamp("MAX(Viesti.pvm)");
             
-            Ketju uusiKetju = new Ketju(id, alueId, nimi);
+            LocalDateTime pvmLCT = timestamp.toLocalDateTime();
+            Ketju uusiKetju = new Ketju(id, alueId, pvmLCT, nimi);
             ketjut.add(uusiKetju);
         }
         rs.close();
@@ -74,6 +81,4 @@ public class KetjuDAO implements Dao<Alue, Ketju> {
     public void suljeYhteys() throws SQLException {
         yhteys.close();
     }
-    
-    
 }
