@@ -4,6 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Sovelluslogiikka {
 
@@ -55,30 +59,60 @@ public class Sovelluslogiikka {
     
 
     public List<Alue> haeAlueet() {
-        List<Alue> alueet = new ArrayList<>();
+        List<Alue> alueet = new LinkedList<>();
+        try {
+            alueet = alueDao.getAll(null);
+        } catch (SQLException ex) {
+        }
         return alueet;
     }
 
     public List<Ketju> haeKetjut(int alue_id) {
-        List<Ketju> ketjut = new ArrayList<>();
+        List<Ketju> ketjut = new LinkedList<>();
+        try {
+            ketjut = ketjuDao.getAll(alue_id);
+        } catch (SQLException ex) {
+        }
         return ketjut;
     }
 
     public List<Viesti> haeViestit(int ketju_id) {
-        List<Viesti> viestit = new ArrayList<>();
+        List<Viesti> viestit = new LinkedList<>();
+        try {
+            viestit = viestiDao.getAll(ketju_id);
+        } catch (SQLException ex) {
+        }
         return viestit;
     }
 
     public boolean luoAlue(String nimi) {
-        return false;
+        Alue luotavaAlue = new Alue(0, nimi, null, 0);
+        try {
+            alueDao.add(luotavaAlue);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
     }
 
     public boolean luoKetju(String otsikko, int alue_id) {
-        return false;
+        Ketju luotavaKetju = new Ketju(0, alue_id, null, otsikko, null);
+        try {
+            ketjuDao.add(luotavaKetju);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
     }
 
     public boolean luoViesti(String viesti, String nimimerkki, int ketju_id) {
-        return false;
+        Viesti luotavaViesti = new Viesti(0, viesti, nimimerkki, null, ketju_id);
+        try {
+            viestiDao.add(luotavaViesti);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
     }
 
 }

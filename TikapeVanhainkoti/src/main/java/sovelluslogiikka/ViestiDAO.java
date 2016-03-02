@@ -16,7 +16,7 @@ import java.util.List;
  *Hallinnoi yhteydenottoa SQL-tietokantaan ja suorittaa
  *Viesti-olioiden SQL-kyselyt.
  */
-public class ViestiDAO implements Dao<Ketju, Viesti> {
+public class ViestiDAO implements Dao<Integer, Viesti> {
     private Database database;
     private Connection yhteys;
     
@@ -60,12 +60,12 @@ public class ViestiDAO implements Dao<Ketju, Viesti> {
     }
 
     @Override
-    public List<Viesti> getAll(Ketju ketju) throws SQLException {
+    public List<Viesti> getAll(Integer ketjuId) throws SQLException {
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT * FROM Ketju, Viesti "
                     + "WHERE Ketju.Id = Viesti.KetjuId "
                     + "AND Viesti.KetjuId = ?;");
-        stmt.setInt(1, ketju.getId());
+        stmt.setInt(1, ketjuId);
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new LinkedList<>();
         
@@ -73,11 +73,11 @@ public class ViestiDAO implements Dao<Ketju, Viesti> {
             int id = rs.getInt("Viesti.Id");
             String viesti = rs.getString("Viesti.viesti");
             String nimimerkki = rs.getString("Viesti.nimimerkki");
-            int ketjuId = rs.getInt("Viesti.ketjuid");
+            int ketjuhaeId = rs.getInt("Viesti.ketjuid");
             
             Timestamp pvmTimestamp = rs.getTimestamp("viesti.pvm");
             LocalDateTime pvm = pvmTimestamp.toLocalDateTime();
-            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId);
+            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuhaeId);
             viestit.add(uusiViesti);
         }
         rs.close();
