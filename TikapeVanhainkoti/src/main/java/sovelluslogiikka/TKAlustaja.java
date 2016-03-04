@@ -31,21 +31,21 @@ public class TKAlustaja {
         
         //taulu "Alue" luonti
         taulunLuominen("CREATE TABLE Alue"
-                    + "(Id integer PRIMARY KEY,"
-                    + "Nimi varchar(100) NOT NULL)");
+                    + "(id integer PRIMARY KEY,"
+                    + "nimi varchar(100) NOT NULL)");
         //taulu "Ketju" luonti
         taulunLuominen("CREATE TABLE Ketju"
-                    + "(Id integer PRIMARY KEY,"
-                    + "Nimi varchar(100) NOT NULL,"
-                    + "AlueId integer NOT NULL UNIQUE,"
+                    + "(id integer PRIMARY KEY,"
+                    + "nimi varchar(100) NOT NULL,"
+                    + "alueId integer NOT NULL UNIQUE,"
                     + "FOREIGN KEY (AlueId) REFERENCES Alue(Id))");
          //taulu "Viesti" luonti, Nimimerkin kanssa.
         taulunLuominen("CREATE TABLE Viesti"
-                    + "(Id integer PRIMARY KEY,"
-                    + "Viesti text NOT NULL,"
-                    + "Nimimerkki varchar(50) NOT NULL, "
-                    + "Pvm datetime NOT NULL,"
-                    + "KetjuId integer NOT NULL UNIQUE,"
+                    + "(id integer PRIMARY KEY,"
+                    + "viesti text NOT NULL,"
+                    + "nimimerkki varchar(50) NOT NULL, "
+                    + "pvm datetime NOT NULL,"
+                    + "ketjuId integer NOT NULL UNIQUE,"
                     + "FOREIGN KEY (KetjuId) REFERENCES Ketju(Id))");   
     }
 

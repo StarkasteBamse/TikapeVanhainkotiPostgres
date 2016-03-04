@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Alue</title>
+        <title>Vanhainkoti</title>
         <meta charset="utf-8" />
     </head>
 
@@ -11,7 +11,9 @@
         
         <ul>
             <li th:each="alue: ${alueet}">
-                <span th:text="${alue.getNimi}"></span>    
+                <span th:text="${alue.getNimi}">Nimi</span>
+                <span th:text="${alue.getId}">Id</span>
+                <span th:text="${alue.getViimeisinPvm}">Pvm</span>
             </li>
         </ul>
             

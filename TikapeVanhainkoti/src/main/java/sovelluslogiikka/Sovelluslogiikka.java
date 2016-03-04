@@ -63,7 +63,7 @@ public class Sovelluslogiikka {
         try {
             alueet = alueDao.getAll(null);
         } catch (SQLException ex) {
-        }
+            System.out.println(ex);}
         return alueet;
     }
 
@@ -86,7 +86,7 @@ public class Sovelluslogiikka {
     }
 
     public boolean luoAlue(String nimi) {
-        Alue luotavaAlue = new Alue(0, nimi, null, 0);
+        Alue luotavaAlue = new Alue(0, nimi, null , 0);
         try {
             alueDao.add(luotavaAlue);
             return true;

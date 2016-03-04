@@ -25,8 +25,8 @@ public class AlueDAO implements Dao<Ketju, Alue> {
         this.database = database;
     }
     
-    public void muodostaYhteys(String tietokannanNimi) throws SQLException {
-        yhteys = DriverManager.getConnection(tietokannanNimi);
+    public void muodostaYhteys() throws SQLException {
+        yhteys = database.getConnection();
     }
     
     @Override
@@ -37,10 +37,12 @@ public class AlueDAO implements Dao<Ketju, Alue> {
 
     @Override
     public void add(Alue alue) throws SQLException {
+        muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
             "INSERT INTO Alue(Nimi) VALUES (?);");
         stmt.setString(1, alue.getNimi());
         stmt.execute();
+        suljeYhteys();
     }
 
     @Override
@@ -48,15 +50,16 @@ public class AlueDAO implements Dao<Ketju, Alue> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+    @Override //tämä hakee vain jos löytyy Alue, ketju ja viesti. Eli ei löydä pelkkää aluetta
     public List<Alue> getAll(Ketju kkey) throws SQLException {
+        muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
-            "SELECT Alue.nimi, COUNT(Viesti.id) AS Viesteja, MAX(viesti.pvm) AS Viimeisin "
+            "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, MAX(viesti.pvm) AS Viimeisin "
             + "FROM Viesti "
             + "JOIN Ketju "
             + "ON Ketju.id = Viesti.ketjuid "
             + "JOIN Alue "
-            + "ON Alue.id=Ketju.alueid "
+            + "ON Alue.id = Ketju.alueid "
             + "GROUP BY ketju.alueid "
             + "ORDER BY Alue.Nimi ASC;");
         
@@ -64,12 +67,12 @@ public class AlueDAO implements Dao<Ketju, Alue> {
         List<Alue> alueet = new LinkedList<>();
         
         while (rs.next()) {
-            int id = rs.getInt("Alue.Id");
-            String nimi = rs.getString("Alue.nimi");
-            Timestamp timestamp = rs.getTimestamp("MAX(Viesti.pvm)");
+            int id = rs.getInt("id");
+            String nimi = rs.getString("nimi");
+            Timestamp timestamp = rs.getTimestamp("Viimeisin"); //tämän kanssa ongelmia
             int viestienLkm = rs.getInt("Viesteja");
-            LocalDateTime pvmLCT = timestamp.toLocalDateTime();
-            Alue uusiAlue = new Alue(id, nimi, pvmLCT, viestienLkm);
+            LocalDateTime pvmLCT = timestamp.toLocalDateTime(); //tämän kanssa ongelmia
+            Alue uusiAlue = new Alue(id, nimi, null, viestienLkm);
             alueet.add(uusiAlue);
         }
         rs.close();
