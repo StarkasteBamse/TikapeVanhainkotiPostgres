@@ -96,7 +96,7 @@ public class Sovelluslogiikka {
     }
 
     public boolean luoKetju(String otsikko, int alue_id) {
-        Ketju luotavaKetju = new Ketju(0, alue_id, null, otsikko, null);
+        Ketju luotavaKetju = new Ketju(0, alue_id, null, otsikko, null, 0);
         try {
             ketjuDao.add(luotavaKetju);
             return true;

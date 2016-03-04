@@ -1,6 +1,6 @@
 
 import java.util.*;
-import kayttoliittyma.Webbikayttoliittyma;
+import kayttoliittyma.*;
 import sovelluslogiikka.*;
 
 
@@ -19,8 +19,10 @@ public class Main {
         }
         
 
-        Webbikayttoliittyma wc = new Webbikayttoliittyma(sl);
-        wc.kaynnista();
-               
+//        Webbikayttoliittyma wc = new Webbikayttoliittyma(sl);
+//        wc.kaynnista();
+
+        Tekstikayttoliittyma tkl = new Tekstikayttoliittyma(sl);
+        tkl.kaynnista();
     }
 }

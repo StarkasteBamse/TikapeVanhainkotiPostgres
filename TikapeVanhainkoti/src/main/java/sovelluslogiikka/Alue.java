@@ -27,6 +27,10 @@ public class Alue {
     public LocalDateTime getViimeisinPvm() {
         return viimeisinPvm;
     }
+    
+    public int getLkm(){
+        return viestienLkm;
+    }
 
     @Override
     public String toString() {
