@@ -55,11 +55,11 @@ public class AlueDAO implements Dao<Ketju, Alue> {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
             "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, MAX(viesti.pvm) AS Viimeisin "
-            + "FROM Viesti "
+            + "FROM Alue "
             + "JOIN Ketju "
-            + "ON Ketju.id = Viesti.ketjuid "
-            + "JOIN Alue "
             + "ON Alue.id = Ketju.alueid "
+            + "JOIN Viesti "
+            + "ON Ketju.id = Viesti.ketjuid "
             + "GROUP BY ketju.alueid "
             + "ORDER BY Alue.Nimi ASC;");
         
@@ -69,9 +69,9 @@ public class AlueDAO implements Dao<Ketju, Alue> {
         while (rs.next()) {
             int id = rs.getInt("id");
             String nimi = rs.getString("nimi");
-            Timestamp timestamp = rs.getTimestamp("Viimeisin"); //tämän kanssa ongelmia, Error parsing time stamp
+//            Timestamp timestamp = rs.getTimestamp("Viimeisin"); //tämän kanssa ongelmia, Error parsing time stamp
             int viestienLkm = rs.getInt("Viesteja");
-            LocalDateTime pvmLCT = timestamp.toLocalDateTime(); //tämän kanssa ongelmia, Error parsing time stamp
+//           LocalDateTime pvmLCT = timestamp.toLocalDateTime(); //tämän kanssa ongelmia, Error parsing time stamp
             Alue uusiAlue = new Alue(id, nimi, null, viestienLkm);
             alueet.add(uusiAlue);
         }

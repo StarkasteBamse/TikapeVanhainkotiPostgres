@@ -17,12 +17,12 @@ public class Webbikayttoliittyma {
     public void kaynnista() {
         
         
-        get("/alue", (req, res) -> {
+        get("/", (req, res) -> {
             HashMap map = new HashMap<>();
             
             map.put("alueet", sovelluslogiikka.haeAlueet());
 
-            return new ModelAndView(map, "alue");
+            return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
         
         get("/ketju", (req, res) -> {

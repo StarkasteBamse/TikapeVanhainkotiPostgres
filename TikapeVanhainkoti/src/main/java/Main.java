@@ -10,10 +10,7 @@ public class Main {
 //        System.out.println(alue1.getId() + ", " + alue1.getNimi());
         
         Sovelluslogiikka sl = new Sovelluslogiikka("jdbc:sqlite:koe.db");
-        sl.kaynnista();
-        
-       
-        
+        sl.kaynnista();        
         
         List<Alue> a = sl.haeAlueet();
         if (a.isEmpty()) System.out.println("tyhjä");
@@ -22,8 +19,8 @@ public class Main {
         }
         
 
-//        Webbikayttoliittyma wc = new Webbikayttoliittyma(sl);
-//        wc.kaynnista();
+        Webbikayttoliittyma wc = new Webbikayttoliittyma(sl);
+        wc.kaynnista();
                
     }
 }
