@@ -14,7 +14,7 @@ import java.util.List;
  *Hallinnoi yhteydenottoa SQL-tietokantaan ja suorittaa
  *Ketju-olioiden SQL-kyselyt.
  */
-public class KetjuDAO implements Dao<Alue, Ketju> {
+public class KetjuDAO implements Dao<Integer, Ketju> {
     private Database database;
     private Connection yhteys;
     
@@ -48,7 +48,7 @@ public class KetjuDAO implements Dao<Alue, Ketju> {
     }
     
     @Override
-    public List<Ketju> getAll(Alue alue) throws SQLException {
+    public List<Ketju> getAll(Integer alueid) throws SQLException {
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT Ketju.Id, Ketju.alueid, ketju.nimi, MAX(Viesti.pvm) "
                     + "FROM Alue, Ketju, Viesti "
@@ -58,7 +58,7 @@ public class KetjuDAO implements Dao<Alue, Ketju> {
                     + "GROUP BY Ketju.Id "
                     + "ORDER BY MAX(Viesti.pvm) DESC;");
         
-        stmt.setInt(1, alue.getId());
+        stmt.setInt(1, alueid);
         ResultSet rs = stmt.executeQuery();
         List<Ketju> ketjut = new LinkedList<>();
         
