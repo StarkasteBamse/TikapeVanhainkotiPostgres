@@ -69,9 +69,9 @@ public class AlueDAO implements Dao<Ketju, Alue> {
         while (rs.next()) {
             int id = rs.getInt("id");
             String nimi = rs.getString("nimi");
-            Timestamp timestamp = rs.getTimestamp("Viimeisin"); //tämän kanssa ongelmia
+            Timestamp timestamp = rs.getTimestamp("Viimeisin"); //tämän kanssa ongelmia, Error parsing time stamp
             int viestienLkm = rs.getInt("Viesteja");
-            LocalDateTime pvmLCT = timestamp.toLocalDateTime(); //tämän kanssa ongelmia
+            LocalDateTime pvmLCT = timestamp.toLocalDateTime(); //tämän kanssa ongelmia, Error parsing time stamp
             Alue uusiAlue = new Alue(id, nimi, null, viestienLkm);
             alueet.add(uusiAlue);
         }
