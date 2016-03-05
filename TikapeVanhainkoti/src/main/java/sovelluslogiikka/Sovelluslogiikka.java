@@ -1,13 +1,8 @@
 package sovelluslogiikka;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Sovelluslogiikka {
 
