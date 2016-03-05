@@ -71,13 +71,8 @@ public class AlueDAO implements Dao<Ketju, Alue> {
 
             int viestienLkm = rs.getInt("Viesteja");
 
-            // tämän kanssa ongelmia, Error parsing time stamp
-            // ks esim http://stackoverflow.com/questions/5425557/sqlite-jdbc-rs-getdate-gettimestamp-etc-all-return-wrong-values
-            // ehkä strftime('%s', jotain) jolloin saadaan timestamp inttinä?
             Timestamp timestamp = new Timestamp(rs.getLong("Viimeisin"));
             LocalDateTime pvm = timestamp.toLocalDateTime();
-
-//            LocalDateTime pvm = new LocalDateTime();
             
             alueet.add(new Alue(id, nimi, pvm, viestienLkm));
             

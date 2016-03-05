@@ -73,11 +73,9 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
             String alueNimi = rs.getString("Alue.nimi");
             int maara = rs.getInt("maara");
 
-            // oletettavasti jos aluedaossa on ongelma aikojen kanssa niin myös täällä
             Timestamp timestamp = new Timestamp (rs.getLong("pvm"));
             LocalDateTime pvm = timestamp.toLocalDateTime();
             
-//            LocalDateTime pvm = null;
             ketjut.add(new Ketju(id, alueId, pvm, nimi, alueNimi, maara));
             
         }

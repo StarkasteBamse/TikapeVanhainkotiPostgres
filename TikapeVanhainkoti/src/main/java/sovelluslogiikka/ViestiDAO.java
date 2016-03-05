@@ -75,11 +75,10 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
             int id = rs.getInt("Viesti.Id");
             String viesti = rs.getString("Viesti.viesti");
             String nimimerkki = rs.getString("Viesti.nimimerkki");
-            int ketjuhaeId = rs.getInt("Viesti.ketjuid");
             
-            Timestamp pvmTimestamp = rs.getTimestamp("viesti.pvm");
+            Timestamp pvmTimestamp = new Timestamp(rs.getLong("viesti.pvm"));
             LocalDateTime pvm = pvmTimestamp.toLocalDateTime();
-            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuhaeId);
+            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId);
             viestit.add(uusiViesti);
         }
         rs.close();
