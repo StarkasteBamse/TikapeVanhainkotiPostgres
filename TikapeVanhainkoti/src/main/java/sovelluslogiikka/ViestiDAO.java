@@ -58,9 +58,7 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
     public List<Viesti> getAll(Integer ketjuId) throws SQLException {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
-                "SELECT * FROM Ketju, Viesti "
-                    + "WHERE Ketju.Id = Viesti.KetjuId "
-                    + "AND Viesti.KetjuId = ?;");
+                "SELECT * FROM Viesti WHERE Viesti.KetjuId = ?;");
         stmt.setInt(1, ketjuId);
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new LinkedList<>();

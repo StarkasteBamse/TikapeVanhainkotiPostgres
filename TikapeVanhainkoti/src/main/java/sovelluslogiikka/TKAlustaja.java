@@ -32,7 +32,7 @@ public class TKAlustaja {
         //taulu "Alue" luonti
         taulunLuominen("CREATE TABLE Alue"
                     + "(id integer PRIMARY KEY,"
-                    + "nimi varchar(100) NOT NULL)");
+                    + "nimi varchar(100) UNIQUE NOT NULL)");
         //taulu "Ketju" luonti
         taulunLuominen("CREATE TABLE Ketju"
                     + "(id integer PRIMARY KEY,"

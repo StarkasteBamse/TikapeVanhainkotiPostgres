@@ -45,7 +45,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
     }
 
     @Override
-    public List<Ketju> getAll(Integer alueid) throws SQLException {
+    public List<Ketju> getAll(Integer alueId) throws SQLException {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT Ketju.Id, Ketju.alueid, Alue.nimi, ketju.nimi, "
@@ -57,13 +57,12 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
                 + "GROUP BY Ketju.Id "
                 + "ORDER BY MAX(Viesti.pvm) DESC;");
 
-        stmt.setInt(1, alueid);
+        stmt.setInt(1, alueId);
         ResultSet rs = stmt.executeQuery();
         List<Ketju> ketjut = new LinkedList<>();
 
         while (rs.next()) {
             int id = rs.getInt("Ketju.Id");
-            int alueId = rs.getInt("Ketju.alueid");
             String nimi = rs.getString("Ketju.nimi");
             String alueNimi = rs.getString("Alue.nimi");
             int maara = rs.getInt("maara");
