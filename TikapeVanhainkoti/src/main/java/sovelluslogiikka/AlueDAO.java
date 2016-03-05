@@ -53,7 +53,7 @@ public class AlueDAO implements Dao<Ketju, Alue> {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, "
-                + "strftime('%s', MAX(viesti.pvm)) AS Viimeisin "
+                + "MAX(viesti.pvm) AS Viimeisin "
                 + "FROM Alue "
                 + "LEFT JOIN Ketju "
                 + "ON Alue.id = Ketju.alueid "
@@ -74,13 +74,13 @@ public class AlueDAO implements Dao<Ketju, Alue> {
             // tämän kanssa ongelmia, Error parsing time stamp
             // ks esim http://stackoverflow.com/questions/5425557/sqlite-jdbc-rs-getdate-gettimestamp-etc-all-return-wrong-values
             // ehkä strftime('%s', jotain) jolloin saadaan timestamp inttinä?
-//            Timestamp timestamp = rs.getDate("Viimeisin");
-//            LocalDateTime pvmLCT = timestamp.toLocalDateTime();
+            Timestamp timestamp = new Timestamp(rs.getLong("Viimeisin"));
+            LocalDateTime pvm = timestamp.toLocalDateTime();
 
-            LocalDateTime pvm = null;
+//            LocalDateTime pvm = new LocalDateTime();
             
-            Alue uusiAlue = new Alue(id, nimi, pvm, viestienLkm);
-            alueet.add(uusiAlue);
+            alueet.add(new Alue(id, nimi, pvm, viestienLkm));
+            
         }
         rs.close();
         stmt.close();
