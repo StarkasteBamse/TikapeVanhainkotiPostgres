@@ -16,10 +16,10 @@ public class Tekstikayttoliittyma {
 
     public void kaynnista() {
 
-        
+        System.out.print("Anna komento ('H' - tulostaa ohjeen): ");
 
         while (lukija.hasNext()) {
-            System.out.print("Anna komento ('H' - tulostaa ohjeen): ");
+            System.out.println("Anna komento ('H' - tulostaa ohjeen): ");
             String komento = lukija.nextLine();
          
             switch (komento){

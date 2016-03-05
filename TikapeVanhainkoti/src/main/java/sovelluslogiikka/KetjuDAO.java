@@ -50,7 +50,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
     @Override
     public List<Ketju> getAll(Integer alueid) throws SQLException {
         PreparedStatement stmt = yhteys.prepareStatement(
-                "SELECT Ketju.Id, Ketju.alueid, ketju.nimi, MAX(Viesti.pvm) "
+                "SELECT Ketju.Id, Ketju.alueid, ketju.nimi, MAX(Viesti.pvm) AS pvm, COUNT(Viesti.id) AS maara"
                     + "FROM Alue, Ketju, Viesti "
                     + "WHERE Alue.Id = Ketju.AlueId "
                     + "AND Ketju.Id = Viesti.KetjuId "
@@ -67,11 +67,11 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
             int alueId = rs.getInt("Ketju.alueid");
             String nimi = rs.getString("Ketju.nimi");
             String alueNimi = rs.getString("Alue.nimi");
-            Timestamp timestamp = rs.getTimestamp("MAX(Viesti.pvm)");
-            
+            Timestamp timestamp = rs.getTimestamp("pvm");
+            int maara = rs.getInt("maara");
             
             LocalDateTime pvmLCT = timestamp.toLocalDateTime();
-            Ketju uusiKetju = new Ketju(id, alueId, pvmLCT, nimi, alueNimi);
+            Ketju uusiKetju = new Ketju(id, alueId, pvmLCT, nimi, alueNimi, maara);
             ketjut.add(uusiKetju);
         }
         rs.close();
