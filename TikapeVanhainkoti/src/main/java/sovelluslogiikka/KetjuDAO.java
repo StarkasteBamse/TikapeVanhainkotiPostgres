@@ -65,7 +65,6 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         stmt.setInt(1, alueid);
         ResultSet rs = stmt.executeQuery();
         List<Ketju> ketjut = new LinkedList<>();
-        System.out.println(rs.getString("Ketju.nimi"));
 
         while (rs.next()) {
             int id = rs.getInt("Ketju.Id");
