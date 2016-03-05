@@ -1,4 +1,3 @@
-
 package sovelluslogiikka;
 
 import java.sql.Connection;
@@ -11,10 +10,9 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
-
 /**
- *Hallinnoi yhteydenottoa SQL-tietokantaan ja suorittaa
- *Alue-olioiden SQL-kyselyt.
+ * Hallinnoi yhteydenottoa SQL-tietokantaan ja suorittaa Alue-olioiden
+ * SQL-kyselyt.
  */
 public class AlueDAO implements Dao<Ketju, Alue> {
 
@@ -24,11 +22,11 @@ public class AlueDAO implements Dao<Ketju, Alue> {
     public AlueDAO(Database database) throws SQLException {
         this.database = database;
     }
-    
+
     public void muodostaYhteys() throws SQLException {
         yhteys = database.getConnection();
     }
-    
+
     @Override
     public void delete(Alue alue) throws SQLException {
         //käytetään jokaisessa metodissa omaa prepareStatementtia
@@ -39,7 +37,7 @@ public class AlueDAO implements Dao<Ketju, Alue> {
     public void add(Alue alue) throws SQLException {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
-            "INSERT INTO Alue(Nimi) VALUES (?);");
+                "INSERT INTO Alue(Nimi) VALUES (?);");
         stmt.setString(1, alue.getNimi());
         stmt.execute();
         suljeYhteys();
@@ -50,29 +48,38 @@ public class AlueDAO implements Dao<Ketju, Alue> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override //tämä hakee vain jos löytyy Alue, ketju ja viesti. Eli ei löydä pelkkää aluetta
+    @Override
     public List<Alue> getAll(Ketju kkey) throws SQLException {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
-            "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, MAX(viesti.pvm) AS Viimeisin "
-            + "FROM Alue "
-            + "LEFT JOIN Ketju "
-            + "ON Alue.id = Ketju.alueid "
-            + "LEFT JOIN Viesti "
-            + "ON Ketju.id = Viesti.ketjuid "
-            + "GROUP BY ketju.alueid "
-            + "ORDER BY Alue.Nimi ASC;");
-        
+                "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, "
+                + "strftime('%s', MAX(viesti.pvm)) AS Viimeisin "
+                + "FROM Alue "
+                + "LEFT JOIN Ketju "
+                + "ON Alue.id = Ketju.alueid "
+                + "LEFT JOIN Viesti "
+                + "ON Ketju.id = Viesti.ketjuid "
+                + "GROUP BY ketju.alueid "
+                + "ORDER BY Alue.Nimi ASC;");
+
         ResultSet rs = stmt.executeQuery();
         List<Alue> alueet = new LinkedList<>();
-        
+
         while (rs.next()) {
             int id = rs.getInt("id");
             String nimi = rs.getString("nimi");
-//            Timestamp timestamp = rs.getTimestamp("Viimeisin"); //tämän kanssa ongelmia, Error parsing time stamp
+
             int viestienLkm = rs.getInt("Viesteja");
-//           LocalDateTime pvmLCT = timestamp.toLocalDateTime(); //tämän kanssa ongelmia, Error parsing time stamp
-            Alue uusiAlue = new Alue(id, nimi, null, viestienLkm);
+
+            // tämän kanssa ongelmia, Error parsing time stamp
+            // ks esim http://stackoverflow.com/questions/5425557/sqlite-jdbc-rs-getdate-gettimestamp-etc-all-return-wrong-values
+            // ehkä strftime('%s', jotain) jolloin saadaan timestamp inttinä?
+//            Timestamp timestamp = rs.getDate("Viimeisin");
+//            LocalDateTime pvmLCT = timestamp.toLocalDateTime();
+
+            LocalDateTime pvm = null;
+            
+            Alue uusiAlue = new Alue(id, nimi, pvm, viestienLkm);
             alueet.add(uusiAlue);
         }
         rs.close();
@@ -80,7 +87,7 @@ public class AlueDAO implements Dao<Ketju, Alue> {
         suljeYhteys();
         return alueet;
     }
-    
+
     public void suljeYhteys() throws SQLException {
         yhteys.close();
     }

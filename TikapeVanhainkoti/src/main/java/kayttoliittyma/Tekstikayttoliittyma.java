@@ -69,6 +69,9 @@ public class Tekstikayttoliittyma {
             // ei jaksa käsitellä virheitä
             int n = Integer.parseInt(p);
             List<Ketju> ketjut = sovelluslogiikka.haeKetjut(n);
+            
+            // ketjut on tyhjä?
+            
             System.out.println("Ketjut");
             for (Ketju ketjut1 : ketjut) {
                 System.out.println(ketjut1.getNimi()+ " " + ketjut1.getViestienMaara() + " viestiä, viimeisin " + ketjut1.getViimeisinPvm());

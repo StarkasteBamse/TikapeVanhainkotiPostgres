@@ -68,7 +68,6 @@ public class Sovelluslogiikka {
     }
 
     public List<Ketju> haeKetjut(int alue_id) {
-        System.out.println("hui");
         List<Ketju> ketjut = new LinkedList<>();
         try {
             ketjut = ketjuDao.getAll(alue_id);

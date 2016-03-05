@@ -65,17 +65,21 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         stmt.setInt(1, alueid);
         ResultSet rs = stmt.executeQuery();
         List<Ketju> ketjut = new LinkedList<>();
+        System.out.println(rs.getString("Ketju.nimi"));
 
         while (rs.next()) {
             int id = rs.getInt("Ketju.Id");
             int alueId = rs.getInt("Ketju.alueid");
             String nimi = rs.getString("Ketju.nimi");
             String alueNimi = rs.getString("Alue.nimi");
-            Timestamp timestamp = rs.getTimestamp("pvm");
             int maara = rs.getInt("maara");
 
-            LocalDateTime pvmLCT = timestamp.toLocalDateTime();
-            Ketju uusiKetju = new Ketju(id, alueId, pvmLCT, nimi, alueNimi, maara);
+            // oletettavasti jos aluedaossa on ongelma aikojen kanssa niin myös täällä
+//            Timestamp timestamp = rs.getTimestamp("pvm");
+//            LocalDateTime pvm = timestamp.toLocalDateTime();
+            
+            LocalDateTime pvm = null;
+            Ketju uusiKetju = new Ketju(id, alueId, pvm, nimi, alueNimi, maara);
             ketjut.add(uusiKetju);
         }
         rs.close();
