@@ -37,7 +37,7 @@ public class TKAlustaja {
         taulunLuominen("CREATE TABLE Ketju"
                     + "(id integer PRIMARY KEY,"
                     + "nimi varchar(100) NOT NULL,"
-                    + "alueId integer NOT NULL UNIQUE,"
+                    + "alueId integer NOT NULL,"
                     + "FOREIGN KEY (AlueId) REFERENCES Alue(Id))");
          //taulu "Viesti" luonti, Nimimerkin kanssa.
         taulunLuominen("CREATE TABLE Viesti"
@@ -45,7 +45,7 @@ public class TKAlustaja {
                     + "viesti text NOT NULL,"
                     + "nimimerkki varchar(50) NOT NULL, "
                     + "pvm datetime NOT NULL,"
-                    + "ketjuId integer NOT NULL UNIQUE,"
+                    + "ketjuId integer NOT NULL,"
                     + "FOREIGN KEY (KetjuId) REFERENCES Ketju(Id))");   
     }
 
