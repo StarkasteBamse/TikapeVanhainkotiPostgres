@@ -24,8 +24,8 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
         this.database = database;
     }
 
-    public void muodostaYhteys(String tietokannanNimi) throws SQLException {
-        yhteys = DriverManager.getConnection(tietokannanNimi);
+    public void muodostaYhteys() throws SQLException {
+        yhteys = database.getConnection();
     }
     
     public void suljeYhteys() throws SQLException {
@@ -39,6 +39,7 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
 
     @Override
     public void add(Viesti viesti) throws SQLException {
+        muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "INSERT INTO Viesti(Viesti, Nimimerkki, Pvm, KetjuId) "
                                             + "VALUES (?, ?, ?, ?);");
@@ -61,6 +62,7 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
 
     @Override
     public List<Viesti> getAll(Integer ketjuId) throws SQLException {
+        muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT * FROM Ketju, Viesti "
                     + "WHERE Ketju.Id = Viesti.KetjuId "

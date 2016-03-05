@@ -56,9 +56,9 @@ public class AlueDAO implements Dao<Ketju, Alue> {
         PreparedStatement stmt = yhteys.prepareStatement(
             "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, MAX(viesti.pvm) AS Viimeisin "
             + "FROM Alue "
-            + "JOIN Ketju "
+            + "LEFT JOIN Ketju "
             + "ON Alue.id = Ketju.alueid "
-            + "JOIN Viesti "
+            + "LEFT JOIN Viesti "
             + "ON Ketju.id = Viesti.ketjuid "
             + "GROUP BY ketju.alueid "
             + "ORDER BY Alue.Nimi ASC;");
