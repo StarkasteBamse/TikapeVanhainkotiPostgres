@@ -10,23 +10,17 @@ public class Viesti {
     private final String nimimerkki;
     private final LocalDateTime pvm; //harkintaan datetime olio/unix-timestamp?
     private final int ketjuId;
-    private final String knimi;
-    private final int aid;
-    private final String animi;
 
     public Viesti(String viesti, String nimimerkki, int ketjuId, int alueId) {
-        this(0, viesti, nimimerkki, null, ketjuId, "", alueId, "");
+        this(0, viesti, nimimerkki, null, ketjuId);
     }
 
-    public Viesti(int id, String viesti, String nimimerkki, LocalDateTime pvm, int ketjuId, String knimi, int aid, String animi) {
+    public Viesti(int id, String viesti, String nimimerkki, LocalDateTime pvm, int ketjuId) {
         this.id = id;
         this.viesti = viesti;
         this.nimimerkki = nimimerkki;
         this.pvm = pvm;
         this.ketjuId = ketjuId;
-        this.aid = aid;
-        this.knimi = knimi;
-        this.animi = animi;
     }
 
     public int getId() {
@@ -35,18 +29,6 @@ public class Viesti {
 
     public int getKid() {
         return ketjuId;
-    }
-
-    public String getKnimi() {
-        return knimi;
-    }
-
-    public int getAid() {
-        return aid;
-    }
-
-    public String getAnimi() {
-        return animi;
     }
 
     public String getNimimerkki() {

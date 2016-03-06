@@ -58,26 +58,20 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
     public List<Viesti> getAll(Integer ketjuId) throws SQLException {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
-                "SELECT viesti.id AS vid, viesti.viesti, viesti.nimimerkki, "
-                + "ketju.nimi AS knimi, ketju.alueid AS aid, alue.nimi "
-                + "AS animi FROM Viesti JOIN ketju "
-                + "ON ketju.id = viesti.ketjuid JOIN alue ON "
-                + "alue.id=ketju.alueid WHERE KetjuId = ?;");
+                "SELECT * "
+                + "FROM Viesti WHERE KetjuId = ?;");
         stmt.setInt(1, ketjuId);
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new LinkedList<>();
 
         while (rs.next()) {
-            int id = rs.getInt("vid");
+            int id = rs.getInt("id");
             String viesti = rs.getString("viesti");
             String nimimerkki = rs.getString("nimimerkki");
-            int aid = rs.getInt("aid");
-            String animi = rs.getString("animi");
-            String knimi = rs.getString("knimi");
 
             Timestamp pvmTimestamp = new Timestamp(rs.getLong("pvm"));
             LocalDateTime pvm = pvmTimestamp.toLocalDateTime();
-            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId, knimi, aid, animi);
+            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId);
             viestit.add(uusiViesti);
         }
         rs.close();
@@ -88,7 +82,7 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
 
     @Override
     public Viesti getOne(Integer ketjuId) throws SQLException {
-        Viesti viesti = new Viesti(0, "", "", null, 0, "", 0, "");
+        Viesti viesti = new Viesti(0, "", "", null, 0);
 
         return viesti;
     }
@@ -121,7 +115,7 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
 
             Timestamp pvmTimestamp = new Timestamp(rs.getLong("pvm"));
             LocalDateTime pvm = pvmTimestamp.toLocalDateTime();
-            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId, "", 0, "");
+            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId);
             viestit.add(uusiViesti);
         }
         rs.close();
