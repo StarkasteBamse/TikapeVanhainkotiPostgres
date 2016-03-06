@@ -58,17 +58,17 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
     public List<Viesti> getAll(Integer ketjuId) throws SQLException {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
-                "SELECT * FROM Viesti WHERE Viesti.KetjuId = ?;");
+                "SELECT * FROM Viesti WHERE KetjuId = ?;");
         stmt.setInt(1, ketjuId);
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new LinkedList<>();
         
         while (rs.next()) {
-            int id = rs.getInt("Viesti.Id");
-            String viesti = rs.getString("Viesti.viesti");
-            String nimimerkki = rs.getString("Viesti.nimimerkki");
+            int id = rs.getInt("Id");
+            String viesti = rs.getString("viesti");
+            String nimimerkki = rs.getString("nimimerkki");
             
-            Timestamp pvmTimestamp = new Timestamp(rs.getLong("viesti.pvm"));
+            Timestamp pvmTimestamp = new Timestamp(rs.getLong("pvm"));
             LocalDateTime pvm = pvmTimestamp.toLocalDateTime();
             Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId);
             viestit.add(uusiViesti);

@@ -47,8 +47,10 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
     @Override
     public List<Ketju> getAll(Integer alueId) throws SQLException {
         muodostaYhteys();
+        List<Ketju> ketjut = new LinkedList<>();
         PreparedStatement stmt = yhteys.prepareStatement(
-                "SELECT Ketju.Id, Ketju.alueid, Alue.nimi, ketju.nimi, "
+                "SELECT Ketju.Id AS kid, Ketju.alueid AS kaid, "
+                + "Alue.nimi AS an, Ketju.nimi AS kn, "
                 + "MAX(Viesti.pvm) AS pvm, COUNT(Viesti.id) AS maara "
                 + "FROM Alue, Ketju, Viesti "
                 + "WHERE Alue.Id = Ketju.AlueId "
@@ -57,21 +59,30 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
                 + "GROUP BY Ketju.Id "
                 + "ORDER BY MAX(Viesti.pvm) DESC;");
 
+//                PreparedStatement stmt = yhteys.prepareStatement(
+//                "SELECT Ketju.Id, Ketju.alueid, Alue.nimi, Ketju.nimi, "
+//                + "MAX(Viesti.pvm) AS pvm, COUNT(Viesti.id) AS maara "
+//                + "FROM Viesti JOIN Ketju "
+//                + "ON Ketju.Id = Viesti.KetjuId "
+//                + "JOIN Alue "
+//                + "ON Alue.Id = Ketju.AlueId "
+//                + "WHERE Ketju.AlueId = ? "
+//                + "GROUP BY Ketju.Id "
+//                + "ORDER BY MAX(Viesti.pvm) DESC;");
         stmt.setInt(1, alueId);
         ResultSet rs = stmt.executeQuery();
-        List<Ketju> ketjut = new LinkedList<>();
 
         while (rs.next()) {
-            int id = rs.getInt("Ketju.Id");
-            String nimi = rs.getString("Ketju.nimi");
-            String alueNimi = rs.getString("Alue.nimi");
+            int id = rs.getInt("kid");
+            String nimi = rs.getString("kn");
+            String alueNimi = rs.getString("an");
             int maara = rs.getInt("maara");
 
-            Timestamp timestamp = new Timestamp (rs.getLong("pvm"));
+            Timestamp timestamp = new Timestamp(rs.getLong("pvm"));
             LocalDateTime pvm = timestamp.toLocalDateTime();
-            
+
             ketjut.add(new Ketju(id, alueId, pvm, nimi, alueNimi, maara));
-            
+
         }
         rs.close();
         stmt.close();
