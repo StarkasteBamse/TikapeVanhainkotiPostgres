@@ -11,9 +11,10 @@
         
         <ul>
             <li th:each="alue: ${alueet}">
-                <span th:text="${alue.Nimi}">Nimi</span>
-                <!--<span th:text="${alue.ViestienLkm}">ViestienLkm</span>-->
-                <!--<span th:text="${alue.ViimeisinPvm}">Pvm</span>-->
+                <a th:href="@{/alue/{alue.id}}">
+                    <span th:text="${alue.nimi}">Nimi</span></a>
+                <span th:text="${alue.lkm}">ViestienLkm</span>
+                <span th:text="${alue.pvm}">Pvm</span>
             </li>
         </ul>
             

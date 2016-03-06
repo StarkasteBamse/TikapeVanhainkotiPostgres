@@ -19,10 +19,10 @@ public class Main {
         }
         
 
-//        Webbikayttoliittyma wc = new Webbikayttoliittyma(sl);
-//        wc.kaynnista();
+        Webbikayttoliittyma wc = new Webbikayttoliittyma(sl);
+        wc.kaynnista();
 
-        Tekstikayttoliittyma tkl = new Tekstikayttoliittyma(sl);
-        tkl.kaynnista();
+//        Tekstikayttoliittyma tkl = new Tekstikayttoliittyma(sl);
+//        tkl.kaynnista();
     }
 }
