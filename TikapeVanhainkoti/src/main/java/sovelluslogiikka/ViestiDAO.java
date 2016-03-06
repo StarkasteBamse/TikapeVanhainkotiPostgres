@@ -86,4 +86,41 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
         return viesti;
     }
 
+    /**
+     * Palauttaa pyydetyn sivunumeron (monesko sivu halutaan) mukaiset viestit.
+     * Viestien lukumäärä/sivu annetaan myös parametrina.
+     * @param ketjuId minkä ketjun viestejä halutaan listata
+     * @param lkmPerSivu kuinka monta viestiä per sivu
+     * @param sivuNumero monesko sivu halutaan
+     * @return
+     * @throws SQLException 
+     */
+    
+    public List<Viesti> getOnePage(Integer ketjuId, int lkmPerSivu, int sivuNumero) throws SQLException {
+        muodostaYhteys();
+        
+        PreparedStatement stmt = yhteys.prepareStatement(
+                "SELECT * FROM Viesti WHERE KetjuId = ? "
+                    + "ORDER BY pvm ASC LIMIT " + lkmPerSivu + " "
+                    + "OFFSET " + (lkmPerSivu * (sivuNumero - 1)) + ";");
+        stmt.setInt(1, ketjuId);
+        ResultSet rs = stmt.executeQuery();
+        List<Viesti> viestit = new LinkedList<>();
+        
+        while (rs.next()) {
+            int id = rs.getInt("Id");
+            String viesti = rs.getString("viesti");
+            String nimimerkki = rs.getString("nimimerkki");
+            
+            Timestamp pvmTimestamp = new Timestamp(rs.getLong("pvm"));
+            LocalDateTime pvm = pvmTimestamp.toLocalDateTime();
+            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId);
+            viestit.add(uusiViesti);
+        }
+        rs.close();
+        stmt.close();
+        suljeYhteys();
+        return viestit;
+    }
+    
 }

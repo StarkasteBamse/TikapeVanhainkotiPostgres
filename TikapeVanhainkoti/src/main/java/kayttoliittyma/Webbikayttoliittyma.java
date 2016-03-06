@@ -27,7 +27,6 @@ public class Webbikayttoliittyma {
         get("/alue", (req, res) -> {
             HashMap map = new HashMap<>();
 
-            System.out.println(req);
 //            int aid = Integer.parseInt(req.params("id"));
             int aid = 1;
             map.put("ketjut", sovelluslogiikka.haeKetjut(aid));
