@@ -9,7 +9,7 @@ import java.util.List;
  * Hallinnoi yhteydenottoa SQL-tietokantaan ja suorittaa Alue-olioiden
  * SQL-kyselyt.
  */
-public class AlueDAO implements Dao<Ketju, Alue> {
+public class AlueDAO implements Dao<Integer, Alue> {
 
     private Database database;
     private Connection yhteys;
@@ -44,7 +44,7 @@ public class AlueDAO implements Dao<Ketju, Alue> {
     }
 
     @Override
-    public List<Alue> getAll(Ketju kkey) throws SQLException {
+    public List<Alue> getAll(Integer x) throws SQLException {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, "
@@ -68,14 +68,51 @@ public class AlueDAO implements Dao<Ketju, Alue> {
 
             Timestamp timestamp = new Timestamp(rs.getLong("Viimeisin"));
             LocalDateTime pvm = timestamp.toLocalDateTime();
-            
+
             alueet.add(new Alue(id, nimi, pvm, viestienLkm));
-            
+
         }
         rs.close();
         stmt.close();
         suljeYhteys();
         return alueet;
+    }
+
+    @Override
+    public Alue getOne(Integer aid) throws SQLException {
+        muodostaYhteys();
+        PreparedStatement stmt = yhteys.prepareStatement(
+                "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, "
+                + "MAX(viesti.pvm) AS Viimeisin "
+                + "FROM Alue "
+                + "LEFT JOIN Ketju "
+                + "ON Alue.id = Ketju.alueid "
+                + "LEFT JOIN Viesti "
+                + "ON Ketju.id = Viesti.ketjuid "
+                + "WHERE Alue.id = ? "
+                + "GROUP BY ketju.alueid "
+                + "ORDER BY Alue.Nimi ASC;");
+
+        stmt.setInt(1, aid);
+        ResultSet rs = stmt.executeQuery();
+        Alue alue = new Alue(0, "", null, 0);
+
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String nimi = rs.getString("nimi");
+
+            int viestienLkm = rs.getInt("Viesteja");
+
+            Timestamp timestamp = new Timestamp(rs.getLong("Viimeisin"));
+            LocalDateTime pvm = timestamp.toLocalDateTime();
+
+            alue = new Alue(id, nimi, pvm, viestienLkm);
+
+        }
+        rs.close();
+        stmt.close();
+        suljeYhteys();
+        return alue;
     }
 
     public void suljeYhteys() throws SQLException {

@@ -14,7 +14,7 @@ public class Sovelluslogiikka {
     private TKAlustaja tkAlustaja;
 
     public Sovelluslogiikka(String tietokannanNimi) {
-        this.tietokannanNimi = tietokannanNimi;        
+        this.tietokannanNimi = tietokannanNimi;
     }
 
     public boolean kaynnista() {
@@ -29,7 +29,7 @@ public class Sovelluslogiikka {
         } catch (SQLException se) {
             return false;
         } catch (ClassNotFoundException e) {
-            
+
         }
         return true;
     }
@@ -51,15 +51,24 @@ public class Sovelluslogiikka {
     
      Käsittelee myös DAO:n heittämät SQLExceptionit.
      */
-    
-
     public List<Alue> haeAlueet() {
         List<Alue> alueet = new LinkedList<>();
         try {
             alueet = alueDao.getAll(null);
         } catch (SQLException ex) {
-            System.out.println(ex);}
+            System.out.println(ex);
+        }
         return alueet;
+    }
+
+    public Alue haeAlue(int aid) {
+        Alue alue = new Alue(0, "", null, 0);
+        try {
+            alue = alueDao.getOne(aid);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return alue;
     }
 
     public List<Ketju> haeKetjut(int alue_id) {
@@ -69,6 +78,15 @@ public class Sovelluslogiikka {
         } catch (SQLException ex) {
         }
         return ketjut;
+    }
+
+        public Ketju haeKetju(int kid) {
+        Ketju ketju = new Ketju(0, 0, null, "", "", 0);
+        try {
+            ketju = ketjuDao.getOne(kid);
+        } catch (SQLException ex) {
+        }
+        return ketju;
     }
 
     public List<Viesti> haeViestit(int ketju_id) {
@@ -81,7 +99,7 @@ public class Sovelluslogiikka {
     }
 
     public boolean luoAlue(String nimi) {
-        Alue luotavaAlue = new Alue(0, nimi, null , 0);
+        Alue luotavaAlue = new Alue(0, nimi, null, 0);
         try {
             alueDao.add(luotavaAlue);
             return true;

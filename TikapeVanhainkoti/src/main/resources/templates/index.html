@@ -3,7 +3,8 @@
 
     <head>
         <title>Vanhainkoti</title>
-        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" media="all" href="/style.css" />
     </head>
 
     <body>
@@ -11,10 +12,11 @@
         
         <ul>
             <li th:each="alue: ${alueet}">
-                <a th:href="@{/alue/{alue.id}}">
+                <!--<a th:href="@{/alue/{alue.id}}">-->
+                <a th:href="@{http://localhost:4567/alue(id=${alue.id})}">
                     <span th:text="${alue.nimi}">Nimi</span></a>
                 <span th:text="${alue.lkm}">ViestienLkm</span>
-                <span th:text="${alue.pvm}">Pvm</span>
+                <span th:text="${alue.pvm}" th:if="${alue.lkm}>0">Pvm</span>
             </li>
         </ul>
             

@@ -1,4 +1,3 @@
-
 package sovelluslogiikka;
 
 import java.sql.*;
@@ -7,13 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *Hallinnoi yhteydenottoa SQL-tietokantaan ja suorittaa
- *Viesti-olioiden SQL-kyselyt.
+ * Hallinnoi yhteydenottoa SQL-tietokantaan ja suorittaa Viesti-olioiden
+ * SQL-kyselyt.
  */
 public class ViestiDAO implements Dao<Integer, Viesti> {
+
     private Database database;
     private Connection yhteys;
-    
+
     public ViestiDAO(Database database) throws SQLException {
         this.database = database;
     }
@@ -21,11 +21,11 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
     public void muodostaYhteys() throws SQLException {
         yhteys = database.getConnection();
     }
-    
+
     public void suljeYhteys() throws SQLException {
         yhteys.close();
     }
-    
+
     @Override
     public void delete(Viesti key) throws SQLException {
         PreparedStatement stmt = yhteys.prepareStatement("");
@@ -36,10 +36,10 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "INSERT INTO Viesti(Viesti, Nimimerkki, Pvm, KetjuId) "
-                                            + "VALUES (?, ?, ?, ?);");
+                + "VALUES (?, ?, ?, ?);");
         stmt.setString(1, viesti.getViesti());
         stmt.setString(2, viesti.getNimimerkki());
-        
+
         // Viestioliota luodessa jätä pvm null-arvoon
         long pvm = System.currentTimeMillis();
         stmt.setLong(3, pvm);
@@ -62,12 +62,12 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
         stmt.setInt(1, ketjuId);
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new LinkedList<>();
-        
+
         while (rs.next()) {
             int id = rs.getInt("Id");
             String viesti = rs.getString("viesti");
             String nimimerkki = rs.getString("nimimerkki");
-            
+
             Timestamp pvmTimestamp = new Timestamp(rs.getLong("pvm"));
             LocalDateTime pvm = pvmTimestamp.toLocalDateTime();
             Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId);
@@ -78,5 +78,12 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
         suljeYhteys();
         return viestit;
     }
-    
+
+    @Override
+    public Viesti getOne(Integer ketjuId) throws SQLException {
+        Viesti viesti = new Viesti(0, "", "", null, 0);
+
+        return viesti;
+    }
+
 }

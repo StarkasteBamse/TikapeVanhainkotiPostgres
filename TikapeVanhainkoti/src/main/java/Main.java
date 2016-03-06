@@ -12,11 +12,11 @@ public class Main {
         Sovelluslogiikka sl = new Sovelluslogiikka("jdbc:sqlite:koe.db");
         sl.kaynnista();        
         
-        List<Alue> a = sl.haeAlueet();
-        if (a.isEmpty()) System.out.println("tyhjä");
-        for (Alue alue : a) {
-            System.out.println(alue.getNimi());
-        }
+//        List<Alue> a = sl.haeAlueet();
+//        if (a.isEmpty()) System.out.println("tyhjä");
+//        for (Alue alue : a) {
+//            System.out.println(alue.getNimi());
+//        }
         
 
         Webbikayttoliittyma wc = new Webbikayttoliittyma(sl);
