@@ -3,7 +3,7 @@
 
     <head>
         
-        <!--<title th:text="Vanhainkoti: ${ketju.animi}">animi</title>-->
+        <!--<title th:title="Vanhainkoti: ${ketju.animi}">animi</title>-->
         <title>Vanhainkoti</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" media="all" href="/style.css" />
@@ -11,7 +11,7 @@
 
     <body>
         <h1><a th:href="@{http://localhost:4567/}">Forum</a> /
-            <a th:href="@{http://localhost:4567/alue/(id=${ketju.aid})}">
+            <a th:href="@{http://localhost:4567/alue(id=${ketju.aid})}">
                 <span th:text="${ketju.animi}">animi</span></a> / 
             <span th:text="${ketju.nimi}">knimi</span></h1>
 

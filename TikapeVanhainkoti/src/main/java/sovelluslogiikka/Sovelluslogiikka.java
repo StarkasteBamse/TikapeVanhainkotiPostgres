@@ -119,7 +119,7 @@ public class Sovelluslogiikka {
     }
 
     public boolean luoViesti(String viesti, String nimimerkki, int ketju_id) {
-        Viesti luotavaViesti = new Viesti(0, viesti, nimimerkki, null, ketju_id, "", 0, "");
+        Viesti luotavaViesti = new Viesti(0, viesti, nimimerkki, null, ketju_id);
         try {
             viestiDao.add(luotavaViesti);
             return true;
