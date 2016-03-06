@@ -13,5 +13,5 @@ public interface Dao<K, T> {
 
     List<T> getAll(K kkey) throws SQLException;
 
-//    T getOne(K kkey) throws SQLException;
+    T getOne(K kkey) throws SQLException;
 }

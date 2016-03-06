@@ -86,12 +86,13 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
         return viestit;
     }
 
-//    @Override
-//    public Viesti getOne(Integer ketjuId) throws SQLException {
-//        Viesti viesti = new Viesti(0, "", "", null, 0);
-//
-//        return viesti;
-//    }
+    @Override
+    public Viesti getOne(Integer ketjuId) throws SQLException {
+        Viesti viesti = new Viesti(0, "", "", null, 0, "", 0, "");
+
+        return viesti;
+    }
+    
     /**
      * Palauttaa pyydetyn sivunumeron (monesko sivu halutaan) mukaiset viestit.
      * Viestien lukumäärä/sivu annetaan myös parametrina.

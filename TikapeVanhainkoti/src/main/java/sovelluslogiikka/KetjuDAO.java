@@ -90,44 +90,44 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         return ketjut;
     }
 
-//    @Override
-//    public Ketju getOne(Integer kid) throws SQLException {
-//        muodostaYhteys();
-//
-//        PreparedStatement stmt = yhteys.prepareStatement(
-//                "SELECT Ketju.Id AS kid, Ketju.alueid AS kaid, "
-//                + "Alue.nimi AS an, Ketju.nimi AS kn, "
-//                + "MAX(Viesti.pvm) AS pvm, COUNT(Viesti.id) AS maara "
-//                + "FROM Alue, Ketju, Viesti "
-//                + "WHERE Alue.Id = Ketju.AlueId "
-//                + "AND Ketju.Id = Viesti.KetjuId "
-//                + "AND Ketju.Id = ? "
-//                + "GROUP BY Ketju.Id "
-//                + "ORDER BY MAX(Viesti.pvm) DESC;");
-//
-//        stmt.setInt(1, kid);
-//        ResultSet rs = stmt.executeQuery();
-//
-//        Ketju ketju = new Ketju(0, 0, null, "", "", 0);
-//
-//        while (rs.next()) {
-//            int id = rs.getInt("kid");
-//            int aid = rs.getInt("kaid");
-//            String nimi = rs.getString("kn");
-//            String alueNimi = rs.getString("an");
-//            int maara = rs.getInt("maara");
-//
-//            Timestamp timestamp = new Timestamp(rs.getLong("pvm"));
-//            LocalDateTime pvm = timestamp.toLocalDateTime();
-//
-//            ketju = new Ketju(id, aid, pvm, nimi, alueNimi, maara);
-//
-//        }
-//        rs.close();
-//        stmt.close();
-//        suljeYhteys();
-//        return ketju;
-//    }
+    @Override
+    public Ketju getOne(Integer kid) throws SQLException {
+        muodostaYhteys();
+
+        PreparedStatement stmt = yhteys.prepareStatement(
+                "SELECT Ketju.Id AS kid, Ketju.alueid AS kaid, "
+                + "Alue.nimi AS an, Ketju.nimi AS kn, "
+                + "MAX(Viesti.pvm) AS pvm, COUNT(Viesti.id) AS maara "
+                + "FROM Alue, Ketju, Viesti "
+                + "WHERE Alue.Id = Ketju.AlueId "
+                + "AND Ketju.Id = Viesti.KetjuId "
+                + "AND Ketju.Id = ? "
+                + "GROUP BY Ketju.Id "
+                + "ORDER BY MAX(Viesti.pvm) DESC;");
+
+        stmt.setInt(1, kid);
+        ResultSet rs = stmt.executeQuery();
+
+        Ketju ketju = new Ketju(0, 0, null, "", "", 0);
+
+        while (rs.next()) {
+            int id = rs.getInt("kid");
+            int aid = rs.getInt("kaid");
+            String nimi = rs.getString("kn");
+            String alueNimi = rs.getString("an");
+            int maara = rs.getInt("maara");
+
+            Timestamp timestamp = new Timestamp(rs.getLong("pvm"));
+            LocalDateTime pvm = timestamp.toLocalDateTime();
+
+            ketju = new Ketju(id, aid, pvm, nimi, alueNimi, maara);
+
+        }
+        rs.close();
+        stmt.close();
+        suljeYhteys();
+        return ketju;
+    }
 
     public void suljeYhteys() throws SQLException {
         yhteys.close();

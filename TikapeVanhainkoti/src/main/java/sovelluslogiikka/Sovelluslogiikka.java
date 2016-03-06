@@ -63,11 +63,11 @@ public class Sovelluslogiikka {
 
     public Alue haeAlue(int aid) {
         Alue alue = new Alue(0, "", null, 0);
-//        try {
-//            alue = alueDao.getOne(aid);
-//        } catch (SQLException ex) {
-//            System.out.println(ex);
-//        }
+        try {
+            alue = alueDao.getOne(aid);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
         return alue;
     }
 
@@ -82,10 +82,10 @@ public class Sovelluslogiikka {
 
         public Ketju haeKetju(int kid) {
         Ketju ketju = new Ketju(0, 0, null, "", "", 0);
-//        try {
-//            ketju = ketjuDao.getOne(kid);
-//        } catch (SQLException ex) {
-//        }
+        try {
+            ketju = ketjuDao.getOne(kid);
+        } catch (SQLException ex) {
+        }
         return ketju;
     }
 

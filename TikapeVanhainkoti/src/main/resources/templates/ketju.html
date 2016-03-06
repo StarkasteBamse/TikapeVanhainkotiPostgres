@@ -3,17 +3,17 @@
 
     <head>
         
-        <!--<title th:text="Vanhainkoti: ${ketju[0].animi}">animi</title>-->
+        <!--<title th:text="Vanhainkoti: ${ketju.animi}">animi</title>-->
         <title>Vanhainkoti</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" media="all" href="/style.css" />
     </head>
 
     <body>
-<!--        <h1><a th:href="@{http://localhost:4567/}">Forum</a> /
-            <a th:href="@{http://localhost:4567/alue/(id=${ketju[0].aid})}">
-                <span th:text="${ketju[0].animi}">animi</span></a> / 
-            <span th:text="${ketju[0].nimi}">knimi</span></h1>-->
+        <h1><a th:href="@{http://localhost:4567/}">Forum</a> /
+            <a th:href="@{http://localhost:4567/alue/(id=${ketju.aid})}">
+                <span th:text="${ketju.animi}">animi</span></a> / 
+            <span th:text="${ketju.nimi}">knimi</span></h1>
 
         <ul>
             <li th:each="viesti: ${viestit}">
