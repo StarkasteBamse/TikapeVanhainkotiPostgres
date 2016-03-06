@@ -80,7 +80,7 @@ public class Sovelluslogiikka {
         return ketjut;
     }
 
-        public Ketju haeKetju(int kid) {
+    public Ketju haeKetju(int kid) {
         Ketju ketju = new Ketju(0, 0, null, "", "", 0);
         try {
             ketju = ketjuDao.getOne(kid);

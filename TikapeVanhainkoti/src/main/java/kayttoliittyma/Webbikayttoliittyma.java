@@ -24,21 +24,20 @@ public class Webbikayttoliittyma {
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
-        get("/alue", (req, res) -> {
+        get("/alue/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-
-//            int aid = Integer.parseInt(req.params("id"));
-            int aid = 1;
+            
+            int aid = Integer.parseInt(req.params("id"));
             map.put("ketjut", sovelluslogiikka.haeKetjut(aid));
             map.put("alue", sovelluslogiikka.haeAlue(aid));
 
             return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
 
-        get("/ketju/", (req, res) -> {
+        get("/ketju/:id", (req, res) -> {
             HashMap map = new HashMap<>();
 
-            int kid = 1;
+            int kid = Integer.parseInt(req.params("id"));
             map.put("viestit", sovelluslogiikka.haeViestit(kid));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
 

@@ -13,7 +13,7 @@
         <ul>
             <li th:each="ketju: ${ketjut}">
                 <!--<a th:href="@{/ketju/{ketju.id}}">-->
-                <a th:href="@{http://localhost:4567/ketju/(${ketju.id})}">
+                <a th:href="@{http://localhost:4567/ketju/{kid}(kid=${ketju.id})}">
                     <span th:text="${ketju.nimi}">Nimi</span></a>
                 <span th:text="${ketju.lkm}">Maara</span>
                 <span th:text="${ketju.pvm}">Pvm</span>
