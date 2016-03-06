@@ -6,18 +6,11 @@
 package sovelluslogiikka;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.util.converter.LocalDateTimeStringConverter;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -29,8 +22,7 @@ import static org.junit.Assert.*;
  *
  * @author saaville
  */
-public class KetjuDAOTest {
-    
+public class ViestiDAOTest {
     private Database database;
     private String testiOsoite;
     private KetjuDAO kDao;
@@ -38,8 +30,7 @@ public class KetjuDAOTest {
     private Statement lausunto;
     private long testiaika;
     
-    
-    public KetjuDAOTest() {
+    public ViestiDAOTest() {
     }
     
     @BeforeClass
@@ -52,7 +43,7 @@ public class KetjuDAOTest {
     
     @Before
     public void setUp() {
-        testiOsoite = "jdbc:sqlite:ketjuDAOTest.db";
+        testiOsoite = "jdbc:sqlite:ViestiDAOTest.db";
         try {
             database = new Database(testiOsoite);
             kDao = new KetjuDAO(database);
@@ -66,122 +57,16 @@ public class KetjuDAOTest {
         luoAlueet();
     }
     
-    @After
-    public void tearDown() {
-        katkaiseYhteys();
-        poistaTietokanta();
-    }
-
     public void poistaTietokanta() {
         try {
-            File testiTietokanta = new File("ketjuDAOTest.db");
+            File testiTietokanta = new File("ViestiDAOTest.db");
             testiTietokanta.delete();
         } catch (Exception se) {
             System.out.println(se.getMessage());
         }
     }
     
-    @Test
-    public void testaaKetjunLuominen() {
-        luoYhteys();
-        
-        Ketju ketju1 = new Ketju(0, 1, null, "Ketju1", null, 0);
-        try {
-            kDao.add(ketju1);
-            ResultSet rs = lausunto.executeQuery("SELECT * FROM Ketju;");
-            assertEquals(rs.getString("Nimi"), "Ketju1");
-        } catch (SQLException ex) {
-            assertFalse(ex.getMessage(), true);
-        }
-        katkaiseYhteys();
-        luoYhteys();
-        try {
-            lausunto.executeUpdate("DELETE FROM Ketju WHERE Nimi = 'Ketju1';");
-        } catch (SQLException ex) {
-            assertFalse(ex.getMessage(), true);
-        }
-        katkaiseYhteys();
-    }
-    
-    @Test
-    public void testaaEttaTietokantaOnEdelleenTyhja() {
-        try {
-            luoYhteys();
-            ResultSet rs = lausunto.executeQuery("SELECT COUNT(*) AS Total FROM Ketju;");
-            assertEquals(0, rs.getInt("Total"));
-        } catch (SQLException ex) {
-            assertTrue(ex.getMessage(), false);
-        }
-        katkaiseYhteys();
-    }
-    
-    @Test
-    public void testaaKetjujenHakeminen() {
-        luoTestiKetjutJaViestit();
-        List<Ketju> ketjut = null;
-        
-        try {
-            ketjut = kDao.getAll(1);
-            kDao.suljeYhteys();
-            assertEquals(4, ketjut.size());
-        } catch (SQLException ex) {
-            assertFalse(ex.getMessage(), true);
-        }
-        katkaiseYhteys();
-        poistaKetjutJaViestit();
-    }
-    
-    @Test
-    public void testaaKetjujenHakeminenPvmOikea() {
-        luoTestiKetjutJaViestit();
-        List<Ketju> ketjut = null;
-        
-        try {
-            ketjut = kDao.getAll(1);
-            Timestamp tmp = new Timestamp(testiaika - 30000);
-            LocalDateTime locDT = tmp.toLocalDateTime();
-            assertEquals(locDT, ketjut.get(ketjut.size()-1).getPvm());
-        } catch (SQLException ex) {
-            assertFalse(ex.getMessage(), true);
-        }
-        katkaiseYhteys();
-        poistaKetjutJaViestit();
-    }
-    
-    @Test
-    public void testaaKetjujenHakeminenViestienLkmOikea() {
-        luoTestiKetjutJaViestit();
-        List<Ketju> ketjut = null;
-        
-        try {
-            ketjut = kDao.getAll(1);
-            assertEquals(4, ketjut.get(ketjut.size()-1).getLkm());
-        } catch (SQLException ex) {
-            assertFalse(ex.getMessage(), true);
-        }
-        katkaiseYhteys();
-        poistaKetjutJaViestit();
-    }
-    
-    public void luoYhteys() {
-        try {
-            yhteys = database.getConnection();
-            lausunto = yhteys.createStatement();
-        } catch (SQLException ex) {
-            Logger.getLogger(KetjuDAOTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void katkaiseYhteys() {
-        try {
-            if (lausunto != null) lausunto.close();
-            if (yhteys != null) yhteys.close();
-        } catch (SQLException se) {
-            System.out.println();
-        }
-    }
-    
-    public void luoAlueet() {
+     public void luoAlueet() {
         luoYhteys();
         String alue1 = "Ohjelmoinnin alkeet";
         int id1 = 1;
@@ -288,4 +173,33 @@ public class KetjuDAOTest {
         luoAlueet();
     }
     
+    public void luoYhteys() {
+        try {
+            yhteys = database.getConnection();
+            lausunto = yhteys.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(KetjuDAOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void katkaiseYhteys() {
+        try {
+            if (lausunto != null) lausunto.close();
+            if (yhteys != null) yhteys.close();
+        } catch (SQLException se) {
+            System.out.println();
+        }
+    }
+    
+    
+    @After
+    public void tearDown() {
+        poistaKetjutJaViestit();
+    }
+
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
+    // @Test
+    // public void hello() {}
 }
