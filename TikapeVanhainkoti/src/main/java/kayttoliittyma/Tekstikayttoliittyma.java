@@ -70,7 +70,7 @@ public class Tekstikayttoliittyma {
             // ketjut on tyhjä?
             System.out.println("Ketjut");
             for (Ketju ketjut1 : ketjut) {
-                System.out.println(ketjut1.getNimi() + " " + ketjut1.getViestienMaara() + " viestiä, viimeisin " + ketjut1.getViimeisinPvm());
+                System.out.println(ketjut1.getNimi() + " " + ketjut1.getLkm() + " viestiä, viimeisin " + ketjut1.getPvm());
             }
         }
     }

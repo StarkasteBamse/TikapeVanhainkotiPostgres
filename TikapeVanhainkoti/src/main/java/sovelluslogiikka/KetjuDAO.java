@@ -34,7 +34,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         PreparedStatement stmt = yhteys.prepareStatement(
                 "INSERT INTO Ketju(Nimi, AlueId) VALUES (?, ?);");
         stmt.setString(1, ketju.getNimi());
-        stmt.setInt(2, ketju.getAlueId());
+        stmt.setInt(2, ketju.getAid());
         stmt.execute();
         suljeYhteys();
     }
