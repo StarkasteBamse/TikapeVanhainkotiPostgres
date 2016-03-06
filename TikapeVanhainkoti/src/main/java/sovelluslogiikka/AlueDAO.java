@@ -78,42 +78,42 @@ public class AlueDAO implements Dao<Integer, Alue> {
         return alueet;
     }
 
-    @Override
-    public Alue getOne(Integer aid) throws SQLException {
-        muodostaYhteys();
-        PreparedStatement stmt = yhteys.prepareStatement(
-                "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, "
-                + "MAX(viesti.pvm) AS Viimeisin "
-                + "FROM Alue "
-                + "LEFT JOIN Ketju "
-                + "ON Alue.id = Ketju.alueid "
-                + "LEFT JOIN Viesti "
-                + "ON Ketju.id = Viesti.ketjuid "
-                + "WHERE Alue.id = ? "
-                + "GROUP BY ketju.alueid "
-                + "ORDER BY Alue.Nimi ASC;");
-
-        stmt.setInt(1, aid);
-        ResultSet rs = stmt.executeQuery();
-        Alue alue = new Alue(0, "", null, 0);
-
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String nimi = rs.getString("nimi");
-
-            int viestienLkm = rs.getInt("Viesteja");
-
-            Timestamp timestamp = new Timestamp(rs.getLong("Viimeisin"));
-            LocalDateTime pvm = timestamp.toLocalDateTime();
-
-            alue = new Alue(id, nimi, pvm, viestienLkm);
-
-        }
-        rs.close();
-        stmt.close();
-        suljeYhteys();
-        return alue;
-    }
+//    @Override
+//    public Alue getOne(Integer aid) throws SQLException {
+//        muodostaYhteys();
+//        PreparedStatement stmt = yhteys.prepareStatement(
+//                "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, "
+//                + "MAX(viesti.pvm) AS Viimeisin "
+//                + "FROM Alue "
+//                + "LEFT JOIN Ketju "
+//                + "ON Alue.id = Ketju.alueid "
+//                + "LEFT JOIN Viesti "
+//                + "ON Ketju.id = Viesti.ketjuid "
+//                + "WHERE Alue.id = ? "
+//                + "GROUP BY ketju.alueid "
+//                + "ORDER BY Alue.Nimi ASC;");
+//
+//        stmt.setInt(1, aid);
+//        ResultSet rs = stmt.executeQuery();
+//        Alue alue = new Alue(0, "", null, 0);
+//
+//        while (rs.next()) {
+//            int id = rs.getInt("id");
+//            String nimi = rs.getString("nimi");
+//
+//            int viestienLkm = rs.getInt("Viesteja");
+//
+//            Timestamp timestamp = new Timestamp(rs.getLong("Viimeisin"));
+//            LocalDateTime pvm = timestamp.toLocalDateTime();
+//
+//            alue = new Alue(id, nimi, pvm, viestienLkm);
+//
+//        }
+//        rs.close();
+//        stmt.close();
+//        suljeYhteys();
+//        return alue;
+//    }
 
     public void suljeYhteys() throws SQLException {
         yhteys.close();

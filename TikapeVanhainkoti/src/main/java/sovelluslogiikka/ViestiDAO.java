@@ -58,19 +58,26 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
     public List<Viesti> getAll(Integer ketjuId) throws SQLException {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
-                "SELECT * FROM Viesti WHERE KetjuId = ?;");
+                "SELECT viesti.id AS vid, viesti.viesti, viesti.nimimerkki, "
+                + "ketju.nimi AS knimi, ketju.alueid AS aid, alue.nimi "
+                + "AS animi FROM Viesti JOIN ketju "
+                + "ON ketju.id = viesti.ketjuid JOIN alue ON "
+                + "alue.id=ketju.alueid WHERE KetjuId = ?;");
         stmt.setInt(1, ketjuId);
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new LinkedList<>();
 
         while (rs.next()) {
-            int id = rs.getInt("Id");
+            int id = rs.getInt("vid");
             String viesti = rs.getString("viesti");
             String nimimerkki = rs.getString("nimimerkki");
+            int aid = rs.getInt("aid");
+            String animi = rs.getString("animi");
+            String knimi = rs.getString("knimi");
 
             Timestamp pvmTimestamp = new Timestamp(rs.getLong("pvm"));
             LocalDateTime pvm = pvmTimestamp.toLocalDateTime();
-            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId);
+            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId, knimi, aid, animi);
             viestit.add(uusiViesti);
         }
         rs.close();
@@ -79,42 +86,41 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
         return viestit;
     }
 
-    @Override
-    public Viesti getOne(Integer ketjuId) throws SQLException {
-        Viesti viesti = new Viesti(0, "", "", null, 0);
-
-        return viesti;
-    }
-
+//    @Override
+//    public Viesti getOne(Integer ketjuId) throws SQLException {
+//        Viesti viesti = new Viesti(0, "", "", null, 0);
+//
+//        return viesti;
+//    }
     /**
      * Palauttaa pyydetyn sivunumeron (monesko sivu halutaan) mukaiset viestit.
      * Viestien lukumäärä/sivu annetaan myös parametrina.
+     *
      * @param ketjuId minkä ketjun viestejä halutaan listata
      * @param lkmPerSivu kuinka monta viestiä per sivu
      * @param sivuNumero monesko sivu halutaan
      * @return
-     * @throws SQLException 
+     * @throws SQLException
      */
-    
     public List<Viesti> getOnePage(Integer ketjuId, int lkmPerSivu, int sivuNumero) throws SQLException {
         muodostaYhteys();
-        
+
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT * FROM Viesti WHERE KetjuId = ? "
-                    + "ORDER BY pvm ASC LIMIT " + lkmPerSivu + " "
-                    + "OFFSET " + (lkmPerSivu * (sivuNumero - 1)) + ";");
+                + "ORDER BY pvm ASC LIMIT " + lkmPerSivu + " "
+                + "OFFSET " + (lkmPerSivu * (sivuNumero - 1)) + ";");
         stmt.setInt(1, ketjuId);
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new LinkedList<>();
-        
+
         while (rs.next()) {
             int id = rs.getInt("Id");
             String viesti = rs.getString("viesti");
             String nimimerkki = rs.getString("nimimerkki");
-            
+
             Timestamp pvmTimestamp = new Timestamp(rs.getLong("pvm"));
             LocalDateTime pvm = pvmTimestamp.toLocalDateTime();
-            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId);
+            Viesti uusiViesti = new Viesti(id, viesti, nimimerkki, pvm, ketjuId, "", 0, "");
             viestit.add(uusiViesti);
         }
         rs.close();
@@ -122,5 +128,5 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
         suljeYhteys();
         return viestit;
     }
-    
+
 }
