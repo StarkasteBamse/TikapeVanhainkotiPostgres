@@ -50,7 +50,7 @@ public class Tekstikayttoliittyma {
         List<Alue> alueet = sovelluslogiikka.haeAlueet();
         System.out.println("Alueet");
         for (Alue alueet1 : alueet) {
-            System.out.println(alueet1.getNimi() + " " + alueet1.getLkm() + " viestiä, viimeisin " + alueet1.getViimeisinPvm());
+            System.out.println(alueet1.getNimi() + " " + alueet1.getLkm() + " viestiä, viimeisin " + alueet1.getPvm());
         }
     }
 
@@ -70,7 +70,7 @@ public class Tekstikayttoliittyma {
             // ketjut on tyhjä?
             System.out.println("Ketjut");
             for (Ketju ketjut1 : ketjut) {
-                System.out.println(ketjut1.getNimi() + " " + ketjut1.getViestienMaara() + " viestiä, viimeisin " + ketjut1.getViimeisinPvm());
+                System.out.println(ketjut1.getNimi() + " " + ketjut1.getLkm() + " viestiä, viimeisin " + ketjut1.getPvm());
             }
         }
     }

@@ -24,7 +24,7 @@ public class Alue {
         return nimi;
     }
 
-    public LocalDateTime getViimeisinPvm() {
+    public LocalDateTime getPvm() {
         return viimeisinPvm;
     }
     

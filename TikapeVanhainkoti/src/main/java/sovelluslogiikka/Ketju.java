@@ -29,19 +29,19 @@ public class Ketju {
         return nimi;
     }
 
-    public int getAlueId() {
+    public int getAid() {
         return alueId;
     }
 
-    public String getAlueNimi() {
+    public String getAnimi() {
         return alueNimi;
     }
 
-    public LocalDateTime getViimeisinPvm() {
+    public LocalDateTime getPvm() {
         return viimeisinPvm;
     }
 
-    public int getViestienMaara(){
+    public int getLkm(){
         return viestienMaara;
     }
     

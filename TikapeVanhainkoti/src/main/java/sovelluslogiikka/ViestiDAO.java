@@ -43,7 +43,7 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
         // Viestioliota luodessa jätä pvm null-arvoon
         long pvm = System.currentTimeMillis();
         stmt.setLong(3, pvm);
-        stmt.setInt(4, viesti.getKetjuId());
+        stmt.setInt(4, viesti.getKid());
         stmt.execute();
         stmt.close();
         suljeYhteys();

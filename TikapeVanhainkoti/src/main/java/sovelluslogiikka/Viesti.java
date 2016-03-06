@@ -27,7 +27,7 @@ public class Viesti {
         return id;
     }
 
-    public int getKetjuId() {
+    public int getKid() {
         return ketjuId;
     }
 
