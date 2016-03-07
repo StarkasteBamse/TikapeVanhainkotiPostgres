@@ -29,13 +29,16 @@ public class AlueDAO implements Dao<Integer, Alue> {
     }
 
     @Override
-    public void add(Alue alue) throws SQLException {
+    public int add(Alue alue) throws SQLException {
+        // palautetaan luodun alueen id
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "INSERT INTO Alue(Nimi) VALUES (?);");
         stmt.setString(1, alue.getNimi());
         stmt.execute();
         suljeYhteys();
+
+        return 1;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
                 + "ON Alue.id = Ketju.alueid "
                 + "LEFT JOIN Viesti "
                 + "ON Ketju.id = Viesti.ketjuid "
-                + "GROUP BY ketju.alueid "
+                + "GROUP BY alue.id "
                 + "ORDER BY Alue.Nimi ASC;");
 
         ResultSet rs = stmt.executeQuery();

@@ -32,7 +32,8 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
     }
 
     @Override
-    public void add(Viesti viesti) throws SQLException {
+    public int add(Viesti viesti) throws SQLException {
+        // periaatteessa palautetaan luodun viestin id
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "INSERT INTO Viesti(Viesti, Nimimerkki, Pvm, KetjuId) "
@@ -47,6 +48,8 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
         stmt.execute();
         stmt.close();
         suljeYhteys();
+        
+        return 1; //käytännössä tällä ei ole väliä
     }
 
     @Override

@@ -7,7 +7,7 @@ public interface Dao<K, T> {
 
     void delete(T key) throws SQLException;
 
-    void add(T key) throws SQLException;
+    int add(T key) throws SQLException;
 
     void update(T key) throws SQLException;
 

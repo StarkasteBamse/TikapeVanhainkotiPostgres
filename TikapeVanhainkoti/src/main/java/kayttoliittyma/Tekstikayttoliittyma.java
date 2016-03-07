@@ -86,7 +86,12 @@ public class Tekstikayttoliittyma {
 
             System.out.println("Ketjun otsikko? ");
             String otsikko = lukija.nextLine();
-            sovelluslogiikka.luoKetju(otsikko, alue);
+            System.out.println("nimimerkki? ");
+            String nimim = lukija.nextLine();
+            System.out.println("Viesti? ");
+            String viesti = lukija.nextLine();
+            
+            sovelluslogiikka.luoKetju(otsikko, alue, nimim, viesti);
         } else {
             int n = Integer.parseInt(p);
             List<Viesti> viestit = sovelluslogiikka.haeViestit(n);

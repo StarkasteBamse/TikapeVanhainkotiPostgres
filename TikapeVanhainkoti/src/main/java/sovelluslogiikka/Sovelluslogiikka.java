@@ -108,10 +108,11 @@ public class Sovelluslogiikka {
         }
     }
 
-    public boolean luoKetju(String otsikko, int alue_id) {
+    public boolean luoKetju(String otsikko, int alue_id, String nimimerkki, String viesti) {
         Ketju luotavaKetju = new Ketju(0, alue_id, null, otsikko, null, 0);
         try {
-            ketjuDao.add(luotavaKetju);
+            int kid = ketjuDao.add(luotavaKetju);
+            luoViesti(viesti, nimimerkki, kid);
             return true;
         } catch (SQLException ex) {
             return false;

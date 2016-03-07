@@ -29,7 +29,9 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
     }
 
     @Override
-    public void add(Ketju ketju) throws SQLException {
+    public int add(Ketju ketju) throws SQLException {
+        //palautetaan luodun ketjun id
+        
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "INSERT INTO Ketju(Nimi, AlueId) VALUES (?, ?);");
@@ -37,6 +39,8 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         stmt.setInt(2, ketju.getAid());
         stmt.execute();
         suljeYhteys();
+        
+        return 1; //FIXME
     }
 
     @Override
