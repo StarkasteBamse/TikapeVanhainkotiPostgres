@@ -38,9 +38,26 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         stmt.setString(1, ketju.getNimi());
         stmt.setInt(2, ketju.getAid());
         stmt.execute();
-        suljeYhteys();
         
-        return 1; //FIXME
+        
+        stmt = yhteys.prepareStatement("SELECT * FROM Ketju "
+                                    + "LEFT JOIN Viesti "
+                                    + "ON Ketju.id = Viesti.KetjuId "
+                                    + "WHERE Ketju.AlueId = ? "
+                                    + "AND Ketju.Nimi = ? "
+                                    + "AND COUNT(Viesti.id) = 0 "
+                                    + "GROUP BY Ketju.id;");
+        
+        stmt.setInt(1, ketju.getAid());
+        stmt.setString(2, ketju.getNimi());
+        ResultSet rs = stmt.executeQuery();
+    
+        int ketjuId = rs.getInt("Ketju.id");
+        
+        rs.close();
+        stmt.close();
+        suljeYhteys();
+        return ketjuId;
     }
 
     @Override
