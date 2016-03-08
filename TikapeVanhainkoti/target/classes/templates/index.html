@@ -13,7 +13,7 @@
         <ul>
             <li th:each="alue: ${alueet}">
                 <!--<a th:href="@{/alue/{aid}(aid=${alue.id})}">-->
-                <a th:href="@{http://localhost:4567/alue/{aid}(aid=${alue.id})}">
+                <a th:href="@{~/alue/{aid}(aid=${alue.id})}">
                     <span th:text="${alue.nimi}">Nimi</span></a>
                 <span th:text="${alue.lkm}">ViestienLkm</span>
                 <span th:text="${alue.pvm}" th:if="${alue.lkm}>0">Pvm</span>

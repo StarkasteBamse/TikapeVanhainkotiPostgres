@@ -17,10 +17,10 @@ public class Main {
 //        for (Alue alue : a) {
 //            System.out.println(alue.getNimi());
 //        }
-//        Webbikayttoliittyma wc = new Webbikayttoliittyma(sl);
-//        wc.kaynnista();
+        Webbikayttoliittyma wc = new Webbikayttoliittyma(sl);
+        wc.kaynnista();
 
-        Tekstikayttoliittyma tkl = new Tekstikayttoliittyma(sl);
-        tkl.kaynnista();
+//        Tekstikayttoliittyma tkl = new Tekstikayttoliittyma(sl);
+//        tkl.kaynnista();
     }
 }
