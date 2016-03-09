@@ -43,10 +43,18 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
 
         System.out.println("alueid, ketju" + ketju.getAid() + " " + ketju.getNimi());
 
+//
+// Taisinkin hampaita pestessä keksiä mikä ongelma on 
+//  - Haemme ketjun Id:n tuolla MAX funktiolla ja talletamme sen sitten IsoinIDksi
+//     mutta myöhemmin etsimme rs.getInt("id")
+//
+
+
         muodostaYhteys();
         PreparedStatement stmt2 = yhteys.prepareStatement("SELECT MAX(id) AS IsoinID FROM Ketju "
                 + "WHERE AlueId = ? "
-                //                                    + "AND Nimi = ? "
+                // ja yllä olevan kommentin perusteella nimen poiskommentointi (ja yhteyden sulkemiset) oli turhaa
+                                                    + "AND Nimi = ? "
                 + ";");
 
 //        stmt = yhteys.prepareStatement("SELECT * FROM Ketju "
