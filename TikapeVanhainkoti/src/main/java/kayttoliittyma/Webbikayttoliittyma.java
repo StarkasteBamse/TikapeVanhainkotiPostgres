@@ -64,6 +64,23 @@ public class Webbikayttoliittyma {
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
+        post("/ketju/uusi", (req, res) -> {
+            HashMap map = new HashMap<>();
+            String nimimerkki = req.queryParams("nimimerkki");
+            String otsikko = req.queryParams("otsikko");
+            String viesti = req.queryParams("viesti");
+
+            // try catch
+            int alueid = Integer.parseInt(req.queryParams("alueid"));
+
+            sovelluslogiikka.luoKetju(otsikko, alueid, nimimerkki, viesti);
+
+            map.put("ketjut", sovelluslogiikka.haeKetjut(alueid));
+            map.put("alue", sovelluslogiikka.haeAlue(alueid));
+
+            return new ModelAndView(map, "alue");
+        }, new ThymeleafTemplateEngine());
+
         get("/ketju/:id/:sivu", (req, res) -> {
             HashMap map = new HashMap<>();
 
@@ -97,6 +114,25 @@ public class Webbikayttoliittyma {
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
 
+        post("/ketju/:id", (req, res) -> {
+            HashMap map = new HashMap<>();
+
+            //try catch
+            int kid = Integer.parseInt(req.params("id"));
+            int sivu = 0;
+
+            String nimimerkki = req.queryParams("nimimerkki");
+            String viesti = req.queryParams("viesti");
+
+            sovelluslogiikka.luoViesti(viesti, nimimerkki, kid);
+
+            //hae viestit sivun perusteella, sivunro mukaan mappiin
+            map.put("viestit", sovelluslogiikka.haeViestit(kid));
+            map.put("ketju", sovelluslogiikka.haeKetju(kid));
+
+            return new ModelAndView(map, "ketju");
+        }, new ThymeleafTemplateEngine());
+
         get("/ketju/:id", (req, res) -> {
             HashMap map = new HashMap<>();
 
@@ -109,22 +145,6 @@ public class Webbikayttoliittyma {
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
 
-        post("/ketju/uusi", (req, res) -> {
-            HashMap map = new HashMap<>();
-            String nimimerkki = req.queryParams("nimimerkki");
-            String otsikko = req.queryParams("otsikko");
-            String viesti = req.queryParams("viesti");
-
-            // try catch
-            int alueid = Integer.parseInt(req.queryParams("alueid"));
-
-            sovelluslogiikka.luoKetju(otsikko, alueid, nimimerkki, viesti);
-
-            map.put("ketjut", sovelluslogiikka.haeKetjut(alueid));
-            map.put("alue", sovelluslogiikka.haeAlue(alueid));
-
-            return new ModelAndView(map, "alue");
-        }, new ThymeleafTemplateEngine());
 
     }
 }

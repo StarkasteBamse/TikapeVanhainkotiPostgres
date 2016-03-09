@@ -81,7 +81,7 @@ public class Sovelluslogiikka {
     }
 
     public Ketju haeKetju(int kid) {
-        Ketju ketju = new Ketju(0, 0, null, "", "", 0);
+        Ketju ketju = new Ketju(0, 0, null, "", "", 0, 0);
         try {
             ketju = ketjuDao.getOne(kid);
         } catch (SQLException ex) {
@@ -109,7 +109,7 @@ public class Sovelluslogiikka {
     }
 
     public boolean luoKetju(String otsikko, int alue_id, String nimimerkki, String viesti) {
-        Ketju luotavaKetju = new Ketju(0, alue_id, null, otsikko, null, 0);
+        Ketju luotavaKetju = new Ketju(0, alue_id, null, otsikko, null, 0, 0);
         try {
             int kid = ketjuDao.add(luotavaKetju);
             luoViesti(viesti, nimimerkki, kid);

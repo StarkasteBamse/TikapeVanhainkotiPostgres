@@ -11,14 +11,16 @@ public class Ketju {
     private final String nimi;
     private final String alueNimi;
     private int viestienMaara;
+    private int sivu;
 
-    public Ketju(int id, int alueId, LocalDateTime viimeisinPvm, String nimi, String alueNimi, int viestienMaara) {
+    public Ketju(int id, int alueId, LocalDateTime viimeisinPvm, String nimi, String alueNimi, int viestienMaara, int sivu) {
         this.alueId = alueId;
         this.id = id;
         this.nimi = nimi;
         this.viimeisinPvm = viimeisinPvm;
         this.alueNimi = alueNimi;
         this.viestienMaara = viestienMaara;
+        this.sivu = sivu;
     }
 
     public int getId() {

@@ -9,7 +9,7 @@
 
     <body>
         <h1><a href="/">Foorumi</a>: <span th:text="${alue.nimi}">nimi</span></h1>
-        
+
         <ul>
             <li th:each="ketju: ${ketjut}">
                 <!--<a th:href="@{/ketju/{kid}(kid=${ketju.id})}">-->
@@ -19,17 +19,18 @@
                 <span th:text="${ketju.pvm}">Pvm</span>
             </li>            
         </ul>
-            
-                <!--formista katso http://www.thymeleaf.org/doc/tutorials/2.1/thymeleafspring.html#creating-a-form 
-        tarvitaan kai joku model object -->
+
+        <!--formista katso http://www.thymeleaf.org/doc/tutorials/2.1/thymeleafspring.html#creating-a-form 
+tarvitaan kai joku model object -->
+        <!--<form method="POST" th:action="@{~/ketju/{aid}/uusi(aid=${alue.id})}">-->
         <form method="POST" action="/ketju/uusi">
             Nimimerkki:<br/>
             <input type="text" name="nimimerkki"/><br/>
             Otsikko:<br/>
             <input type="text" name="otsikko"/><br/>
             Viesti:<br/>
-            <input type="textarea" rows="4" cols="50" name="viesti"/><br/>
-            <input type="hidden" name="alueid" th:value="${ketju.alueid}" /><br/>
+            <input type="textarea" name="viesti" /><br/>
+            <input type="hidden" name="alueid" th:value="${alue.id}" /><br/>
             <input type="submit" value="Aloita ketju"/>
         </form>
 

@@ -31,7 +31,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
     @Override
     public int add(Ketju ketju) throws SQLException {
         //palautetaan luodun ketjun id
-        
+
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "INSERT INTO Ketju(Nimi, AlueId) VALUES (?, ?);");
@@ -39,25 +39,31 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         stmt.setInt(2, ketju.getAid());
         stmt.execute();
         stmt.close();
-        
+        suljeYhteys();
+
+        System.out.println("alueid, ketju" + ketju.getAid() + " " + ketju.getNimi());
+
+        muodostaYhteys();
         PreparedStatement stmt2 = yhteys.prepareStatement("SELECT MAX(id) AS IsoinID FROM Ketju "
-                                    + "WHERE AlueId = ? "
-                                    + "AND Nimi = ? "
-                                    + ";");
-        
+                + "WHERE AlueId = ? "
+                //                                    + "AND Nimi = ? "
+                + ";");
+
 //        stmt = yhteys.prepareStatement("SELECT * FROM Ketju "
 //                                    + "LEFT JOIN Viesti "
 //                                    + "ON Ketju.id = Viesti.KetjuId "
 //                                    + "WHERE Ketju.AlueId = ? "
 //                                    + "AND Ketju.Nimi = ? "
 //                                    + "AND Viesti.id IS NULL;");
-        
         stmt2.setInt(1, ketju.getAid());
-        stmt2.setString(2, ketju.getNimi());
+//        stmt2.setString(2, ketju.getNimi());
         ResultSet rs = stmt2.executeQuery();
-    
+
         int ketjuId = rs.getInt("id");
-        
+
+        // Tämä sout ei tulostu, miksi?
+        System.out.println("ketjuid " + ketjuId);
+
         rs.close();
         stmt2.close();
         suljeYhteys();
@@ -73,14 +79,16 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
     public List<Ketju> getAll(Integer alueId) throws SQLException {
         muodostaYhteys();
         List<Ketju> ketjut = new LinkedList<>();
+        // LEFT JOIN kunnes saadaan yhdistettyä sisältö ketjuun luonnissa
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT Ketju.Id AS kid, Ketju.alueid AS kaid, "
                 + "Alue.nimi AS an, Ketju.nimi AS kn, "
                 + "MAX(Viesti.pvm) AS pvm, COUNT(Viesti.id) AS maara "
-                + "FROM Alue, Ketju, Viesti "
-                + "WHERE Alue.Id = Ketju.AlueId "
-                + "AND Ketju.Id = Viesti.KetjuId "
-                + "AND Ketju.AlueId = ? "
+                + "FROM Ketju LEFT JOIN Viesti "
+                + "ON Ketju.Id = Viesti.KetjuId "
+                + "LEFT JOIN Alue "
+                + "ON Alue.Id = Ketju.AlueId "
+                + "WHERE Ketju.AlueId = ? "
                 + "GROUP BY Ketju.Id "
                 + "ORDER BY MAX(Viesti.pvm) DESC;");
 
@@ -106,7 +114,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
             Timestamp timestamp = new Timestamp(rs.getLong("pvm"));
             LocalDateTime pvm = timestamp.toLocalDateTime();
 
-            ketjut.add(new Ketju(id, alueId, pvm, nimi, alueNimi, maara));
+            ketjut.add(new Ketju(id, alueId, pvm, nimi, alueNimi, maara, 0));
 
         }
         rs.close();
@@ -123,17 +131,18 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
                 "SELECT Ketju.Id AS kid, Ketju.alueid AS kaid, "
                 + "Alue.nimi AS an, Ketju.nimi AS kn, "
                 + "MAX(Viesti.pvm) AS pvm, COUNT(Viesti.id) AS maara "
-                + "FROM Alue, Ketju, Viesti "
-                + "WHERE Alue.Id = Ketju.AlueId "
-                + "AND Ketju.Id = Viesti.KetjuId "
-                + "AND Ketju.Id = ? "
+                + "FROM Ketju LEFT JOIN Viesti "
+                + "ON Ketju.Id = Viesti.KetjuId "
+                + "LEFT JOIN Alue "
+                + "ON Alue.Id = Ketju.AlueId "
+                + "WHERE Ketju.Id = ? "
                 + "GROUP BY Ketju.Id "
                 + "ORDER BY MAX(Viesti.pvm) DESC;");
 
         stmt.setInt(1, kid);
         ResultSet rs = stmt.executeQuery();
 
-        Ketju ketju = new Ketju(0, 0, null, "", "", 0);
+        Ketju ketju = new Ketju(0, 0, null, "", "", 0, 0);
 
         while (rs.next()) {
             int id = rs.getInt("kid");
@@ -145,7 +154,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
             Timestamp timestamp = new Timestamp(rs.getLong("pvm"));
             LocalDateTime pvm = timestamp.toLocalDateTime();
 
-            ketju = new Ketju(id, aid, pvm, nimi, alueNimi, maara);
+            ketju = new Ketju(id, aid, pvm, nimi, alueNimi, maara, 0);
 
         }
         rs.close();
