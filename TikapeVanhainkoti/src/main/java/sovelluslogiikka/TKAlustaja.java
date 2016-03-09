@@ -32,7 +32,7 @@ public class TKAlustaja {
         //taulu "Alue" luonti
         taulunLuominen("CREATE TABLE Alue"
                     + "(id integer PRIMARY KEY AUTOINCREMENT,"
-                    + "nimi varchar(100) UNIQUE NOT NULL)");
+                    + "nimi varchar(100) NOT NULL UNIQUE)");
         //taulu "Ketju" luonti
         taulunLuominen("CREATE TABLE Ketju"
                     + "(id integer PRIMARY KEY AUTOINCREMENT,"
