@@ -38,9 +38,30 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         stmt.setString(1, ketju.getNimi());
         stmt.setInt(2, ketju.getAid());
         stmt.execute();
-        suljeYhteys();
+        stmt.close();
         
-        return 1; //FIXME
+        PreparedStatement stmt2 = yhteys.prepareStatement("SELECT MAX(id) AS IsoinID FROM Ketju "
+                                    + "WHERE AlueId = ? "
+                                    + "AND Nimi = ? "
+                                    + ";");
+        
+//        stmt = yhteys.prepareStatement("SELECT * FROM Ketju "
+//                                    + "LEFT JOIN Viesti "
+//                                    + "ON Ketju.id = Viesti.KetjuId "
+//                                    + "WHERE Ketju.AlueId = ? "
+//                                    + "AND Ketju.Nimi = ? "
+//                                    + "AND Viesti.id IS NULL;");
+        
+        stmt2.setInt(1, ketju.getAid());
+        stmt2.setString(2, ketju.getNimi());
+        ResultSet rs = stmt2.executeQuery();
+    
+        int ketjuId = rs.getInt("id");
+        
+        rs.close();
+        stmt2.close();
+        suljeYhteys();
+        return ketjuId;
     }
 
     @Override

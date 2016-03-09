@@ -87,9 +87,12 @@ public class KetjuDAOTest {
         
         Ketju ketju1 = new Ketju(0, 1, null, "Ketju1", null, 0);
         try {
-            kDao.add(ketju1);
+            int ketjuId = kDao.add(ketju1);
             ResultSet rs = lausunto.executeQuery("SELECT * FROM Ketju;");
+            ResultSet rs2 = lausunto.executeQuery("SELECT * FROM Ketju "
+                                    + "WHERE Nimi = '" + ketju1.getNimi() + "';");
             assertEquals(rs.getString("Nimi"), "Ketju1");
+            assertEquals(ketjuId, rs2.getInt("Id"));
         } catch (SQLException ex) {
             assertFalse(ex.getMessage(), true);
         }
@@ -101,6 +104,8 @@ public class KetjuDAOTest {
             assertFalse(ex.getMessage(), true);
         }
         katkaiseYhteys();
+        poistaKetjutJaViestit();
+        
     }
     
     @Test
@@ -162,6 +167,7 @@ public class KetjuDAOTest {
         katkaiseYhteys();
         poistaKetjutJaViestit();
     }
+    
     
     public void luoYhteys() {
         try {
