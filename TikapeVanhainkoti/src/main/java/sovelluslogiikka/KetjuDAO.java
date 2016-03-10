@@ -39,22 +39,10 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         stmt.setInt(2, ketju.getAid());
         stmt.execute();
         stmt.close();
-        suljeYhteys();
 
-        System.out.println("alueid, ketju" + ketju.getAid() + " " + ketju.getNimi());
-
-//
-// Taisinkin hampaita pestessä keksiä mikä ongelma on 
-//  - Haemme ketjun Id:n tuolla MAX funktiolla ja talletamme sen sitten IsoinIDksi
-//     mutta myöhemmin etsimme rs.getInt("id")
-//
-
-
-        muodostaYhteys();
         PreparedStatement stmt2 = yhteys.prepareStatement("SELECT MAX(id) AS IsoinID FROM Ketju "
                 + "WHERE AlueId = ? "
-                // ja yllä olevan kommentin perusteella nimen poiskommentointi (ja yhteyden sulkemiset) oli turhaa
-                                                    + "AND Nimi = ? "
+                + "AND Nimi = ? "
                 + ";");
 
 //        stmt = yhteys.prepareStatement("SELECT * FROM Ketju "
@@ -64,13 +52,13 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
 //                                    + "AND Ketju.Nimi = ? "
 //                                    + "AND Viesti.id IS NULL;");
         stmt2.setInt(1, ketju.getAid());
-//        stmt2.setString(2, ketju.getNimi());
+        stmt2.setString(2, ketju.getNimi());
         ResultSet rs = stmt2.executeQuery();
 
-        int ketjuId = rs.getInt("id");
+        int ketjuId = rs.getInt("IsoinID");
 
         // Tämä sout ei tulostu, miksi?
-        System.out.println("ketjuid " + ketjuId);
+//        System.out.println("ketjuid " + ketjuId);
 
         rs.close();
         stmt2.close();
