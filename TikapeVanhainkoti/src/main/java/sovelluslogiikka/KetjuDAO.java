@@ -39,7 +39,9 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         stmt.setInt(2, ketju.getAid());
         stmt.execute();
         stmt.close();
-
+        suljeYhteys();
+        
+        muodostaYhteys();
         PreparedStatement stmt2 = yhteys.prepareStatement("SELECT MAX(id) AS IsoinID FROM Ketju "
                 + "WHERE AlueId = ? "
                 + "AND Nimi = ? "
@@ -51,6 +53,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
 //                                    + "WHERE Ketju.AlueId = ? "
 //                                    + "AND Ketju.Nimi = ? "
 //                                    + "AND Viesti.id IS NULL;");
+        
         stmt2.setInt(1, ketju.getAid());
         stmt2.setString(2, ketju.getNimi());
         ResultSet rs = stmt2.executeQuery();
@@ -58,7 +61,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         int ketjuId = rs.getInt("IsoinID");
 
         // Tämä sout ei tulostu, miksi?
-//        System.out.println("ketjuid " + ketjuId);
+        System.out.println("ketjuid " + ketjuId);
 
         rs.close();
         stmt2.close();
@@ -98,6 +101,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
 //                + "WHERE Ketju.AlueId = ? "
 //                + "GROUP BY Ketju.Id "
 //                + "ORDER BY MAX(Viesti.pvm) DESC;");
+        
         stmt.setInt(1, alueId);
         ResultSet rs = stmt.executeQuery();
 

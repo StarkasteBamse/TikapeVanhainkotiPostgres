@@ -8,7 +8,7 @@ public class Viesti {
     private final int id;
     private final String viesti;
     private final String nimimerkki;
-    private final LocalDateTime pvm; //harkintaan datetime olio/unix-timestamp?
+    private final LocalDateTime pvm; 
     private final int ketjuId;
 
     public Viesti(String viesti, String nimimerkki, int ketjuId, int alueId) {

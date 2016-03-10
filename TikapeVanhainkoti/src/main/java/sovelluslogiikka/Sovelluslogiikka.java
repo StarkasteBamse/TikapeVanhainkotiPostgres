@@ -15,6 +15,7 @@ public class Sovelluslogiikka {
 
     public Sovelluslogiikka(String tietokannanNimi) {
         this.tietokannanNimi = tietokannanNimi;
+        
     }
 
     public boolean kaynnista() {
@@ -108,8 +109,8 @@ public class Sovelluslogiikka {
         }
     }
 
-    public boolean luoKetju(String otsikko, int alue_id, String nimimerkki, String viesti) {
-        Ketju luotavaKetju = new Ketju(0, alue_id, null, otsikko, null, 0, 0);
+    public boolean luoKetju(String nimi, int alue_id, String nimimerkki, String viesti) {
+        Ketju luotavaKetju = new Ketju(0, alue_id, null, nimi, null, 0, 0);
         try {
             int kid = ketjuDao.add(luotavaKetju);
             luoViesti(viesti, nimimerkki, kid);
