@@ -152,5 +152,27 @@ public class Sovelluslogiikka {
         }
         return -1;
     }
+    
+    public List<Viesti> haeSivuViesteja(int ketjuid, int sivunumero) {
+        List<Viesti> lista;
+        try {
+            lista = viestiDao.getOnePage(ketjuid, 10, sivunumero);
+            return lista;
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+        }
+        return null;
+    }
+    
+    public List<Ketju> haeSivuKetjuja(int alueid, int sivunumero) {
+        List<Ketju> lista;
+        try {
+            lista = ketjuDao.getOnePage(alueid, 10, sivunumero);
+            return lista;
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+        }
+        return null;
+    }
 
 }
