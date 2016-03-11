@@ -14,11 +14,16 @@
             <ul>
                 <li th:each="ketju: ${ketjut}">
                     <!--<a th:href="@{/ketju/{kid}(kid=${ketju.id})}">-->
-                    <a th:href="@{~/ketju/{kid}(kid=${ketju.id})}">
+                    <a th:href="@{~/ketju/{kid}/1(kid=${ketju.id})}">
                         <span th:text="${ketju.nimi}">Nimi</span></a>
                     <span th:text="${ketju.lkm}">Maara</span>
                     <span th:text="${ketju.pvm}">Pvm</span>
                 </li>
+            </ul>
+
+            <ul class="pager">
+                <li><span th:if="${sivu}>1"><a th:href="@{~/alue/{aid}/{sivunro}(aid=${alue.id}, sivunro=${sivu}-1)}">Edellinen</a></span></li>
+                <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/alue/{aid}/{sivunro}(aid=${alue.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
             </ul>
 
             <!--<form method="POST" th:action="@{~/ketju/{aid}/uusi(aid=${alue.id})}">-->

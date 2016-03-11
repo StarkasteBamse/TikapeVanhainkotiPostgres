@@ -34,7 +34,7 @@ public class Webbikayttoliittyma {
             //hae ketjut sivun perusteella, sivunro mukaan mappiin
             map.put("ketjut", sovelluslogiikka.haeKetjut(aid));
             map.put("alue", sovelluslogiikka.haeAlue(aid));
-            map.put("sivumaara", sovelluslogiikka.haeKetjut(aid));
+            map.put("sivumaara", (sovelluslogiikka.haeKetjujenLkm(aid) / 10 + 1));
             map.put("sivu", sivu);
 
             return new ModelAndView(map, "alue");
@@ -51,6 +51,8 @@ public class Webbikayttoliittyma {
 
             map.put("ketjut", sovelluslogiikka.haeKetjut(aid));
             map.put("alue", sovelluslogiikka.haeAlue(aid));
+            map.put("sivumaara", (sovelluslogiikka.haeKetjujenLkm(aid) / 10 + 1));
+            map.put("sivu", 1);
 
             return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
@@ -79,6 +81,8 @@ public class Webbikayttoliittyma {
 
             map.put("ketjut", sovelluslogiikka.haeKetjut(alueid));
             map.put("alue", sovelluslogiikka.haeAlue(alueid));
+            map.put("sivumaara", (sovelluslogiikka.haeKetjujenLkm(alueid) / 10 + 1));
+            map.put("sivu", 1);
 
             return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
