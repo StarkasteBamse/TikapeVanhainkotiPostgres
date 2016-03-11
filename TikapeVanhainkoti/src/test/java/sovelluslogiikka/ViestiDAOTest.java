@@ -52,7 +52,7 @@ public class ViestiDAOTest {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        TKAlustaja tkalustaja = new TKAlustaja(database);
+        TKAlustaja tkalustaja = new TKAlustaja(database, true);
         tkalustaja.luoTaulut();
         luoAlueet();
     }
@@ -168,7 +168,7 @@ public class ViestiDAOTest {
     
     public void poistaKetjutJaViestit() {
         poistaTietokanta();
-        TKAlustaja tkalustaja = new TKAlustaja(database);
+        TKAlustaja tkalustaja = new TKAlustaja(database, true);
         tkalustaja.luoTaulut();
         luoAlueet();
     }
