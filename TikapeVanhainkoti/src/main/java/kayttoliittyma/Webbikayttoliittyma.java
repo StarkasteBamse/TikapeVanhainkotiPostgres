@@ -92,7 +92,7 @@ public class Webbikayttoliittyma {
 
             String varoitus = "Apuvva!!!";
             //hae viestit sivun perusteella, sivunro mukaan mappiin
-            map.put("viestit", sovelluslogiikka.haeViestit(kid));
+            map.put("viestit", sovelluslogiikka.haeSivuViesteja(kid, sivu));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
             map.put("sivumaara", (sovelluslogiikka.haeViestienLkm(kid) / 10 + 1));
             map.put("sivu", sivu);
