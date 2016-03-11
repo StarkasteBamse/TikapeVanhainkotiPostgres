@@ -6,32 +6,32 @@
         <!--<th:title="Vanhainkoti: ${ketju.animi}">animi</title>-->
         <title>Vanhainkoti</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" type="text/css" media="all" href="/style.css" />
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     </head>
 
     <body>
-        <h1><a th:href="@{~/}">Forum</a> /
-            <a th:href="@{~/alue/{aid}(aid=${ketju.aid})}">
-                <span th:text="${ketju.animi}">animi</span></a> / 
-            <span th:text="${ketju.nimi}">knimi</span></h1>
+        <div class="container">
+            <h1><a th:href="@{~/}">Forum</a> /
+                <a th:href="@{~/alue/{aid}(aid=${ketju.aid})}">
+                    <span th:text="${ketju.animi}">animi</span></a> / 
+                <span th:text="${ketju.nimi}">knimi</span></h1>
 
-        <ul>
-            <li th:each="viesti: ${viestit}">
-                <span th:text="${viesti.viesti}">sisalto</span> t. 
-                <span th:text="${viesti.nimimerkki}">nimim</span>
-            </li>            
-        </ul>
+            <ul>
+                <li th:each="viesti: ${viestit}">
+                    <span th:text="${viesti.viesti}">sisalto</span> t. 
+                    <span th:text="${viesti.nimimerkki}">nimim</span>
+                </li>            
+            </ul>
 
-        <!--formista katso http://www.thymeleaf.org/doc/tutorials/2.1/thymeleafspring.html#creating-a-form 
-        tarvitaan kai joku model object -->
-        <form method="POST" th:action="@{~/ketju/{kid}(kid=${ketju.id})}">
-            Nimimerkki:<br/>
-            <input type="text" name="nimimerkki"/><br/>
-            Viesti:<br/>
-            <input type="text" name="viesti"/><br/>
-            <input type="hidden" name="alueid" th:value="${ketju.id}" /><br/>
-            <input type="submit" value="Vastaa"/>
-        </form>
+            <form method="POST" th:action="@{~/ketju/{kid}(kid=${ketju.id})}">
+                Nimimerkki:<br/>
+                <input type="text" name="nimimerkki"/><br/>
+                Viesti:<br/>
+                <input type="text" name="viesti"/><br/>
+                <input type="hidden" name="alueid" th:value="${ketju.id}" /><br/>
+                <input type="submit" value="Vastaa"/>
+            </form>
+        </div>
 
     </body>
 </html>
