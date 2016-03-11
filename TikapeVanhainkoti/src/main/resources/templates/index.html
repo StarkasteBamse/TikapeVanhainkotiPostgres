@@ -38,15 +38,17 @@
                     <span th:text="${alue.pvm}" th:if="${alue.lkm}>0">Pvm</span>
                 </div>
             </div>
-            
-            <div>
-                <form method="POST" action="/alue/uusi">
-                    Alueen nimi:<br/>
-                    <input type="text" name="nimi"/><br/>
-                    <input type="submit" value="Luo alue"/>
-                </form>
-            </div>
-            
+
+
+            <form class="form" role="form" method="POST" action="/alue/uusi">
+                <div class="form-group">
+                    <label for="nimi">Alueen nimi:</label>
+                    <input type="text" class="form-control" id="nimi" name="nimi" placeholder="Kirjoita luotava alue"/>
+                </div>
+                <button type="submit" class="btn btn-default">Luo alue</button>
+            </form>
+
+
         </div>
     </body>
 </html>

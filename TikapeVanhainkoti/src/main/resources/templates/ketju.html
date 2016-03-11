@@ -82,13 +82,17 @@
                 </div>
             </div>
 
-            <form method="POST" th:action="@{~/ketju/{kid}(kid=${ketju.id})}">
-                Nimimerkki:<br/>
-                <input type="text" name="nimimerkki"/><br/>
-                Viesti:<br/>
-                <input type="text" name="viesti"/><br/>
+            <form class="form" role="form" method="POST" th:action="@{~/ketju/{kid}(kid=${ketju.id})}">
+                <div class="form-group">
+                    <label for="nimimerkki">Nimimerkki:</label>
+                    <input type="text" class="form-control" id="nimimerkki" name="nimimerkki" placeholder="Kirjoita nimimerkkisi"/>
+                </div>
+                <div class="form-group">
+                    <label for="viesti">Viesti:</label>
+                    <textarea class="form-control" rows="3" id="viesti" name="viesti" placeholder="Kirjoita viestisi tänne"></textarea>
+                </div>
                 <input type="hidden" name="alueid" th:value="${ketju.id}" /><br/>
-                <input type="submit" value="Vastaa"/>
+                <button type="submit" class="btn btn-default">Vastaa</button>
             </form>
         </div>
 

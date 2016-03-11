@@ -74,6 +74,10 @@ public class Webbikayttoliittyma {
             String otsikko = req.queryParams("otsikko");
             String viesti = req.queryParams("viesti");
 
+//            System.out.println("otsikko" + otsikko);
+//            System.out.println("nimim" + nimimerkki);
+//            System.out.println("viesti" + viesti);
+            
             // try catch
             int alueid = Integer.parseInt(req.queryParams("alueid"));
 

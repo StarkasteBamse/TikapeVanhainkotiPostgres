@@ -71,17 +71,23 @@
                             <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/alue/{aid}/{sivunro}(aid=${alue.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
                         </ul>-->
 
-            <!--<form method="POST" th:action="@{~/ketju/{aid}/uusi(aid=${alue.id})}">-->
-            <form method="POST" action="/ketju/uusi">
-                Nimimerkki:<br/>
-                <input type="text" name="nimimerkki"/><br/>
-                Otsikko:<br/>
-                <input type="text" name="otsikko"/><br/>
-                Viesti:<br/>
-                <input type="textarea" name="viesti" /><br/>
-                <input type="hidden" name="alueid" th:value="${alue.id}" /><br/>
-                <input type="submit" value="Aloita ketju"/>
+            <form class="form" role="form" method="POST" action="/ketju/uusi">
+                <div class="form-group">
+                    <label for="nimimerkki">Nimimerkki:</label>
+                    <input type="text" class="form-control" id="nimimerkki" name="nimimerkki" placeholder="Kirjoita nimimerkkisi"/>
+                </div>
+                <div class="form-group">
+                    <label for="otsikko">Otsikko:</label>
+                    <input type="text" class="form-control" id="otsikko" name="otsikko" placeholder="Kirjoita viestin otsikko"/>
+                </div>
+                <div class="form-group">
+                    <label for="viesti">Viesti:</label>
+                    <textarea class="form-control" rows="3" id="viesti" name="viesti" placeholder="Kirjoita viestisi tänne"></textarea>
+                </div>
+                <input type="hidden" name="alueid" th:value="${alue.id}" />
+                <button type="submit" class="btn btn-default">Aloita ketju</button>
             </form>
+
         </div>
     </body>
 </html>
