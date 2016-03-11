@@ -51,11 +51,12 @@
                     <strong>Kirjoittaja</strong>
                 </div>
             </div>
-            <div class="row" th:each="viesti: ${viestit}">
-                <div class="col-sm-8">
+            
+            <div class="row" th:each="viesti,iterStat: ${viestit}">
+                <div class="col-sm-8" th:style="${iterStat.even}? 'background-color:lavender;'">
                     <span th:text="${viesti.viesti}">sisalto</span>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4" th:style="${iterStat.even}? 'background-color:lavender;'">
                     <span th:text="${viesti.nimimerkki}">nimim</span>
                 </div>
             </div>
@@ -70,7 +71,7 @@
                 </div>
                 <div class="col-sm-2">
                     <ul class="pagination">
-                        <li th:class="${i==sivunro}? 'active'" th:each="i : ${sivunumerot}"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${i})}"><span th:text="${i}">0</span></a></li>
+                        <li th:each="i : ${sivunumerot}" th:class="*{i==sivunro} ? 'active'"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${i})}"><span th:text="${i}">0</span></a></li>
                     </ul>
                 </div>
                 <div class="col-sm-2">

@@ -32,15 +32,15 @@
                 </div>
             </div>
 
-            <div class="row" th:each="alue: ${alueet}">
-                <div class="col-sm-6">
+            <div class="row" th:each="alue, iterStat: ${alueet}">
+                <div class="col-sm-6" th:style="${iterStat.even}? 'background-color:lavender;'">
                     <a th:href="@{~/alue/{aid}/1(aid=${alue.id})}">
                         <span th:text="${alue.nimi}">Nimi</span></a>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" th:style="${iterStat.even}? 'background-color:lavender;'">
                     <span th:text="${alue.lkm}">ViestienLkm</span>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4" th:style="${iterStat.even}? 'background-color:lavender;'">
                     <span th:text="${alue.pvm}" th:if="${alue.lkm}>0">Pvm</span>
                 </div>
             </div>

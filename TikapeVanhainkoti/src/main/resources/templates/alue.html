@@ -50,15 +50,15 @@
                 </div>
             </div>
 
-            <div class="row" th:each="ketju: ${ketjut}">
-                <div class="col-sm-6">
+            <div class="row" th:each="ketju, iterStat: ${ketjut}">
+                <div class="col-sm-6" th:style="${iterStat.even}? 'background-color:lavender;'">
                     <a th:href="@{~/ketju/{kid}/1(kid=${ketju.id})}">
                         <span th:text="${ketju.nimi}">Nimi</span></a>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" th:style="${iterStat.even}? 'background-color:lavender;'">
                     <span th:text="${ketju.lkm}">Maara</span>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4" th:style="${iterStat.even}? 'background-color:lavender;'">
                     <span th:text="${ketju.pvm}">Pvm</span>
                 </div>
             </div>
