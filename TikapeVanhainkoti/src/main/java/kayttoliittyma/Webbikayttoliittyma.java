@@ -31,11 +31,19 @@ public class Webbikayttoliittyma {
             int aid = Integer.parseInt(req.params("id"));
             int sivu = Integer.parseInt(req.params("sivu"));
 
+            ArrayList<Integer> sivunumerot = new ArrayList<>();
+            int sivumaara = sovelluslogiikka.haeKetjujenLkm(aid) / 10 + 1;
+
+            for (int i = 1; i <= sivumaara; i++) {
+                sivunumerot.add(i);
+            }
+
             //hae ketjut sivun perusteella, sivunro mukaan mappiin
             map.put("ketjut", sovelluslogiikka.haeKetjut(aid));
             map.put("alue", sovelluslogiikka.haeAlue(aid));
-            map.put("sivumaara", (sovelluslogiikka.haeKetjujenLkm(aid) / 10 + 1));
+            map.put("sivumaara", (sivumaara));
             map.put("sivu", sivu);
+            map.put("sivunumerot", sivunumerot);
 
             return new ModelAndView(map, "alue");
 
@@ -49,10 +57,18 @@ public class Webbikayttoliittyma {
             //try catch
             int aid = Integer.parseInt(req.params("id"));
 
+            ArrayList<Integer> sivunumerot = new ArrayList<>();
+            int sivumaara = sovelluslogiikka.haeKetjujenLkm(aid) / 10 + 1;
+
+            for (int i = 1; i <= sivumaara; i++) {
+                sivunumerot.add(i);
+            }
+
             map.put("ketjut", sovelluslogiikka.haeKetjut(aid));
             map.put("alue", sovelluslogiikka.haeAlue(aid));
-            map.put("sivumaara", (sovelluslogiikka.haeKetjujenLkm(aid) / 10 + 1));
+            map.put("sivumaara", (sivumaara));
             map.put("sivu", 1);
+            map.put("sivunumerot", sivunumerot);
 
             return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
@@ -79,10 +95,18 @@ public class Webbikayttoliittyma {
 
             sovelluslogiikka.luoKetju(otsikko, alueid, nimimerkki, viesti);
 
+            ArrayList<Integer> sivunumerot = new ArrayList<>();
+            int sivumaara = sovelluslogiikka.haeKetjujenLkm(alueid) / 10 + 1;
+
+            for (int i = 1; i <= sivumaara; i++) {
+                sivunumerot.add(i);
+            }
+
             map.put("ketjut", sovelluslogiikka.haeKetjut(alueid));
             map.put("alue", sovelluslogiikka.haeAlue(alueid));
-            map.put("sivumaara", (sovelluslogiikka.haeKetjujenLkm(alueid) / 10 + 1));
+            map.put("sivumaara", (sivumaara));
             map.put("sivu", 1);
+            map.put("sivunumerot", sivunumerot);
 
             return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
@@ -95,11 +119,20 @@ public class Webbikayttoliittyma {
             int sivu = Integer.parseInt(req.params("sivu"));
 
             String varoitus = "Apuvva!!!";
+
+            ArrayList<Integer> sivunumerot = new ArrayList<>();
+            int sivumaara = sovelluslogiikka.haeViestienLkm(kid) / 10 + 1;
+
+            for (int i = 1; i <= sivumaara; i++) {
+                sivunumerot.add(i);
+            }
+
             //hae viestit sivun perusteella, sivunro mukaan mappiin
             map.put("viestit", sovelluslogiikka.haeSivuViesteja(kid, sivu));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
-            map.put("sivumaara", (sovelluslogiikka.haeViestienLkm(kid) / 10 + 1));
+            map.put("sivumaara", (sivumaara));
             map.put("sivu", sivu);
+            map.put("sivunumerot", sivunumerot);
 //            map.put("varoitus", varoitus);
 
             return new ModelAndView(map, "ketju");
@@ -117,11 +150,19 @@ public class Webbikayttoliittyma {
 
             sovelluslogiikka.luoViesti(viesti, nimimerkki, kid);
 
+            ArrayList<Integer> sivunumerot = new ArrayList<>();
+            int sivumaara = sovelluslogiikka.haeViestienLkm(kid) / 10 + 1;
+
+            for (int i = 1; i <= sivumaara; i++) {
+                sivunumerot.add(i);
+            }
+
             //hae viestit sivun perusteella, sivunro mukaan mappiin
             map.put("viestit", sovelluslogiikka.haeViestit(kid));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
-            map.put("sivumaara", (sovelluslogiikka.haeViestienLkm(kid) / 10 + 1));
+            map.put("sivumaara", (sivumaara));
             map.put("sivu", sivu);
+            map.put("sivunumerot", sivunumerot);
 
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
@@ -138,11 +179,19 @@ public class Webbikayttoliittyma {
 
             sovelluslogiikka.luoViesti(viesti, nimimerkki, kid);
 
+            ArrayList<Integer> sivunumerot = new ArrayList<>();
+            int sivumaara = sovelluslogiikka.haeViestienLkm(kid) / 10 + 1;
+
+            for (int i = 1; i <= sivumaara; i++) {
+                sivunumerot.add(i);
+            }
+
             //hae viestit sivun perusteella, sivunro mukaan mappiin
             map.put("viestit", sovelluslogiikka.haeViestit(kid));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
-            map.put("sivumaara", (sovelluslogiikka.haeViestienLkm(kid) / 10 + 1));
-            map.put("sivu", 1);
+            map.put("sivumaara", (sivumaara));
+            map.put("sivu", sivu);
+            map.put("sivunumerot", sivunumerot);
 
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
@@ -153,10 +202,18 @@ public class Webbikayttoliittyma {
             //try catch
             int kid = Integer.parseInt(req.params("id"));
 
+            ArrayList<Integer> sivunumerot = new ArrayList<>();
+            int sivumaara = sovelluslogiikka.haeViestienLkm(kid) / 10 + 1;
+
+            for (int i = 1; i <= sivumaara; i++) {
+                sivunumerot.add(i);
+            }
+
             map.put("viestit", sovelluslogiikka.haeViestit(kid));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
-            map.put("sivumaara", (sovelluslogiikka.haeViestienLkm(kid) / 10 + 1));
+            map.put("sivumaara", (sivumaara));
             map.put("sivu", 1);
+            map.put("sivunumerot", sivunumerot);
 
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
