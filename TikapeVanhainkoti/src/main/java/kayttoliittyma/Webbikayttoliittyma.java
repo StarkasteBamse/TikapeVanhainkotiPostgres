@@ -46,7 +46,7 @@ public class Webbikayttoliittyma {
                 sivunumerot.add(i);
             }
 
-            map.put("ketjut", sovelluslogiikka.haeKetjut(aid));
+            map.put("ketjut", sovelluslogiikka.haeSivuKetjuja(aid,sivu));
             map.put("alue", sovelluslogiikka.haeAlue(aid));
             map.put("sivumaara", (sivumaara));
             map.put("sivu", sivu);
@@ -75,7 +75,7 @@ public class Webbikayttoliittyma {
                 sivunumerot.add(i);
             }
 
-            map.put("ketjut", sovelluslogiikka.haeKetjut(aid));
+            map.put("ketjut", sovelluslogiikka.haeSivuKetjuja(aid,1));
             map.put("alue", sovelluslogiikka.haeAlue(aid));
             map.put("sivumaara", (sivumaara));
             map.put("sivu", 1);
@@ -133,7 +133,7 @@ public class Webbikayttoliittyma {
                 sivunumerot.add(i);
             }
 
-            map.put("ketjut", sovelluslogiikka.haeKetjut(alueid));
+            map.put("ketjut", sovelluslogiikka.haeSivuKetjuja(alueid,1));
             map.put("alue", sovelluslogiikka.haeAlue(alueid));
             map.put("sivumaara", (sivumaara));
             map.put("sivu", 1);
@@ -177,7 +177,7 @@ public class Webbikayttoliittyma {
             HashMap map = new HashMap<>();
 
             int kid = 0;
-            int sivu = 0;
+            int sivu = 1;
             try {
                 kid = Integer.parseInt(req.params("id"));
                 sivu = Integer.parseInt(req.params("sivu"));
@@ -204,7 +204,7 @@ public class Webbikayttoliittyma {
                 sivunumerot.add(i);
             }
 
-            map.put("viestit", sovelluslogiikka.haeViestit(kid));
+            map.put("viestit", sovelluslogiikka.haeSivuViesteja(kid, sivu));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
             map.put("sivumaara", (sivumaara));
             map.put("sivu", sivu);

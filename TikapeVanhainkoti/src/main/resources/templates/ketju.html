@@ -81,7 +81,7 @@
                 </div>
             </div>
 
-            <form class="form" role="form" method="POST" th:action="@{~/ketju/{kid}(kid=${ketju.id})}">
+            <form class="form" role="form" method="POST" th:action="@{~/ketju/{kid}/{sivu}(kid=${ketju.id}, sivu=${sivu})}">
                 <div class="form-group">
                     <label for="nimimerkki">Nimimerkki:</label>
                     <input type="text" class="form-control" id="nimimerkki" name="nimimerkki" placeholder="Kirjoita nimimerkkisi"/>
