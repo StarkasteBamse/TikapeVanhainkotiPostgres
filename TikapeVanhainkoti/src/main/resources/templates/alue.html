@@ -9,7 +9,9 @@
 
     <body>
         <div class="container">
-            <h1><a href="/">Foorumi</a>: <span th:text="${alue.nimi}">nimi</span></h1>
+            <h1><a href="/">Foorumi</a>: <span th:text="${alue.nimi}">nimi</span>
+                 / <span th:text="${sivu}">Sivu</span>
+            </h1>
 
             <div th:if="${varoitus}">
                 <div class="alert alert-warning">

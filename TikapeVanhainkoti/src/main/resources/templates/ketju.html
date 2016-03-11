@@ -14,7 +14,7 @@
             <h1><a th:href="@{~/}">Foorumi</a>:
                 <a th:href="@{~/alue/{aid}(aid=${ketju.aid})}">
                     <span th:text="${ketju.animi}">animi</span></a> / 
-                <span th:text="${ketju.nimi}">knimi</span>
+                <span th:text="${ketju.nimi}">knimi</span> / <span th:text="${sivu}">Sivu</span>
             </h1>
 
             <div th:if="${varoitus}">
