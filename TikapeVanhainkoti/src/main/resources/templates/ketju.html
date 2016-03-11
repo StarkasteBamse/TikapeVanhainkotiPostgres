@@ -16,11 +16,28 @@
                     <span th:text="${ketju.animi}">animi</span></a> / 
                 <span th:text="${ketju.nimi}">knimi</span></h1>
 
+            <!--<div class="alert alert-warning" th:if="${varoitus}">-->
+                <!--<div th:if="${varoitus}">-->
+<!--                <div class="alert alert-warning">
+                    <span th:text="@{varoitus}" th:if="${varoitus}">varoitusteksti</span>
+            </div>-->
+
             <ul>
                 <li th:each="viesti: ${viestit}">
                     <span th:text="${viesti.viesti}">sisalto</span> t. 
                     <span th:text="${viesti.nimimerkki}">nimim</span>
                 </li>            
+            </ul>
+
+            <ul class="pagination">
+                <!--<li th:each="i : ${#numbers.sequence( 1, ${sivu})}"><a href="#"><span th:text="${status.count}">0</span></a></li>-->
+                <!--<li th:each="s: sivu"><a href="#"><span th:text="${status.count}">0</span></a></li>-->
+                <!--<li class="active"><a href="#">2</a></li>-->
+            </ul>
+
+            <ul class="pager">
+                <li><span th:if="${sivu}>1"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${sivu}-1)}">Edellinen</a></span></li>
+                <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
             </ul>
 
             <form method="POST" th:action="@{~/ketju/{kid}(kid=${ketju.id})}">

@@ -34,6 +34,8 @@ public class Webbikayttoliittyma {
             //hae ketjut sivun perusteella, sivunro mukaan mappiin
             map.put("ketjut", sovelluslogiikka.haeKetjut(aid));
             map.put("alue", sovelluslogiikka.haeAlue(aid));
+            map.put("sivumaara", sovelluslogiikka.haeKetjut(aid));
+            map.put("sivu", sivu);
 
             return new ModelAndView(map, "alue");
 
@@ -88,9 +90,13 @@ public class Webbikayttoliittyma {
             int kid = Integer.parseInt(req.params("id"));
             int sivu = Integer.parseInt(req.params("sivu"));
 
+            String varoitus = "Apuvva!!!";
             //hae viestit sivun perusteella, sivunro mukaan mappiin
             map.put("viestit", sovelluslogiikka.haeViestit(kid));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
+            map.put("sivumaara", (sovelluslogiikka.haeViestienLkm(kid) / 10 + 1));
+            map.put("sivu", sivu);
+            map.put("varoitus", varoitus);
 
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
@@ -110,6 +116,8 @@ public class Webbikayttoliittyma {
             //hae viestit sivun perusteella, sivunro mukaan mappiin
             map.put("viestit", sovelluslogiikka.haeViestit(kid));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
+            map.put("sivumaara", (sovelluslogiikka.haeViestienLkm(kid) / 10 + 1));
+            map.put("sivu", sivu);
 
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
@@ -129,6 +137,8 @@ public class Webbikayttoliittyma {
             //hae viestit sivun perusteella, sivunro mukaan mappiin
             map.put("viestit", sovelluslogiikka.haeViestit(kid));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
+            map.put("sivumaara", (sovelluslogiikka.haeViestienLkm(kid) / 10 + 1));
+            map.put("sivu", 1);
 
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
@@ -141,10 +151,11 @@ public class Webbikayttoliittyma {
 
             map.put("viestit", sovelluslogiikka.haeViestit(kid));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
+            map.put("sivumaara", (sovelluslogiikka.haeViestienLkm(kid) / 10 + 1));
+            map.put("sivu", 1);
 
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
-
 
     }
 }
