@@ -2,6 +2,7 @@
 package sovelluslogiikka;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Ketju {
@@ -11,6 +12,7 @@ public class Ketju {
     private final String nimi;
     private final String alueNimi;
     private int viestienMaara;
+    private DateTimeFormatter formatoija;
 
     public Ketju(int id, int alueId, LocalDateTime viimeisinPvm, String nimi, String alueNimi, int viestienMaara) {
         this.alueId = alueId;
@@ -19,6 +21,7 @@ public class Ketju {
         this.viimeisinPvm = viimeisinPvm;
         this.alueNimi = alueNimi;
         this.viestienMaara = viestienMaara;
+        this.formatoija = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     }
 
     public int getId() {
@@ -37,8 +40,8 @@ public class Ketju {
         return alueNimi;
     }
 
-    public LocalDateTime getPvm() {
-        return viimeisinPvm;
+    public String getPvm() {
+        return viimeisinPvm.format(formatoija);
     }
 
     public int getLkm(){

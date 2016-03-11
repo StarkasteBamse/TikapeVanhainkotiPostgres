@@ -1,6 +1,7 @@
 package sovelluslogiikka;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Viesti {
@@ -10,6 +11,7 @@ public class Viesti {
     private final String nimimerkki;
     private final LocalDateTime pvm; 
     private final int ketjuId;
+    private DateTimeFormatter formatoija;
 
     public Viesti(String viesti, String nimimerkki, int ketjuId, int alueId) {
         this(0, viesti, nimimerkki, null, ketjuId);
@@ -21,6 +23,7 @@ public class Viesti {
         this.nimimerkki = nimimerkki;
         this.pvm = pvm;
         this.ketjuId = ketjuId;
+        this.formatoija = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     }
 
     public int getId() {
@@ -35,8 +38,8 @@ public class Viesti {
         return nimimerkki;
     }
 
-    public LocalDateTime getPvm() {
-        return pvm;
+    public String getPvm() {
+        return pvm.format(formatoija);
     }
 
     public String getViesti() {
