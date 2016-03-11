@@ -11,6 +11,12 @@
         <div class="container">
             <h1>Alueet</h1>
 
+            <div th:if="${varoitus}">
+                <div class="alert alert-warning">
+                    <strong>Virhe:</strong> <span th:text="${varoitus}" th:if="${varoitus}">varoitusteksti</span>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-sm-12"></div>
             </div>

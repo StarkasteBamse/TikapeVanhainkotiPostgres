@@ -11,23 +11,17 @@
 
     <body>
         <div class="container">
-            <h1><a th:href="@{~/}">Foruumi</a>:
+            <h1><a th:href="@{~/}">Foorumi</a>:
                 <a th:href="@{~/alue/{aid}(aid=${ketju.aid})}">
                     <span th:text="${ketju.animi}">animi</span></a> / 
-                <span th:text="${ketju.nimi}">knimi</span></h1>
+                <span th:text="${ketju.nimi}">knimi</span>
+            </h1>
 
-            <!--<div class="alert alert-warning" th:if="${varoitus}">-->
-            <!--<div th:if="${varoitus}">-->
-            <!--                <div class="alert alert-warning">
-                                <span th:text="@{varoitus}" th:if="${varoitus}">varoitusteksti</span>
-                        </div>-->
-
-            <!--            <ul>
-                            <li th:each="viesti: ${viestit}">
-                                <span th:text="${viesti.viesti}">sisalto</span> t. 
-                                <span th:text="${viesti.nimimerkki}">nimim</span>
-                            </li>
-                        </ul>-->
+            <div th:if="${varoitus}">
+                <div class="alert alert-warning">
+                    <strong>Virhe:</strong> <span th:text="${varoitus}" th:if="${varoitus}">varoitusteksti</span>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-sm-2">

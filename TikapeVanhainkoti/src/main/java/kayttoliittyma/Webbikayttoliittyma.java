@@ -74,10 +74,6 @@ public class Webbikayttoliittyma {
             String otsikko = req.queryParams("otsikko");
             String viesti = req.queryParams("viesti");
 
-//            System.out.println("otsikko" + otsikko);
-//            System.out.println("nimim" + nimimerkki);
-//            System.out.println("viesti" + viesti);
-            
             // try catch
             int alueid = Integer.parseInt(req.queryParams("alueid"));
 
@@ -104,7 +100,7 @@ public class Webbikayttoliittyma {
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
             map.put("sivumaara", (sovelluslogiikka.haeViestienLkm(kid) / 10 + 1));
             map.put("sivu", sivu);
-            map.put("varoitus", varoitus);
+//            map.put("varoitus", varoitus);
 
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
