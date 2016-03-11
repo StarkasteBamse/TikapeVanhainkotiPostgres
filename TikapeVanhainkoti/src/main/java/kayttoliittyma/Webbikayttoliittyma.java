@@ -28,8 +28,16 @@ public class Webbikayttoliittyma {
             HashMap map = new HashMap<>();
 
             //try catch
-            int aid = Integer.parseInt(req.params("id"));
-            int sivu = Integer.parseInt(req.params("sivu"));
+            int aid = 0;
+            int sivu = 0;
+            try {
+                aid = Integer.parseInt(req.params("id"));
+                sivu = Integer.parseInt(req.params("sivu"));
+            } catch (Exception e) {
+                map.put("alueet", sovelluslogiikka.haeAlueet());
+                map.put("varoitus", "Yritit virheelliseen osoitteeseen");
+                return new ModelAndView(map, "index");
+            }
 
             ArrayList<Integer> sivunumerot = new ArrayList<>();
             int sivumaara = sovelluslogiikka.haeKetjujenLkm(aid) / 10 + 1;
@@ -38,7 +46,6 @@ public class Webbikayttoliittyma {
                 sivunumerot.add(i);
             }
 
-            //hae ketjut sivun perusteella, sivunro mukaan mappiin
             map.put("ketjut", sovelluslogiikka.haeKetjut(aid));
             map.put("alue", sovelluslogiikka.haeAlue(aid));
             map.put("sivumaara", (sivumaara));
@@ -47,15 +54,19 @@ public class Webbikayttoliittyma {
 
             return new ModelAndView(map, "alue");
 
-            // jonkinlainen redirect juureen jos virhe?
-            // res.redirect("/index.html"); //tms
         }, new ThymeleafTemplateEngine());
 
         get("/alue/:id", (req, res) -> {
             HashMap map = new HashMap<>();
 
-            //try catch
-            int aid = Integer.parseInt(req.params("id"));
+            int aid = 0;
+            try {
+                aid = Integer.parseInt(req.params("id"));
+            } catch (Exception e) {
+                map.put("alueet", sovelluslogiikka.haeAlueet());
+                map.put("varoitus", "Yritit virheelliseen osoitteeseen");
+                return new ModelAndView(map, "index");
+            }
 
             ArrayList<Integer> sivunumerot = new ArrayList<>();
             int sivumaara = sovelluslogiikka.haeKetjujenLkm(aid) / 10 + 1;
@@ -77,6 +88,12 @@ public class Webbikayttoliittyma {
             HashMap map = new HashMap<>();
             String nimi = req.queryParams("nimi");
 
+            if (nimi.isEmpty()) {
+                map.put("alueet", sovelluslogiikka.haeAlueet());
+                map.put("varoitus", "Yritit luoda alueen ilman nimeä");
+                return new ModelAndView(map, "index");
+            }
+
             sovelluslogiikka.luoAlue(nimi);
 
             map.put("alueet", sovelluslogiikka.haeAlueet());
@@ -90,10 +107,24 @@ public class Webbikayttoliittyma {
             String otsikko = req.queryParams("otsikko");
             String viesti = req.queryParams("viesti");
 
-            // try catch
-            int alueid = Integer.parseInt(req.queryParams("alueid"));
+            int alueid = 0;
+            try {
+                alueid = Integer.parseInt(req.queryParams("alueid"));
+            } catch (Exception e) {
+                map.put("alueet", sovelluslogiikka.haeAlueet());
+                map.put("varoitus", "Yritit virheelliseen osoitteeseen");
+                return new ModelAndView(map, "index");
+            }
 
-            sovelluslogiikka.luoKetju(otsikko, alueid, nimimerkki, viesti);
+            if (nimimerkki.isEmpty()) {
+                map.put("varoitus", "Yritit aloittaa keskustelun ilman nimimerkkiä");
+            } else if (viesti.isEmpty()) {
+                map.put("varoitus", "Yritit aloittaa keskustelun tyhjällä viestillä");
+            } else if (otsikko.isEmpty()) {
+                map.put("varoitus", "Yritit aloittaa keskustelun ilman otsikkoa");
+            } else {
+                sovelluslogiikka.luoKetju(otsikko, alueid, nimimerkki, viesti);
+            }
 
             ArrayList<Integer> sivunumerot = new ArrayList<>();
             int sivumaara = sovelluslogiikka.haeKetjujenLkm(alueid) / 10 + 1;
@@ -114,11 +145,16 @@ public class Webbikayttoliittyma {
         get("/ketju/:id/:sivu", (req, res) -> {
             HashMap map = new HashMap<>();
 
-            //try catch
-            int kid = Integer.parseInt(req.params("id"));
-            int sivu = Integer.parseInt(req.params("sivu"));
-
-            String varoitus = "Apuvva!!!";
+            int kid = 0;
+            int sivu = 0;
+            try {
+                kid = Integer.parseInt(req.params("id"));
+                sivu = Integer.parseInt(req.params("sivu"));
+            } catch (Exception e) {
+                map.put("alueet", sovelluslogiikka.haeAlueet());
+                map.put("varoitus", "Yritit virheelliseen osoitteeseen");
+                return new ModelAndView(map, "index");
+            }
 
             ArrayList<Integer> sivunumerot = new ArrayList<>();
             int sivumaara = sovelluslogiikka.haeViestienLkm(kid) / 10 + 1;
@@ -127,7 +163,6 @@ public class Webbikayttoliittyma {
                 sivunumerot.add(i);
             }
 
-            //hae viestit sivun perusteella, sivunro mukaan mappiin
             map.put("viestit", sovelluslogiikka.haeSivuViesteja(kid, sivu));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
             map.put("sivumaara", (sivumaara));
@@ -141,14 +176,26 @@ public class Webbikayttoliittyma {
         post("/ketju/:id/:sivu", (req, res) -> {
             HashMap map = new HashMap<>();
 
-            //try catch
-            int kid = Integer.parseInt(req.params("id"));
-            int sivu = Integer.parseInt(req.params("sivu"));
+            int kid = 0;
+            int sivu = 0;
+            try {
+                kid = Integer.parseInt(req.params("id"));
+                sivu = Integer.parseInt(req.params("sivu"));
+            } catch (Exception e) {
+                map.put("alueet", sovelluslogiikka.haeAlueet());
+                map.put("varoitus", "Yritit virheelliseen osoitteeseen");
+                return new ModelAndView(map, "index");
+            }
 
             String nimimerkki = req.queryParams("nimimerkki");
             String viesti = req.queryParams("viesti");
-
-            sovelluslogiikka.luoViesti(viesti, nimimerkki, kid);
+            if (nimimerkki.isEmpty()) {
+                map.put("varoitus", "Yritit vastata ilman nimimerkkiä");
+            } else if (viesti.isEmpty()) {
+                map.put("varoitus", "Yritit vastata tyhjällä viestillä");
+            } else {
+                sovelluslogiikka.luoViesti(viesti, nimimerkki, kid);
+            }
 
             ArrayList<Integer> sivunumerot = new ArrayList<>();
             int sivumaara = sovelluslogiikka.haeViestienLkm(kid) / 10 + 1;
@@ -157,7 +204,6 @@ public class Webbikayttoliittyma {
                 sivunumerot.add(i);
             }
 
-            //hae viestit sivun perusteella, sivunro mukaan mappiin
             map.put("viestit", sovelluslogiikka.haeViestit(kid));
             map.put("ketju", sovelluslogiikka.haeKetju(kid));
             map.put("sivumaara", (sivumaara));
@@ -170,14 +216,27 @@ public class Webbikayttoliittyma {
         post("/ketju/:id", (req, res) -> {
             HashMap map = new HashMap<>();
 
-            //try catch
-            int kid = Integer.parseInt(req.params("id"));
+            int kid = 0;
+            try {
+                kid = Integer.parseInt(req.params("id"));
+            } catch (Exception e) {
+                map.put("alueet", sovelluslogiikka.haeAlueet());
+                map.put("varoitus", "Yritit virheelliseen osoitteeseen");
+                return new ModelAndView(map, "index");
+            }
+
             int sivu = 0;
 
             String nimimerkki = req.queryParams("nimimerkki");
             String viesti = req.queryParams("viesti");
 
-            sovelluslogiikka.luoViesti(viesti, nimimerkki, kid);
+            if (nimimerkki.isEmpty()) {
+                map.put("varoitus", "Yritit vastata ilman nimimerkkiä");
+            } else if (viesti.isEmpty()) {
+                map.put("varoitus", "Yritit vastata tyhjällä viestillä");
+            } else {
+                sovelluslogiikka.luoViesti(viesti, nimimerkki, kid);
+            }
 
             ArrayList<Integer> sivunumerot = new ArrayList<>();
             int sivumaara = sovelluslogiikka.haeViestienLkm(kid) / 10 + 1;
@@ -199,8 +258,14 @@ public class Webbikayttoliittyma {
         get("/ketju/:id", (req, res) -> {
             HashMap map = new HashMap<>();
 
-            //try catch
-            int kid = Integer.parseInt(req.params("id"));
+            int kid = 0;
+            try {
+                kid = Integer.parseInt(req.params("id"));
+            } catch (Exception e) {
+                map.put("alueet", sovelluslogiikka.haeAlueet());
+                map.put("varoitus", "Yritit virheelliseen osoitteeseen");
+                return new ModelAndView(map, "index");
+            }
 
             ArrayList<Integer> sivunumerot = new ArrayList<>();
             int sivumaara = sovelluslogiikka.haeViestienLkm(kid) / 10 + 1;
@@ -216,6 +281,24 @@ public class Webbikayttoliittyma {
             map.put("sivunumerot", sivunumerot);
 
             return new ModelAndView(map, "ketju");
+        }, new ThymeleafTemplateEngine());
+
+        get("*", (req, res) -> {
+            HashMap map = new HashMap<>();
+
+            map.put("alueet", sovelluslogiikka.haeAlueet());
+            map.put("varoitus", "Yritit virheelliseen osoitteeseen");
+
+            return new ModelAndView(map, "index");
+        }, new ThymeleafTemplateEngine());
+
+        post("*", (req, res) -> {
+            HashMap map = new HashMap<>();
+
+            map.put("alueet", sovelluslogiikka.haeAlueet());
+            map.put("varoitus", "Yritit virheelliseen osoitteeseen");
+
+            return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
     }
