@@ -46,13 +46,6 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
                 + "WHERE AlueId = ? "
                 + "AND Nimi = ? "
                 + ";");
-
-//        stmt = yhteys.prepareStatement("SELECT * FROM Ketju "
-//                                    + "LEFT JOIN Viesti "
-//                                    + "ON Ketju.id = Viesti.KetjuId "
-//                                    + "WHERE Ketju.AlueId = ? "
-//                                    + "AND Ketju.Nimi = ? "
-//                                    + "AND Viesti.id IS NULL;");
         
         stmt2.setInt(1, ketju.getAid());
         stmt2.setString(2, ketju.getNimi());
@@ -87,17 +80,6 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
                 + "WHERE Ketju.AlueId = ? "
                 + "GROUP BY Ketju.Id "
                 + "ORDER BY MAX(Viesti.pvm) DESC;");
-
-//                PreparedStatement stmt = yhteys.prepareStatement(
-//                "SELECT Ketju.Id, Ketju.alueid, Alue.nimi, Ketju.nimi, "
-//                + "MAX(Viesti.pvm) AS pvm, COUNT(Viesti.id) AS maara "
-//                + "FROM Viesti JOIN Ketju "
-//                + "ON Ketju.Id = Viesti.KetjuId "
-//                + "JOIN Alue "
-//                + "ON Alue.Id = Ketju.AlueId "
-//                + "WHERE Ketju.AlueId = ? "
-//                + "GROUP BY Ketju.Id "
-//                + "ORDER BY MAX(Viesti.pvm) DESC;");
         
         stmt.setInt(1, alueId);
         ResultSet rs = stmt.executeQuery();
