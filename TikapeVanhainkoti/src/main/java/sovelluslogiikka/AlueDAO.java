@@ -10,7 +10,7 @@ import java.util.List;
  * SQL-kyselyt.
  */
 public class AlueDAO implements Dao<Integer, Alue> {
-
+    
     private Database database;
     private Connection yhteys;
 
@@ -24,7 +24,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
 
     @Override
     public void delete(Alue alue) throws SQLException {
-        //käytetään jokaisessa metodissa omaa prepareStatementtia
+        
         PreparedStatement stmt = yhteys.prepareStatement("");
     }
 
@@ -120,5 +120,23 @@ public class AlueDAO implements Dao<Integer, Alue> {
 
     public void suljeYhteys() throws SQLException {
         yhteys.close();
+    }
+
+    @Override
+    public int getAmount(Integer alueId) throws SQLException {
+        muodostaYhteys();
+
+        PreparedStatement stmt = yhteys.prepareStatement(
+                "SELECT COUNT(ketju.id) AS Maara FROM Alue, Ketju "
+              + "WHERE alue.id = ketju.alueid "
+              + "AND alue.id = ?;");  
+        stmt.setInt(1, alueId);
+        ResultSet rs = stmt.executeQuery();
+        int lkm = rs.getInt("Maara");
+        
+        rs.close();
+        suljeYhteys();
+        
+        return lkm;
     }
 }

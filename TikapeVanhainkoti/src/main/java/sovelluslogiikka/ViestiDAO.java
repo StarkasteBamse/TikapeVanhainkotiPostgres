@@ -127,4 +127,9 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
         return viestit;
     }
 
+    @Override
+    public int getAmount(Integer kkey) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

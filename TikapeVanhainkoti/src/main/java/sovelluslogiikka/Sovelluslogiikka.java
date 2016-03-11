@@ -15,7 +15,6 @@ public class Sovelluslogiikka {
 
     public Sovelluslogiikka(String tietokannanNimi) {
         this.tietokannanNimi = tietokannanNimi;
-        
     }
 
     public boolean kaynnista() {
@@ -82,7 +81,7 @@ public class Sovelluslogiikka {
     }
 
     public Ketju haeKetju(int kid) {
-        Ketju ketju = new Ketju(0, 0, null, "", "", 0, 0);
+        Ketju ketju = new Ketju(0, 0, null, "", "", 0);
         try {
             ketju = ketjuDao.getOne(kid);
         } catch (SQLException ex) {
@@ -110,7 +109,7 @@ public class Sovelluslogiikka {
     }
 
     public boolean luoKetju(String nimi, int alue_id, String nimimerkki, String viesti) {
-        Ketju luotavaKetju = new Ketju(0, alue_id, null, nimi, null, 0, 0);
+        Ketju luotavaKetju = new Ketju(0, alue_id, null, nimi, null, 0);
         try {
             int kid = ketjuDao.add(luotavaKetju);
             luoViesti(viesti, nimimerkki, kid);

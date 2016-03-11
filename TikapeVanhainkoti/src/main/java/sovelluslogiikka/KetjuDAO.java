@@ -60,9 +60,6 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
 
         int ketjuId = rs.getInt("IsoinID");
 
-        // Tämä sout ei tulostu, miksi?
-        System.out.println("ketjuid " + ketjuId);
-
         rs.close();
         stmt2.close();
         suljeYhteys();
@@ -114,7 +111,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
             Timestamp timestamp = new Timestamp(rs.getLong("pvm"));
             LocalDateTime pvm = timestamp.toLocalDateTime();
 
-            ketjut.add(new Ketju(id, alueId, pvm, nimi, alueNimi, maara, 0));
+            ketjut.add(new Ketju(id, alueId, pvm, nimi, alueNimi, maara));
 
         }
         rs.close();
@@ -142,7 +139,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         stmt.setInt(1, kid);
         ResultSet rs = stmt.executeQuery();
 
-        Ketju ketju = new Ketju(0, 0, null, "", "", 0, 0);
+        Ketju ketju = new Ketju(0, 0, null, "", "", 0);
 
         while (rs.next()) {
             int id = rs.getInt("kid");
@@ -154,7 +151,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
             Timestamp timestamp = new Timestamp(rs.getLong("pvm"));
             LocalDateTime pvm = timestamp.toLocalDateTime();
 
-            ketju = new Ketju(id, aid, pvm, nimi, alueNimi, maara, 0);
+            ketju = new Ketju(id, aid, pvm, nimi, alueNimi, maara);
 
         }
         rs.close();
@@ -165,6 +162,24 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
 
     public void suljeYhteys() throws SQLException {
         yhteys.close();
+    }
+
+    @Override
+    public int getAmount(Integer ketjuId) throws SQLException {
+        muodostaYhteys();
+
+        PreparedStatement stmt = yhteys.prepareStatement(
+                "SELECT COUNT(viesti.id) AS Maara FROM Ketju, Viesti "
+              + "WHERE ketju.id = viesti.ketjuid "
+              + "AND Ketju.id = ?;");  
+        stmt.setInt(1, ketjuId);
+        ResultSet rs = stmt.executeQuery();
+        int lkm = rs.getInt("Maara");
+        
+        rs.close();
+        suljeYhteys();
+        
+        return lkm;
     }
 
 }
