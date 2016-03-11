@@ -128,5 +128,23 @@ public class Sovelluslogiikka {
             return false;
         }
     }
+    
+    public int haeKetjujenLkm(int aid) {
+        try {
+            return alueDao.getAmount(aid);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return -1;
+    }
+    
+    public int haeViestienLkm(int kid) {
+        try {
+            return ketjuDao.getAmount(kid);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return -1;
+    }
 
 }
