@@ -17,17 +17,49 @@
                 <span th:text="${ketju.nimi}">knimi</span></h1>
 
             <!--<div class="alert alert-warning" th:if="${varoitus}">-->
-                <!--<div th:if="${varoitus}">-->
-<!--                <div class="alert alert-warning">
-                    <span th:text="@{varoitus}" th:if="${varoitus}">varoitusteksti</span>
-            </div>-->
+            <!--<div th:if="${varoitus}">-->
+            <!--                <div class="alert alert-warning">
+                                <span th:text="@{varoitus}" th:if="${varoitus}">varoitusteksti</span>
+                        </div>-->
 
-            <ul>
-                <li th:each="viesti: ${viestit}">
-                    <span th:text="${viesti.viesti}">sisalto</span> t. 
+            <!--            <ul>
+                            <li th:each="viesti: ${viestit}">
+                                <span th:text="${viesti.viesti}">sisalto</span> t. 
+                                <span th:text="${viesti.nimimerkki}">nimim</span>
+                            </li>
+                        </ul>-->
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <ul class="pager">
+                        <li><span th:if="${sivu}>1"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${sivu}-1)}">Edellinen</a></span></li>
+                    </ul>
+                </div>
+                <div class="col-sm-8">
+                </div>
+                <div class="col-sm-2">
+                    <ul class="pager">
+                        <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-8">
+                    <strong>Viesti</strong>
+                </div>
+                <div class="col-sm-4">
+                    <strong>Kirjoittaja</strong>
+                </div>
+            </div>
+            <div class="row" th:each="viesti: ${viestit}">
+                <div class="col-sm-8">
+                    <span th:text="${viesti.viesti}">sisalto</span>
+                </div>
+                <div class="col-sm-4">
                     <span th:text="${viesti.nimimerkki}">nimim</span>
-                </li>            
-            </ul>
+                </div>
+            </div>
 
             <ul class="pagination">
                 <!--<li th:each="i : ${#numbers.sequence( 1, ${sivu})}"><a href="#"><span th:text="${status.count}">0</span></a></li>-->
@@ -35,10 +67,20 @@
                 <!--<li class="active"><a href="#">2</a></li>-->
             </ul>
 
-            <ul class="pager">
-                <li><span th:if="${sivu}>1"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${sivu}-1)}">Edellinen</a></span></li>
-                <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
-            </ul>
+            <div class="row">
+                <div class="col-sm-2">
+                    <ul class="pager">
+                        <li><span th:if="${sivu}>1"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${sivu}-1)}">Edellinen</a></span></li>
+                    </ul>
+                </div>
+                <div class="col-sm-8">
+                </div>
+                <div class="col-sm-2">
+                    <ul class="pager">
+                        <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
+                    </ul>
+                </div>
+            </div>
 
             <form method="POST" th:action="@{~/ketju/{kid}(kid=${ketju.id})}">
                 Nimimerkki:<br/>

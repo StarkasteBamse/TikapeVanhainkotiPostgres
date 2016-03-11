@@ -11,21 +11,42 @@
         <div class="container">
             <h1>Alueet</h1>
 
-            <ul>
-                <li th:each="alue: ${alueet}">
-                    <!--<a th:href="@{/alue/{aid}(aid=${alue.id})}">-->
+            <div class="row">
+                <div class="col-sm-12"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <strong>Alue</strong>
+                </div>
+                <div class="col-sm-2">
+                    <strong>Viestejä</strong>
+                </div>
+                <div class="col-sm-4">
+                    <strong>Päivämäärä</strong>
+                </div>
+            </div>
+
+            <div class="row" th:each="alue: ${alueet}">
+                <div class="col-sm-6">
                     <a th:href="@{~/alue/{aid}/1(aid=${alue.id})}">
                         <span th:text="${alue.nimi}">Nimi</span></a>
+                </div>
+                <div class="col-sm-2">
                     <span th:text="${alue.lkm}">ViestienLkm</span>
+                </div>
+                <div class="col-sm-4">
                     <span th:text="${alue.pvm}" th:if="${alue.lkm}>0">Pvm</span>
-                </li>
-            </ul>
-
-            <form method="POST" action="/alue/uusi">
-                Alueen nimi:<br/>
-                <input type="text" name="nimi"/><br/>
-                <input type="submit" value="Luo alue"/>
-            </form>
+                </div>
+            </div>
+            
+            <div>
+                <form method="POST" action="/alue/uusi">
+                    Alueen nimi:<br/>
+                    <input type="text" name="nimi"/><br/>
+                    <input type="submit" value="Luo alue"/>
+                </form>
+            </div>
+            
         </div>
     </body>
 </html>

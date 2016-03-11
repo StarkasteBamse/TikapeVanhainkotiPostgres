@@ -11,20 +11,65 @@
         <div class="container">
             <h1><a href="/">Foorumi</a>: <span th:text="${alue.nimi}">nimi</span></h1>
 
-            <ul>
-                <li th:each="ketju: ${ketjut}">
-                    <!--<a th:href="@{/ketju/{kid}(kid=${ketju.id})}">-->
+            <div class="row">
+                <div class="col-sm-2">
+                    <ul class="pager">
+                        <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/alue/{aid}/{sivunro}(aid=${alue.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
+                    </ul>
+                </div>
+                <div class="col-sm-8">
+                </div>
+                <div class="col-sm-2">
+                    <ul class="pager">
+                        <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/alue/{aid}/{sivunro}(aid=${alue.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <strong>Otsikko</strong>
+                </div>
+                <div class="col-sm-2">
+                    <strong>Viestejä</strong>
+                </div>
+                <div class="col-sm-4">
+                    <strong>Päivämäärä</strong>
+                </div>
+            </div>
+
+            <div class="row" th:each="ketju: ${ketjut}">
+                <div class="col-sm-6">
                     <a th:href="@{~/ketju/{kid}/1(kid=${ketju.id})}">
                         <span th:text="${ketju.nimi}">Nimi</span></a>
+                </div>
+                <div class="col-sm-2">
                     <span th:text="${ketju.lkm}">Maara</span>
+                </div>
+                <div class="col-sm-4">
                     <span th:text="${ketju.pvm}">Pvm</span>
-                </li>
-            </ul>
+                </div>
+            </div>
 
-            <ul class="pager">
-                <li><span th:if="${sivu}>1"><a th:href="@{~/alue/{aid}/{sivunro}(aid=${alue.id}, sivunro=${sivu}-1)}">Edellinen</a></span></li>
-                <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/alue/{aid}/{sivunro}(aid=${alue.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
-            </ul>
+            <div class="row">
+                <div class="col-sm-2">
+                    <ul class="pager">
+                        <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/alue/{aid}/{sivunro}(aid=${alue.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
+                    </ul>
+                </div>
+                <div class="col-sm-8">
+                </div>
+                <div class="col-sm-2">
+                    <ul class="pager">
+                        <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/alue/{aid}/{sivunro}(aid=${alue.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!--            <ul class="pager">
+                            <li><span th:if="${sivu}>1"><a th:href="@{~/alue/{aid}/{sivunro}(aid=${alue.id}, sivunro=${sivu}-1)}">Edellinen</a></span></li>
+                            <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/alue/{aid}/{sivunro}(aid=${alue.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
+                        </ul>-->
 
             <!--<form method="POST" th:action="@{~/ketju/{aid}/uusi(aid=${alue.id})}">-->
             <form method="POST" action="/ketju/uusi">
