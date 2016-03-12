@@ -34,13 +34,13 @@ public class TKAlustaja {
         //taulu "Alue" luonti
         
         taulunLuominen("DROP TABLE Alue;");
-        taulunLuominen("CREATE TABLE Alue (id SERIAL PRIMARY KEY AUTOINCREMENT nimi varchar(100) NOT NULL UNIQUE);");
+        taulunLuominen("CREATE TABLE Alue (id SERIAL PRIMARY KEY, nimi varchar(100) NOT NULL UNIQUE);");
         //taulu "Ketju" luonti
         taulunLuominen("DROP TABLE Ketju;");
-        taulunLuominen("CREATE TABLE Ketju (id SERIAL PRIMARY KEY AUTOINCREMENT, nimi varchar(100) NOT NULL, alueId integer NOT NULL, FOREIGN KEY (AlueId) REFERENCES Alue(Id));");
+        taulunLuominen("CREATE TABLE Ketju (id SERIAL PRIMARY KEY, nimi varchar(100) NOT NULL, alueId integer NOT NULL, FOREIGN KEY (AlueId) REFERENCES Alue(Id));");
         //taulu "Viesti" luonti, Nimimerkin kanssa.
         taulunLuominen("DROP TABLE Viesti;");
-        taulunLuominen("CREATE TABLE Viesti (id SERIAL PRIMARY KEY AUTOINCREMENT, viesti text NOT NULL, nimimerkki varchar(50) NOT NULL, pvm datetime NOT NULL, ketjuId integer NOT NULL, FOREIGN KEY (KetjuId) REFERENCES Ketju(Id));");
+        taulunLuominen("CREATE TABLE Viesti (id SERIAL PRIMARY KEY, viesti text NOT NULL, nimimerkki varchar(50) NOT NULL, pvm datetime NOT NULL, ketjuId integer NOT NULL, FOREIGN KEY (KetjuId) REFERENCES Ketju(Id));");
         taulunLuominen("CREATE INDEX idx_ketjuId ON Ketju (id), "
                 + "idx_viestiId ON Viesti (id);");
 
