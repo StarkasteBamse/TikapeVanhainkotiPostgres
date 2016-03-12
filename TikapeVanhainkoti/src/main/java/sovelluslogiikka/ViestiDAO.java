@@ -62,7 +62,7 @@ public class ViestiDAO implements Dao<Integer, Viesti> {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT * "
-                + "FROM Viesti WHERE KetjuId = ?;");
+                + "FROM Viesti WHERE KetjuId = ? ORDER BY pvm;");
         stmt.setInt(1, ketjuId);
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new LinkedList<>();
