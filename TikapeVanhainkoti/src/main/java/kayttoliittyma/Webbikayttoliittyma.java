@@ -3,6 +3,8 @@ package kayttoliittyma;
 import java.util.*;
 import sovelluslogiikka.Sovelluslogiikka;
 import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
 import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
@@ -25,57 +27,33 @@ public class Webbikayttoliittyma {
         }, new ThymeleafTemplateEngine());
 
         get("/alue/:id/:sivu", (req, res) -> {
-            HashMap map = new HashMap<>();
 
-            //try catch
-            int aid = 0;
-            int sivu = 0;
+            int alueid = 1;
+            int sivu = 1;
             try {
-                aid = Integer.parseInt(req.params("id"));
+                alueid = Integer.parseInt(req.params("id"));
                 sivu = Integer.parseInt(req.params("sivu"));
             } catch (Exception e) {
                 return new ModelAndView(virheOsoite(), "index");
             }
 
-            ArrayList<Integer> sivunumerot = new ArrayList<>();
-            int sivumaara = sovelluslogiikka.haeKetjujenLkm(aid) / 10 + 1;
-
-            for (int i = 1; i <= sivumaara; i++) {
-                sivunumerot.add(i);
-            }
-
-            map.put("ketjut", sovelluslogiikka.haeSivuKetjuja(aid, sivu));
-            map.put("alue", sovelluslogiikka.haeAlue(aid));
-            map.put("sivumaara", (sivumaara));
-            map.put("sivu", sivu);
-            map.put("sivunumerot", sivunumerot);
+            HashMap map = haeAlue(alueid, sivu);
 
             return new ModelAndView(map, "alue");
 
         }, new ThymeleafTemplateEngine());
 
         get("/alue/:id", (req, res) -> {
-            HashMap map = new HashMap<>();
 
-            int aid = 0;
+            int alueid = 1;
+            int sivu = 1;
             try {
-                aid = Integer.parseInt(req.params("id"));
+                alueid = Integer.parseInt(req.params("id"));
             } catch (Exception e) {
                 return new ModelAndView(virheOsoite(), "index");
             }
 
-            ArrayList<Integer> sivunumerot = new ArrayList<>();
-            int sivumaara = sovelluslogiikka.haeKetjujenLkm(aid) / 10 + 1;
-
-            for (int i = 1; i <= sivumaara; i++) {
-                sivunumerot.add(i);
-            }
-
-            map.put("ketjut", sovelluslogiikka.haeSivuKetjuja(aid, 1));
-            map.put("alue", sovelluslogiikka.haeAlue(aid));
-            map.put("sivumaara", (sivumaara));
-            map.put("sivu", 1);
-            map.put("sivunumerot", sivunumerot);
+            HashMap map = haeAlue(alueid, sivu);
 
             return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
@@ -98,80 +76,60 @@ public class Webbikayttoliittyma {
         }, new ThymeleafTemplateEngine());
 
         post("/ketju/uusi", (req, res) -> {
-            HashMap map = new HashMap<>();
+
             String nimimerkki = req.queryParams("nimimerkki");
             String otsikko = req.queryParams("otsikko");
             String viesti = req.queryParams("viesti");
 
-            int alueid = 0;
+            int alueid = 1;
+            int sivu = 1;
             try {
                 alueid = Integer.parseInt(req.queryParams("alueid"));
             } catch (Exception e) {
                 return new ModelAndView(virheOsoite(), "index");
             }
 
+            String varoitus = "";
             if (nimimerkki.isEmpty()) {
-                map.put("varoitus", "Yritit aloittaa keskustelun ilman nimimerkkiä");
+                varoitus = "Yritit aloittaa keskustelun ilman nimimerkkiä";
             } else if (viesti.isEmpty()) {
-                map.put("varoitus", "Yritit aloittaa keskustelun tyhjällä viestillä");
+                varoitus = "Yritit aloittaa keskustelun tyhjällä viestillä";
             } else if (otsikko.isEmpty()) {
-                map.put("varoitus", "Yritit aloittaa keskustelun ilman otsikkoa");
+                varoitus = "Yritit aloittaa keskustelun ilman otsikkoa";
             } else {
                 sovelluslogiikka.luoKetju(otsikko, alueid, nimimerkki, viesti);
             }
 
-            ArrayList<Integer> sivunumerot = new ArrayList<>();
-            int sivumaara = sovelluslogiikka.haeKetjujenLkm(alueid) / 10 + 1;
-
-            for (int i = 1; i <= sivumaara; i++) {
-                sivunumerot.add(i);
+            HashMap map = haeAlue(alueid, sivu);
+            if (!varoitus.isEmpty()) {
+                map.put("varoitus", varoitus);
             }
-
-            map.put("ketjut", sovelluslogiikka.haeSivuKetjuja(alueid, 1));
-            map.put("alue", sovelluslogiikka.haeAlue(alueid));
-            map.put("sivumaara", (sivumaara));
-            map.put("sivu", 1);
-            map.put("sivunumerot", sivunumerot);
 
             return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
 
         get("/ketju/:id/:sivu", (req, res) -> {
-            HashMap map = new HashMap<>();
 
-            int kid = 0;
-            int sivu = 0;
+            int ketjuid = 1;
+            int sivu = 1;
             try {
-                kid = Integer.parseInt(req.params("id"));
+                ketjuid = Integer.parseInt(req.params("id"));
                 sivu = Integer.parseInt(req.params("sivu"));
             } catch (Exception e) {
                 return new ModelAndView(virheOsoite(), "index");
             }
 
-            ArrayList<Integer> sivunumerot = new ArrayList<>();
-            int sivumaara = sovelluslogiikka.haeViestienLkm(kid) / 10 + 1;
-
-            for (int i = 1; i <= sivumaara; i++) {
-                sivunumerot.add(i);
-            }
-
-            map.put("viestit", sovelluslogiikka.haeSivuViesteja(kid, sivu));
-            map.put("ketju", sovelluslogiikka.haeKetju(kid));
-            map.put("sivumaara", (sivumaara));
-            map.put("sivu", sivu);
-            map.put("sivunumerot", sivunumerot);
-//            map.put("varoitus", varoitus);
+            HashMap map = haeKetju(ketjuid, sivu);
 
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
 
         post("/ketju/:id/:sivu", (req, res) -> {
-            HashMap map = new HashMap<>();
 
-            int kid = 0;
+            int ketjuid = 1;
             int sivu = 1;
             try {
-                kid = Integer.parseInt(req.params("id"));
+                ketjuid = Integer.parseInt(req.params("id"));
                 sivu = Integer.parseInt(req.params("sivu"));
             } catch (Exception e) {
                 return new ModelAndView(virheOsoite(), "index");
@@ -179,92 +137,69 @@ public class Webbikayttoliittyma {
 
             String nimimerkki = req.queryParams("nimimerkki");
             String viesti = req.queryParams("viesti");
+
+            String varoitus = "";
+
             if (nimimerkki.isEmpty()) {
-                map.put("varoitus", "Yritit vastata ilman nimimerkkiä");
+                varoitus = "Yritit vastata ilman nimimerkkiä";
             } else if (viesti.isEmpty()) {
-                map.put("varoitus", "Yritit vastata tyhjällä viestillä");
+                varoitus = "Yritit vastata tyhjällä viestillä";
             } else {
-                sovelluslogiikka.luoViesti(viesti, nimimerkki, kid);
+                sovelluslogiikka.luoViesti(viesti, nimimerkki, ketjuid);
             }
 
-            ArrayList<Integer> sivunumerot = new ArrayList<>();
-            int sivumaara = sovelluslogiikka.haeViestienLkm(kid) / 10 + 1;
-
-            for (int i = 1; i <= sivumaara; i++) {
-                sivunumerot.add(i);
+            HashMap map = haeKetju(ketjuid, sivu);
+            if (!varoitus.isEmpty()) {
+                map.put("varoitus", varoitus);
             }
-
-            map.put("viestit", sovelluslogiikka.haeSivuViesteja(kid, sivu));
-            map.put("ketju", sovelluslogiikka.haeKetju(kid));
-            map.put("sivumaara", (sivumaara));
-            map.put("sivu", sivu);
-            map.put("sivunumerot", sivunumerot);
 
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
 
         post("/ketju/:id", (req, res) -> {
-            HashMap map = new HashMap<>();
 
-            int kid = 0;
+            int ketjuid = 1;
+            int sivu = 1;
+
             try {
-                kid = Integer.parseInt(req.params("id"));
+                ketjuid = Integer.parseInt(req.params("id"));
             } catch (Exception e) {
                 return new ModelAndView(virheOsoite(), "index");
             }
 
-            int sivu = 0;
-
             String nimimerkki = req.queryParams("nimimerkki");
             String viesti = req.queryParams("viesti");
 
+            String varoitus = "";
+
             if (nimimerkki.isEmpty()) {
-                map.put("varoitus", "Yritit vastata ilman nimimerkkiä");
+                varoitus = "Yritit vastata ilman nimimerkkiä";
             } else if (viesti.isEmpty()) {
-                map.put("varoitus", "Yritit vastata tyhjällä viestillä");
+                varoitus = "Yritit vastata tyhjällä viestillä";
             } else {
-                sovelluslogiikka.luoViesti(viesti, nimimerkki, kid);
+                sovelluslogiikka.luoViesti(viesti, nimimerkki, ketjuid);
             }
 
-            ArrayList<Integer> sivunumerot = new ArrayList<>();
-            int sivumaara = sovelluslogiikka.haeViestienLkm(kid) / 10 + 1;
-
-            for (int i = 1; i <= sivumaara; i++) {
-                sivunumerot.add(i);
+            HashMap map = haeKetju(ketjuid, sivu);
+            if (!varoitus.isEmpty()) {
+                map.put("varoitus", varoitus);
             }
-
-            //hae viestit sivun perusteella, sivunro mukaan mappiin
-            map.put("viestit", sovelluslogiikka.haeViestit(kid));
-            map.put("ketju", sovelluslogiikka.haeKetju(kid));
-            map.put("sivumaara", (sivumaara));
-            map.put("sivu", sivu);
-            map.put("sivunumerot", sivunumerot);
 
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
 
         get("/ketju/:id", (req, res) -> {
-            HashMap map = new HashMap<>();
 
-            int kid = 0;
+            int ketjuid = 1;
+            int sivu = 1;
+
             try {
-                kid = Integer.parseInt(req.params("id"));
+                ketjuid = Integer.parseInt(req.params("id"));
             } catch (Exception e) {
                 return new ModelAndView(virheOsoite(), "index");
             }
 
-            ArrayList<Integer> sivunumerot = new ArrayList<>();
-            int sivumaara = sovelluslogiikka.haeViestienLkm(kid) / 10 + 1;
-
-            for (int i = 1; i <= sivumaara; i++) {
-                sivunumerot.add(i);
-            }
-
-            map.put("viestit", sovelluslogiikka.haeViestit(kid));
-            map.put("ketju", sovelluslogiikka.haeKetju(kid));
-            map.put("sivumaara", (sivumaara));
-            map.put("sivu", 1);
-            map.put("sivunumerot", sivunumerot);
+            HashMap map = haeKetju(ketjuid, sivu);
 
             return new ModelAndView(map, "ketju");
         }, new ThymeleafTemplateEngine());
@@ -286,6 +221,50 @@ public class Webbikayttoliittyma {
         map.put("varoitus", "Yritit virheelliseen osoitteeseen");
 
         return map;
+
+    }
+
+    private HashMap haeAlue(int alueid, int sivu) {
+        HashMap map = new HashMap<>();
+
+        int sivumaara = sovelluslogiikka.haeKetjujenLkm(alueid) / 10 + 1;
+        ArrayList<Integer> sivunumerot = laskeSivunumerot(sivumaara);
+
+        map.put("ketjut", sovelluslogiikka.haeSivuKetjuja(alueid, sivu));
+        map.put("alue", sovelluslogiikka.haeAlue(alueid));
+
+        map.put("sivumaara", (sivumaara));
+        map.put("sivu", sivu);
+        map.put("sivunumerot", sivunumerot);
+
+        return map;
+
+    }
+
+    private HashMap haeKetju(int ketjuid, int sivu) {
+        HashMap map = new HashMap<>();
+
+        int sivumaara = sovelluslogiikka.haeViestienLkm(ketjuid) / 10 + 1;
+        ArrayList<Integer> sivunumerot = laskeSivunumerot(sivumaara);
+
+        map.put("viestit", sovelluslogiikka.haeSivuViesteja(ketjuid, sivu));
+        map.put("ketju", sovelluslogiikka.haeKetju(ketjuid));
+        map.put("sivumaara", (sivumaara));
+        map.put("sivu", sivu);
+        map.put("sivunumerot", sivunumerot);
+
+        return map;
+
+    }
+
+    private ArrayList<Integer> laskeSivunumerot(int sivumaara) {
+        ArrayList<Integer> sivunumerot = new ArrayList<>();
+
+        for (int i = 1; i <= sivumaara; i++) {
+            sivunumerot.add(i);
+        }
+
+        return sivunumerot;
 
     }
 
