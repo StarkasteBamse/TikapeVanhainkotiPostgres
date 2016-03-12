@@ -6,15 +6,10 @@ public class TKAlustaja {
 
     private Database database;
     private boolean debug = false;
-    private String alustus;
+    
 
-    public TKAlustaja(Database database, Boolean sqlite) {
+    public TKAlustaja(Database database) {
         this.database = database;
-        if (sqlite) {
-            alustus = "integer";
-        } else {
-            alustus = "SERIAL";
-        }
     }
 
     public void setDebug(boolean debug) {
@@ -38,17 +33,17 @@ public class TKAlustaja {
 
         //taulu "Alue" luonti
         taulunLuominen("CREATE TABLE Alue "
-                + "(id " + alustus + " PRIMARY KEY AUTOINCREMENT, "
+                + "(id SERIAL PRIMARY KEY AUTOINCREMENT, "
                 + "nimi varchar(100) NOT NULL UNIQUE)");
         //taulu "Ketju" luonti
         taulunLuominen("CREATE TABLE Ketju "
-                + "(id " + alustus + " PRIMARY KEY AUTOINCREMENT, "
+                + "(id SERIAL PRIMARY KEY AUTOINCREMENT, "
                 + "nimi varchar(100) NOT NULL, "
                 + "alueId integer NOT NULL, "
                 + "FOREIGN KEY (AlueId) REFERENCES Alue(Id))");
         //taulu "Viesti" luonti, Nimimerkin kanssa.
         taulunLuominen("CREATE TABLE Viesti "
-                + "(id " + alustus + " PRIMARY KEY AUTOINCREMENT, "
+                + "(id SERIAL PRIMARY KEY AUTOINCREMENT, "
                 + "viesti text NOT NULL, "
                 + "nimimerkki varchar(50) NOT NULL, "
                 + "pvm datetime NOT NULL, "
