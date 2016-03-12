@@ -2,7 +2,6 @@ package sovelluslogiikka;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
  * SQL-kyselyt.
  */
 public class AlueDAO implements Dao<Integer, Alue> {
-
+    
     private Database database;
     private Connection yhteys;
 
@@ -25,7 +24,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
 
     @Override
     public void delete(Alue alue) throws SQLException {
-
+        
         PreparedStatement stmt = yhteys.prepareStatement("");
     }
 
@@ -58,7 +57,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
                 + "ON Alue.id = Ketju.alueid "
                 + "LEFT JOIN Viesti "
                 + "ON Ketju.id = Viesti.ketjuid "
-                + "GROUP BY alue.id, alue.nimi "
+                + "GROUP BY alue.id "
                 + "ORDER BY Alue.Nimi ASC;");
 
         ResultSet rs = stmt.executeQuery();
@@ -94,7 +93,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
                 + "LEFT JOIN Viesti "
                 + "ON Ketju.id = Viesti.ketjuid "
                 + "WHERE Alue.id = ? "
-                + "GROUP BY alue.id, alue.nimi "
+                + "GROUP BY Alue.id "
                 + "ORDER BY Alue.Nimi ASC;");
 
         stmt.setInt(1, aid);
@@ -129,20 +128,20 @@ public class AlueDAO implements Dao<Integer, Alue> {
 
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT COUNT(ketju.id) AS Maara FROM Alue, Ketju "
-                + "WHERE alue.id = ketju.alueid "
-                + "AND alue.id = ?;");
+              + "WHERE alue.id = ketju.alueid "
+              + "AND alue.id = ?;");  
         stmt.setInt(1, alueId);
         ResultSet rs = stmt.executeQuery();
-
+        
         int lkm = 0;
-        while (rs.next()) {
+        while (rs.next()){
             lkm = rs.getInt("Maara");
         }
-
+        
         rs.close();
         stmt.close();
         suljeYhteys();
-
+        
         return lkm;
     }
 }

@@ -16,6 +16,8 @@ public class Webbikayttoliittyma {
 
     public void kaynnista() {
 
+        staticFileLocation("/css");
+        
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
 

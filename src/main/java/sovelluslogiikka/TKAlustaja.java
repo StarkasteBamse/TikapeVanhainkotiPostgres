@@ -52,9 +52,9 @@ public class TKAlustaja {
             taulunLuominen("CREATE INDEX idx_ketjuId ON Ketju (id), "
                     + "idx_viestiId ON Viesti (id);");
         } else {
-            taulunLuominen("DROP TABLE Viesti;");
-            taulunLuominen("DROP TABLE Ketju;");
-            taulunLuominen("DROP TABLE Alue;");
+//            taulunLuominen("DROP TABLE Viesti;");
+//            taulunLuominen("DROP TABLE Ketju;");
+//            taulunLuominen("DROP TABLE Alue;");
             //taulu "Alue" luonti
             taulunLuominen("CREATE TABLE Alue (id SERIAL PRIMARY KEY, nimi varchar(100) NOT NULL UNIQUE);");
             //taulu "Ketju" luonti        
