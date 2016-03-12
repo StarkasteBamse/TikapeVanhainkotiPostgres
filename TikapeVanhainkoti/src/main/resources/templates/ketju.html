@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" th:if="${not #lists.isEmpty(viestit)}">
                 <div class="col-sm-8">
                     <strong>Viesti</strong>
                 </div>
@@ -51,7 +51,13 @@
                     <strong>Kirjoittaja</strong>
                 </div>
             </div>
-            
+
+            <div class="row" th:if="${#lists.isEmpty(viestit)}">
+                <div class="col-sm-12">
+                    <strong>Viestiketjun tällä sivulla ei ole viestejä</strong>
+                </div>
+            </div>
+
             <div class="row" th:each="viesti,iterStat: ${viestit}">
                 <div class="col-sm-8" th:style="${iterStat.even}? 'background-color:lavender;'">
                     <span th:text="${viesti.viesti}">sisalto</span>

@@ -10,7 +10,7 @@
     <body>
         <div class="container">
             <h1><a href="/">Foorumi</a>: <span th:text="${alue.nimi}">nimi</span>
-                 / <span th:text="${sivu}">Sivu</span>
+                / <span th:text="${sivu}">Sivu</span>
             </h1>
 
             <div th:if="${varoitus}">
@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" th:if="${not #lists.isEmpty(ketjut)}">
                 <div class="col-sm-6">
                     <strong>Otsikko</strong>
                 </div>
@@ -49,6 +49,12 @@
                 </div>
                 <div class="col-sm-4">
                     <strong>Päivämäärä</strong>
+                </div>
+            </div>
+
+            <div class="row" th:if="${#lists.isEmpty(ketjut)}">
+                <div class="col-sm-12">
+                    <strong>Alueella tai alueen tällä sivulla ei ole viestejä</strong>
                 </div>
             </div>
 
