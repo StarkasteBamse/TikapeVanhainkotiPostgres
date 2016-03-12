@@ -34,13 +34,13 @@ public class TKAlustaja {
         //taulu "Alue" luonti
         taulunLuominen("CREATE TABLE Alue "
                 + "(id SERIAL PRIMARY KEY AUTOINCREMENT, "
-                + "nimi varchar(100) NOT NULL UNIQUE)");
+                + "nimi varchar(100) NOT NULL UNIQUE);");
         //taulu "Ketju" luonti
         taulunLuominen("CREATE TABLE Ketju "
                 + "(id SERIAL PRIMARY KEY AUTOINCREMENT, "
                 + "nimi varchar(100) NOT NULL, "
                 + "alueId integer NOT NULL, "
-                + "FOREIGN KEY (AlueId) REFERENCES Alue(Id))");
+                + "FOREIGN KEY (AlueId) REFERENCES Alue(Id));");
         //taulu "Viesti" luonti, Nimimerkin kanssa.
         taulunLuominen("CREATE TABLE Viesti "
                 + "(id SERIAL PRIMARY KEY AUTOINCREMENT, "
@@ -48,9 +48,9 @@ public class TKAlustaja {
                 + "nimimerkki varchar(50) NOT NULL, "
                 + "pvm datetime NOT NULL, "
                 + "ketjuId integer NOT NULL, "
-                + "FOREIGN KEY (KetjuId) REFERENCES Ketju(Id))");
+                + "FOREIGN KEY (KetjuId) REFERENCES Ketju(Id));");
         taulunLuominen("CREATE INDEX idx_ketjuId ON Ketju (id), "
-                + "idx_viestiId ON Viesti (id)");
+                + "idx_viestiId ON Viesti (id);");
 
     }
 
