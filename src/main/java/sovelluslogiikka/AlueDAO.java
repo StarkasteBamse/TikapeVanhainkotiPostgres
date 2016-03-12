@@ -52,14 +52,14 @@ public class AlueDAO implements Dao<Integer, Alue> {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja "
-//                + "MAX(viesti.pvm) AS Viimeisin "
+                + "MAX(viesti.pvm) AS Viimeisin "
                 + "FROM Alue "
                 + "LEFT JOIN Ketju "
                 + "ON Alue.id = Ketju.alueid "
                 + "LEFT JOIN Viesti "
                 + "ON Ketju.id = Viesti.ketjuid "
-                + "GROUP BY alue.id, alue.nimi;");
-//                + "ORDER BY Alue.Nimi ASC;");
+                + "GROUP BY alue.id, alue.nimi "
+                + "ORDER BY Alue.Nimi ASC;");
 
         ResultSet rs = stmt.executeQuery();
         List<Alue> alueet = new LinkedList<>();
@@ -70,7 +70,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
 
             int viestienLkm = rs.getInt("Viesteja");
 
-            Timestamp timestamp = new Timestamp(0); //rs.getLong("Viimeisin")
+            Timestamp timestamp = new Timestamp(rs.getLong("Viimeisin"));
             LocalDateTime pvm = timestamp.toLocalDateTime();
 
             alueet.add(new Alue(id, nimi, pvm, viestienLkm));
@@ -87,15 +87,15 @@ public class AlueDAO implements Dao<Integer, Alue> {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja "
-//                + "MAX(viesti.pvm) AS Viimeisin "
+                + "MAX(viesti.pvm) AS Viimeisin "
                 + "FROM Alue "
                 + "LEFT JOIN Ketju "
                 + "ON Alue.id = Ketju.alueid "
                 + "LEFT JOIN Viesti "
                 + "ON Ketju.id = Viesti.ketjuid "
                 + "WHERE Alue.id = ? "
-                + "GROUP BY alue.id, alue.nimi;");
-//                + "ORDER BY Alue.Nimi ASC;");
+                + "GROUP BY alue.id, alue.nimi "
+                + "ORDER BY Alue.Nimi ASC;");
 
         stmt.setInt(1, aid);
         ResultSet rs = stmt.executeQuery();
@@ -107,7 +107,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
 
             int viestienLkm = rs.getInt("Viesteja");
 
-            Timestamp timestamp = new Timestamp(0);  //rs.getLong("Viimeisin")
+            Timestamp timestamp = new Timestamp(rs.getLong("Viimeisin"));
             LocalDateTime pvm = timestamp.toLocalDateTime();
 
             alue = new Alue(id, nimi, pvm, viestienLkm);
