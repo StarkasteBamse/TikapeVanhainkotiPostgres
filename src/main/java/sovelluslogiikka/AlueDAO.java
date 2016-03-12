@@ -110,7 +110,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
             Timestamp timestamp = new Timestamp(0);  //rs.getLong("Viimeisin")
             LocalDateTime pvm = timestamp.toLocalDateTime();
 
-            alue = new Alue(id, nimi, , viestienLkm);
+            alue = new Alue(id, nimi, pvm, viestienLkm);
 
         }
         rs.close();
