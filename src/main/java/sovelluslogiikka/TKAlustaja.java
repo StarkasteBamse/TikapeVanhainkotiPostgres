@@ -5,7 +5,7 @@ import java.sql.*;
 public class TKAlustaja {
 
     private Database database;
-    private boolean debug = false;
+    private boolean debug = true;
     
 
     public TKAlustaja(Database database) {
