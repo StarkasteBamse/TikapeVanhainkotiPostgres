@@ -21,7 +21,7 @@ public class TKAlustaja {
         this.debug = debug;
     }
 
-    public void kokeileYhteys() {
+    public boolean kokeileYhteys() {
         try {
             Connection connection = database.getConnection();
             connection.close();
@@ -29,7 +29,9 @@ public class TKAlustaja {
             if (debug) {
                 System.out.println(e);
             }
+            return false;
         }
+        return true;
     }
 
     public void luoTaulut() {

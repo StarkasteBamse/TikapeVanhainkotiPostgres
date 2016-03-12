@@ -18,17 +18,20 @@ public class Sovelluslogiikka {
     }
 
     public boolean kaynnista() {
-        
+
         boolean sqlite = true;
         if (this.tietokannanNimi.contains("postgres")) {
             sqlite = false;
         }
-        
+
         try {
             this.database = new Database(tietokannanNimi);
             this.tkAlustaja = new TKAlustaja(database, sqlite);
-            tkAlustaja.kokeileYhteys();
-            tkAlustaja.luoTaulut();
+            boolean yhteysToimii = tkAlustaja.kokeileYhteys();
+            System.out.println("yhteys: " + yhteysToimii);
+            if (yhteysToimii) {
+                tkAlustaja.luoTaulut();
+            }
             this.alueDao = new AlueDAO(database);
             this.ketjuDao = new KetjuDAO(database);
             this.viestiDao = new ViestiDAO(database);
@@ -134,7 +137,7 @@ public class Sovelluslogiikka {
             return false;
         }
     }
-    
+
     public int haeKetjujenLkm(int aid) {
         try {
             return alueDao.getAmount(aid);
@@ -143,7 +146,7 @@ public class Sovelluslogiikka {
         }
         return -1;
     }
-    
+
     public int haeViestienLkm(int kid) {
         try {
             return ketjuDao.getAmount(kid);
@@ -152,7 +155,7 @@ public class Sovelluslogiikka {
         }
         return -1;
     }
-    
+
     public List<Viesti> haeSivuViesteja(int ketjuid, int sivunumero) {
         List<Viesti> lista;
         try {
@@ -163,7 +166,7 @@ public class Sovelluslogiikka {
         }
         return null;
     }
-    
+
     public List<Ketju> haeSivuKetjuja(int alueid, int sivunumero) {
         List<Ketju> lista;
         try {
