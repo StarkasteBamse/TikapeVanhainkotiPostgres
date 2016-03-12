@@ -32,23 +32,15 @@ public class TKAlustaja {
     public void luoTaulut() {
 
         //taulu "Alue" luonti
-        taulunLuominen("CREATE TABLE Alue "
-                + "(id SERIAL PRIMARY KEY AUTOINCREMENT, "
-                + "nimi varchar(100) NOT NULL UNIQUE);");
+        
+        taulunLuominen("DROP TABLE Alue;");
+        taulunLuominen("CREATE TABLE Alue (id SERIAL PRIMARY KEY AUTOINCREMENT nimi varchar(100) NOT NULL UNIQUE);");
         //taulu "Ketju" luonti
-        taulunLuominen("CREATE TABLE Ketju "
-                + "(id SERIAL PRIMARY KEY AUTOINCREMENT, "
-                + "nimi varchar(100) NOT NULL, "
-                + "alueId integer NOT NULL, "
-                + "FOREIGN KEY (AlueId) REFERENCES Alue(Id));");
+        taulunLuominen("DROP TABLE Ketju;");
+        taulunLuominen("CREATE TABLE Ketju (id SERIAL PRIMARY KEY AUTOINCREMENT, nimi varchar(100) NOT NULL, alueId integer NOT NULL, FOREIGN KEY (AlueId) REFERENCES Alue(Id));");
         //taulu "Viesti" luonti, Nimimerkin kanssa.
-        taulunLuominen("CREATE TABLE Viesti "
-                + "(id SERIAL PRIMARY KEY AUTOINCREMENT, "
-                + "viesti text NOT NULL, "
-                + "nimimerkki varchar(50) NOT NULL, "
-                + "pvm datetime NOT NULL, "
-                + "ketjuId integer NOT NULL, "
-                + "FOREIGN KEY (KetjuId) REFERENCES Ketju(Id));");
+        taulunLuominen("DROP TABLE Viesti;");
+        taulunLuominen("CREATE TABLE Viesti (id SERIAL PRIMARY KEY AUTOINCREMENT, viesti text NOT NULL, nimimerkki varchar(50) NOT NULL, pvm datetime NOT NULL, ketjuId integer NOT NULL, FOREIGN KEY (KetjuId) REFERENCES Ketju(Id));");
         taulunLuominen("CREATE INDEX idx_ketjuId ON Ketju (id), "
                 + "idx_viestiId ON Viesti (id);");
 
