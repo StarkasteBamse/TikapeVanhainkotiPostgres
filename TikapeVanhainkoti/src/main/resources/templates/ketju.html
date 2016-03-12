@@ -44,7 +44,9 @@
             </div>
 
             <div class="row" th:if="${not #lists.isEmpty(viestit)}">
-                <div class="col-sm-8">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-7">
                     <strong>Viesti</strong>
                 </div>
                 <div class="col-sm-4">
@@ -59,7 +61,10 @@
             </div>
 
             <div class="row" th:each="viesti,iterStat: ${viestit}">
-                <div class="col-sm-8" th:style="${iterStat.even}? 'background-color:lavender;'">
+                <div class="col-sm-1" th:style="${iterStat.even}? 'background-color:lavender;'">
+                    <span th:text="${iterStat.count + 10 * (sivu - 1)}">nro</span>
+                </div>
+                <div class="col-sm-7" th:style="${iterStat.even}? 'background-color:lavender;'">
                     <span th:text="${viesti.viesti}">sisalto</span>
                 </div>
                 <div class="col-sm-4" th:style="${iterStat.even}? 'background-color:lavender;'">
@@ -77,7 +82,7 @@
                 </div>
                 <div class="col-sm-2">
                     <ul class="pagination">
-                        <li th:each="i : ${sivunumerot}" th:class="*{i==sivunro} ? 'active'"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${i})}"><span th:text="${i}">0</span></a></li>
+                        <li th:each="i : ${sivunumerot}" th:class="${i==sivunro}? 'active'"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${i})}"><span th:text="${i}">0</span></a></li>
                     </ul>
                 </div>
                 <div class="col-sm-2">
