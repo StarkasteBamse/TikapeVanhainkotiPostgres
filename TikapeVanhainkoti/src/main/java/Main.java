@@ -20,8 +20,8 @@ public class Main {
         Sovelluslogiikka sl = new Sovelluslogiikka(jdbcOsoite);
         sl.kaynnista();
 
-        Webbikayttoliittyma wc = new Webbikayttoliittyma(sl);
-        wc.kaynnista();
+        Webbikayttoliittyma wkl = new Webbikayttoliittyma(sl);
+        wkl.kaynnista();
 
     }
 }
