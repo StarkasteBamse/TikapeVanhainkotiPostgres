@@ -18,16 +18,13 @@ public class Sovelluslogiikka {
     }
 
     public boolean kaynnista() {
-
-       
-
         try {
             this.database = new Database(tietokannanNimi);
             this.tkAlustaja = new TKAlustaja(database);
             boolean yhteysToimii = tkAlustaja.kokeileYhteys();
-            System.out.println("yhteys: " + yhteysToimii);
+//            System.out.println("yhteys: " + yhteysToimii);
             if (yhteysToimii) {
-                tkAlustaja.luoTaulut();
+                tkAlustaja.luoTaulut(!this.tietokannanNimi.contains("postgres"));
             }
             this.alueDao = new AlueDAO(database);
             this.ketjuDao = new KetjuDAO(database);

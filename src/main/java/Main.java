@@ -12,7 +12,7 @@ public class Main {
             port(Integer.valueOf(System.getenv("PORT")));
         }
 
-        String jdbcOsoite = System.getenv("DATABASE_URL");      
+        String jdbcOsoite = "jdbc:sqlite:koe.db";        
         if (System.getenv("DATABASE_URL") != null) {
             jdbcOsoite = System.getenv("DATABASE_URL");
         }

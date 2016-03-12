@@ -3,8 +3,6 @@ package kayttoliittyma;
 import java.util.*;
 import sovelluslogiikka.Sovelluslogiikka;
 import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
 import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
@@ -227,7 +225,7 @@ public class Webbikayttoliittyma {
     private HashMap haeAlue(int alueid, int sivu) {
         HashMap map = new HashMap<>();
 
-        int sivumaara = sovelluslogiikka.haeKetjujenLkm(alueid) / 10 + 1;
+        int sivumaara = ((sovelluslogiikka.haeKetjujenLkm(alueid) - 1) / 10 + 1);
         ArrayList<Integer> sivunumerot = laskeSivunumerot(sivumaara);
 
         map.put("ketjut", sovelluslogiikka.haeSivuKetjuja(alueid, sivu));
@@ -244,7 +242,7 @@ public class Webbikayttoliittyma {
     private HashMap haeKetju(int ketjuid, int sivu) {
         HashMap map = new HashMap<>();
 
-        int sivumaara = sovelluslogiikka.haeViestienLkm(ketjuid) / 10 + 1;
+        int sivumaara = ((sovelluslogiikka.haeViestienLkm(ketjuid) - 1) / 10 + 1);
         ArrayList<Integer> sivunumerot = laskeSivunumerot(sivumaara);
 
         map.put("viestit", sovelluslogiikka.haeSivuViesteja(ketjuid, sivu));

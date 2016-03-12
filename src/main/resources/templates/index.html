@@ -30,7 +30,7 @@
                     <strong>Viestejä</strong>
                 </div>
                 <div class="col-sm-4">
-                    <strong>Päivämäärä</strong>
+                    <strong>Viimeisin viesti</strong>
                 </div>
             </div>
 
@@ -44,6 +44,7 @@
                 </div>
                 <div class="col-sm-4" th:style="${iterStat.even}? 'background-color:lavender;'">
                     <span th:text="${alue.pvm}" th:if="${alue.lkm}>0">Pvm</span>
+                    <span th:if="0>=${alue.lkm}">&nbsp;</span>
                 </div>
             </div>
 

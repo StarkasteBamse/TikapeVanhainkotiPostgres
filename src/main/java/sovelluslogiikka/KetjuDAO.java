@@ -30,7 +30,6 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
 
     @Override
     public int add(Ketju ketju) throws SQLException {
-        //palautetaan luodun ketjun id
 
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
@@ -40,18 +39,21 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         stmt.execute();
         stmt.close();
         suljeYhteys();
-        
+
         muodostaYhteys();
         PreparedStatement stmt2 = yhteys.prepareStatement("SELECT MAX(id) AS IsoinID FROM Ketju "
                 + "WHERE AlueId = ? "
                 + "AND Nimi = ? "
                 + ";");
-        
+
         stmt2.setInt(1, ketju.getAid());
         stmt2.setString(2, ketju.getNimi());
         ResultSet rs = stmt2.executeQuery();
 
-        int ketjuId = rs.getInt("IsoinID");
+        int ketjuId = 0;
+        while (rs.next()) {
+            ketjuId = rs.getInt("IsoinID");
+        }
 
         rs.close();
         stmt2.close();
@@ -79,7 +81,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
                 + "WHERE Ketju.AlueId = ? "
                 + "GROUP BY Ketju.Id "
                 + "ORDER BY MAX(Viesti.pvm) DESC;");
-        
+
         stmt.setInt(1, alueId);
         ResultSet rs = stmt.executeQuery();
 
@@ -114,7 +116,6 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
                 + "LEFT JOIN Alue "
                 + "ON Alue.Id = Ketju.AlueId "
                 + "WHERE Ketju.Id = ? "
-                + "GROUP BY Ketju.Id "
                 + "ORDER BY MAX(Viesti.pvm) DESC;");
 
         stmt.setInt(1, kid);
@@ -140,7 +141,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
         suljeYhteys();
         return ketju;
     }
-    
+
     public List<Ketju> getOnePage(Integer alueId, int lkmPerSivu, int sivuNumero) throws SQLException {
         muodostaYhteys();
         List<Ketju> ketjut = new LinkedList<>();
@@ -157,7 +158,7 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
                 + "ORDER BY MAX(Viesti.pvm) DESC "
                 + "LIMIT " + lkmPerSivu + " "
                 + "OFFSET " + (lkmPerSivu * (sivuNumero - 1)) + ";");
-        
+
         stmt.setInt(1, alueId);
         ResultSet rs = stmt.executeQuery();
 
@@ -189,15 +190,20 @@ public class KetjuDAO implements Dao<Integer, Ketju> {
 
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT COUNT(viesti.id) AS Maara FROM Ketju, Viesti "
-              + "WHERE ketju.id = viesti.ketjuid "
-              + "AND Ketju.id = ?;");  
+                + "WHERE ketju.id = viesti.ketjuid "
+                + "AND Ketju.id = ?;");
         stmt.setInt(1, ketjuId);
         ResultSet rs = stmt.executeQuery();
-        int lkm = rs.getInt("Maara");
-        
+
+        int lkm = 0;
+        while (rs.next()) {
+            lkm = rs.getInt("Maara");
+        }
+
         rs.close();
+        stmt.close();
         suljeYhteys();
-        
+
         return lkm;
     }
 
