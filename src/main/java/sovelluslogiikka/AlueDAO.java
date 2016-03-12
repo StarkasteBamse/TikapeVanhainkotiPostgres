@@ -51,7 +51,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
     public List<Alue> getAll(Integer x) throws SQLException {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
-                "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja "
+                "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, "
                 + "MAX(viesti.pvm) AS Viimeisin "
                 + "FROM Alue "
                 + "LEFT JOIN Ketju "
@@ -86,7 +86,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
     public Alue getOne(Integer aid) throws SQLException {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
-                "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja "
+                "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, "
                 + "MAX(viesti.pvm) AS Viimeisin "
                 + "FROM Alue "
                 + "LEFT JOIN Ketju "
