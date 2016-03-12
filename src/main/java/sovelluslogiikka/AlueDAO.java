@@ -2,6 +2,7 @@ package sovelluslogiikka;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, "
-                + "MAX(viesti.pvm) AS Viimeisin "
+//                + "MAX(viesti.pvm) AS Viimeisin "
                 + "FROM Alue "
                 + "LEFT JOIN Ketju "
                 + "ON Alue.id = Ketju.alueid "
@@ -69,7 +70,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
 
             int viestienLkm = rs.getInt("Viesteja");
 
-            Timestamp timestamp = new Timestamp(rs.getLong("Viimeisin"));
+            Timestamp timestamp = new Timestamp(0); //rs.getLong("Viimeisin")
             LocalDateTime pvm = timestamp.toLocalDateTime();
 
             alueet.add(new Alue(id, nimi, pvm, viestienLkm));
@@ -86,7 +87,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
         muodostaYhteys();
         PreparedStatement stmt = yhteys.prepareStatement(
                 "SELECT Alue.id, Alue.nimi, COUNT(Viesti.id) AS Viesteja, "
-                + "MAX(viesti.pvm) AS Viimeisin "
+//                + "MAX(viesti.pvm) AS Viimeisin "
                 + "FROM Alue "
                 + "LEFT JOIN Ketju "
                 + "ON Alue.id = Ketju.alueid "
@@ -106,10 +107,10 @@ public class AlueDAO implements Dao<Integer, Alue> {
 
             int viestienLkm = rs.getInt("Viesteja");
 
-            Timestamp timestamp = new Timestamp(rs.getLong("Viimeisin"));
+            Timestamp timestamp = new Timestamp(0);  //rs.getLong("Viimeisin")
             LocalDateTime pvm = timestamp.toLocalDateTime();
 
-            alue = new Alue(id, nimi, pvm, viestienLkm);
+            alue = new Alue(id, nimi, , viestienLkm);
 
         }
         rs.close();
