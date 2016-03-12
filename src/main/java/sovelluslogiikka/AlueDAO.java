@@ -57,7 +57,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
                 + "ON Alue.id = Ketju.alueid "
                 + "LEFT JOIN Viesti "
                 + "ON Ketju.id = Viesti.ketjuid "
-                + "GROUP BY alue.id "
+                + "GROUP BY alue.id, Alue.nimi "
                 + "ORDER BY Alue.Nimi ASC;");
 
         ResultSet rs = stmt.executeQuery();
@@ -93,7 +93,7 @@ public class AlueDAO implements Dao<Integer, Alue> {
                 + "LEFT JOIN Viesti "
                 + "ON Ketju.id = Viesti.ketjuid "
                 + "WHERE Alue.id = ? "
-                + "GROUP BY alue.id "
+                + "GROUP BY alue.id, Alue.nimi "
                 + "ORDER BY Alue.Nimi ASC;");
 
         stmt.setInt(1, aid);
