@@ -75,12 +75,7 @@ public class Sovelluslogiikka {
     }
 
     public List<Ketju> haeKetjut(int alue_id) {
-        List<Ketju> ketjut = new LinkedList<>();
-        try {
-            ketjut = ketjuDao.getAll(alue_id);
-        } catch (SQLException ex) {
-        }
-        return ketjut;
+        return haeSivuKetjuja(alue_id, 1, -1);
     }
 
     public Ketju haeKetju(int kid) {
@@ -93,12 +88,7 @@ public class Sovelluslogiikka {
     }
 
     public List<Viesti> haeViestit(int ketju_id) {
-        List<Viesti> viestit = new LinkedList<>();
-        try {
-            viestit = viestiDao.getAll(ketju_id);
-        } catch (SQLException ex) {
-        }
-        return viestit;
+        return haeSivuViesteja(ketju_id, 1, -1);
     }
 
     public boolean luoAlue(String nimi) {
@@ -150,10 +140,10 @@ public class Sovelluslogiikka {
         return -1;
     }
 
-    public List<Viesti> haeSivuViesteja(int ketjuid, int sivunumero) {
+    public List<Viesti> haeSivuViesteja(int ketjuid, int sivunumero, int viestejaPerSivu) {
         List<Viesti> lista;
         try {
-            lista = viestiDao.getOnePage(ketjuid, 10, sivunumero);
+            lista = viestiDao.getOnePage(ketjuid, viestejaPerSivu, sivunumero);
             return lista;
         } catch (SQLException se) {
             System.out.println(se.getMessage());
@@ -161,10 +151,10 @@ public class Sovelluslogiikka {
         return null;
     }
 
-    public List<Ketju> haeSivuKetjuja(int alueid, int sivunumero) {
+    public List<Ketju> haeSivuKetjuja(int alueid, int sivunumero, int ketjujaPerSivu) {
         List<Ketju> lista;
         try {
-            lista = ketjuDao.getOnePage(alueid, 10, sivunumero);
+            lista = ketjuDao.getOnePage(alueid, ketjujaPerSivu, sivunumero);
             return lista;
         } catch (SQLException se) {
             System.out.println(se.getMessage());

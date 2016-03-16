@@ -50,7 +50,7 @@ public class Tekstikayttoliittyma {
         List<Alue> alueet = sovelluslogiikka.haeAlueet();
         System.out.println("Alueet");
         for (Alue alueet1 : alueet) {
-            System.out.println(alueet1.getNimi() + " " + alueet1.getLkm() + " viestiä, viimeisin " + alueet1.getPvm());
+            System.out.println(alueet1.getId() + " " +alueet1.getNimi() + " " + alueet1.getLkm() + " viestiä, viimeisin " + alueet1.getPvm());
         }
     }
 
@@ -65,12 +65,14 @@ public class Tekstikayttoliittyma {
         } else {
             // ei jaksa käsitellä virheitä
             int n = Integer.parseInt(p);
+            
+            // ei haeta kaikkia vaan vain 30 ensimmäistä
             List<Ketju> ketjut = sovelluslogiikka.haeKetjut(n);
 
             // ketjut on tyhjä?
             System.out.println("Ketjut");
             for (Ketju ketjut1 : ketjut) {
-                System.out.println(ketjut1.getNimi() + " " + ketjut1.getLkm() + " viestiä, viimeisin " + ketjut1.getPvm());
+                System.out.println(ketjut1.getId() + " " + ketjut1.getNimi() + " " + ketjut1.getLkm() + " viestiä, viimeisin " + ketjut1.getPvm());
             }
         }
     }
@@ -94,7 +96,10 @@ public class Tekstikayttoliittyma {
             sovelluslogiikka.luoKetju(otsikko, alue, nimim, viesti);
         } else {
             int n = Integer.parseInt(p);
+            
+            // haetaan vain 30 ensimmäistä
             List<Viesti> viestit = sovelluslogiikka.haeViestit(n);
+            
             System.out.println("Ketjun viestit");
             for (Viesti v : viestit) {
                 System.out.println(v.getViesti() + " t. " + v.getNimimerkki());
