@@ -23,19 +23,19 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-1">
+                <div class="col-xs-3 col-sm-2">
                     <ul class="pager">
                         <li><span th:if="${sivu}>1"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${sivu}-1)}">Edellinen</a></span></li>
                     </ul>
                 </div>
-                <div class="col-xs-8">
+                <div class="col-sm-6">
                 </div>
-                <div class="col-xs-2">
-                    <ul class="pagination" th:each="i : ${sivunumerot}">
-                        <li th:class="${i==sivu}? 'active'" ><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${i})}"><span th:text="${i}">0</span></a></li>
+                <div class="col-xs-4 col-sm-2">
+                    <ul class="pagination">
+                        <li th:each="i, iC : ${sivunumerot}" th:class="${(iC.index + 1)==sivu}? 'active'" ><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${i})}"><span th:text="${i}">0</span></a></li>
                     </ul>
                 </div>
-                <div class="col-xs-1">
+                <div class="col-xs-3 col-sm-2">
                     <ul class="pager">
                         <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
                     </ul>
@@ -72,19 +72,19 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-1">
+                <div class="col-xs-3 col-sm-2">
                     <ul class="pager">
                         <li><span th:if="${sivu}>1"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${sivu}-1)}">Edellinen</a></span></li>
                     </ul>
                 </div>
-                <div class="col-xs-8">
+                <div class="col-sm-6">
                 </div>
-                <div class="col-xs-2">
-                    <ul class="pagination" th:each="i : ${sivunumerot}">
-                        <li th:class="${i==sivu}? 'active'" ><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${i})}"><span th:text="${i}">0</span></a></li>
+                <div class="col-xs-4 col-sm-2">
+                    <ul class="pagination">
+                        <li th:each="i, iC : ${sivunumerot}" th:class="${(iC.index + 1)==sivu}? 'active'" ><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${i})}"><span th:text="${i}">0</span></a></li>
                     </ul>
                 </div>
-                <div class="col-xs-1">
+                <div class="col-xs-3 col-sm-2">
                     <ul class="pager">
                         <li><span th:if="${sivumaara}>${sivu}"><a th:href="@{~/ketju/{kid}/{sivunro}(kid=${ketju.id}, sivunro=${sivu}+1)}">Seuraava</a></span></li>
                     </ul>
